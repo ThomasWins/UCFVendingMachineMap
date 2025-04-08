@@ -142,7 +142,8 @@ var cardList =
         'Whitey Ford',
         'Willie Mays',
         'Rickey Henderson',
-        'Babe Ruth'
+        'Babe Ruth',
+	'Sir Obama'	    
     ];
 
 app.post('/api/addcard', async (req, res, next) => {
