@@ -6,7 +6,7 @@ const app = express();
 
 const {MongoClient, ServerApiVersion} = require('mongodb');
 
-const url = "mongodb+srv://santycastro2004:jQvXXiFa1oUpqFJF@cluster0.iggc36l.mongodb.net/COP4331?retryWrites=true&w=majority&appName=Cluster0";
+const url = "mongodb+srv://santycastro2004:jQvXXiFa1oUpqFJF@cluster0.iggc36l.mongodb.net/BigProject?retryWrites=true&w=majority&appName=Cluster0";
 
 const client = new MongoClient(url, {
 
