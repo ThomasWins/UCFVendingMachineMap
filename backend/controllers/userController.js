@@ -28,3 +28,37 @@ exports.registerUser = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+exports.loginUser = async (req, res) => {
+  try {
+    const { login, password } = req.body;
+
+    // Find the user by login
+    const user = await User.findOne({ login });
+    
+    // Check if user exists
+    if (!user) {
+      return res.status(401).json({ error: 'Invalid login credentials' });
+    }
+
+    // Check if password matches (simple comparison since passwords aren't hashed)
+    if (user.password !== password) {
+      return res.status(401).json({ error: 'Invalid login credentials' });
+    }
+
+    // Return user data on successful login
+    res.status(200).json({
+      success: true,
+      user: {
+        userId: user.userId,
+        login: user.login,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        admin: user.admin,
+        favorites: user.favorites
+      }
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};

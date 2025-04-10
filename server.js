@@ -41,27 +41,6 @@ const userRoutes = require('./backend/routes/userRoutes');
 // Use routes
 app.use('/api/users', userRoutes);
 
-app.post('/api/login', async (req, res, next) => {
-    const { login, password } = req.body;
-    var error = '';
-
-    const db = mongoose.connection.db;
-    const results = await db.collection('Users').find({ Login: login, Password: password }).toArray();
-
-    var id = -1;
-    var fn = '';
-    var ln = '';
-
-    if (results.length > 0) {
-        id = results[0].UserId;
-        fn = results[0].FirstName;
-        ln = results[0].LastName;
-    }
-
-    var ret = { id: id, firstName: fn, lastName: ln, error: '' };
-    res.status(200).json(ret);
-});
-
 app.listen(5000, () => {
     console.log("Server is running on port 5000");
 });
