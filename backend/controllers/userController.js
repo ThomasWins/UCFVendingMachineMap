@@ -11,6 +11,10 @@ exports.registerUser = async (req, res) => {
       return res.status(400).json({ error: 'User already exists' });
     }
 
+    // Assign unique userId
+    const assignId = await User.findOne().sort({ userId: -1 }).limit(1);
+    const nextUserId = assignId ? assignId.userId + 1 : 1;
+
     // Create a new user without hashing the password
     const newUser = new User({
       login,
