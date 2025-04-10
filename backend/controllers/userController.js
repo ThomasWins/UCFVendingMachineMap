@@ -19,7 +19,7 @@ exports.registerUser = async (req, res) => {
     const newUser = new User({
       login,
       password,  // Store password as plain text for now
-      userId,
+      userId: nextUserId,
       firstName,
       lastName,
       admin,
