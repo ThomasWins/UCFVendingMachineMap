@@ -33,8 +33,9 @@ exports.loginUser = async (req, res) => {
   try {
     const { login, password } = req.body;
 
-    // Find the user by login
+    // Find the user by login - log what we find to debug
     const user = await User.findOne({ login });
+    console.log("User found:", user); // Add this to see exact DB structure
     
     // Check if user exists
     if (!user) {
@@ -46,19 +47,23 @@ exports.loginUser = async (req, res) => {
       return res.status(401).json({ error: 'Invalid login credentials' });
     }
 
+    // Map fields correctly - check for both lowercase and uppercase first letter variants
+    const userData = {
+      userId: user.userId || user.UserId || user._id,
+      login: user.login || user.Login,
+      firstName: user.firstName || user.FirstName,
+      lastName: user.lastName || user.LastName,
+      admin: user.admin || user.Admin || false,
+      favorites: user.favorites || user.Favorites || []
+    };
+
     // Return user data on successful login
     res.status(200).json({
       success: true,
-      user: {
-        userId: user.userId,
-        login: user.login,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        admin: user.admin,
-        favorites: user.favorites
-      }
+      user: userData
     });
   } catch (error) {
+    console.error("Login error:", error);
     res.status(500).json({ error: error.message });
   }
 };
