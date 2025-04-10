@@ -11,10 +11,10 @@ exports.registerUser = async (req, res) => {
       return res.status(400).json({ error: 'User already exists' });
     }
 
-    // Create a new user
+    // Create a new user without hashing the password
     const newUser = new User({
       login,
-      password,
+      password,  // Store password as plain text for now
       userId,
       firstName,
       lastName,
