@@ -41,7 +41,7 @@ exports.loginUser = async (req, res) => {
     const user = await User.findOne({ login });
     console.log("User document keys:", Object.keys(user._doc)); // Log all available fields
     console.log("Complete user object:", JSON.stringify(user._doc, null, 2)); // Log the whole user document
-    
+
     // Check if user exists
     if (!user) {
       return res.status(401).json({ error: 'Invalid login credentials' });
@@ -71,6 +71,51 @@ exports.loginUser = async (req, res) => {
     });
   } catch (error) {
     console.error("Login error:", error);
+    res.status(500).json({ error: error.message });
+  }
+};
+
+exports.addFavorite = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const { vendingId } = req.body;
+
+    // Find the user by userId
+    const user = await User.findOne({ userId: parseInt(userId) });
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    // Add vendingId to favorites if not already present
+    if (!user.favorites.includes(vendingId)) {
+      user.favorites.push(vendingId);
+      await user.save();
+      return res.status(200).json({ message: 'Favorite added successfully' });
+
+      // Otherwise, inform that it's already a favorite
+    } else {
+      return res.status(400).json({ error: 'Favorite already exists' });
+    }
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+exports.removeFavorite = async (req, res) => {
+  try {
+    const { userId, vendingId } = req.params;
+
+    // Find the user by userId
+    const user = await User.findOne({ userId: parseInt(userId) });
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    // Remove vendingId from favorites
+    user.favorites = user.favorites.filter(id => id !== parseInt(vendingId));
+    await user.save();
+    return res.status(200).json({ message: 'Favorite removed successfully' });
+  } catch (error) {
     res.status(500).json({ error: error.message });
   }
 };
