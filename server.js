@@ -36,10 +36,10 @@ app.use((req, res, next) => {
 });
 
 // Import routes
-const userRoutes = require('./backend/routes/userRoutes');
+//const userRoutes = require('./backend/routes/userRoutes');
 
 // Use routes
-app.use('/api/users', userRoutes);
+//app.use('/api/users', userRoutes);
 
 app.post('/api/login', async (req, res, next) => {
     const { login, password } = req.body;
