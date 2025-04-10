@@ -33,9 +33,10 @@ exports.loginUser = async (req, res) => {
   try {
     const { login, password } = req.body;
 
-    // Find the user by login - log what we find to debug
+    // Find the user by login
     const user = await User.findOne({ login });
-    console.log("User found:", user); // Add this to see exact DB structure
+    console.log("User document keys:", Object.keys(user._doc)); // Log all available fields
+    console.log("Complete user object:", JSON.stringify(user._doc, null, 2)); // Log the whole user document
     
     // Check if user exists
     if (!user) {
@@ -47,15 +48,17 @@ exports.loginUser = async (req, res) => {
       return res.status(401).json({ error: 'Invalid login credentials' });
     }
 
-    // Map fields correctly - check for both lowercase and uppercase first letter variants
+    // User data object with more variations and with the raw _doc object
     const userData = {
-      userId: user.userId || user.UserId || user._id,
-      login: user.login || user.Login,
-      firstName: user.firstName || user.FirstName,
-      lastName: user.lastName || user.LastName,
-      admin: user.admin || user.Admin || false,
+      userId: user._id || user.userId || user.UserId,
+      login: user.login || user.Login || user.username || user.userName || user.Username || user.UserName,
+      firstName: user.firstName || user.FirstName || user.firstname || user.first_name || user.first,
+      lastName: user.lastName || user.LastName || user.lastname || user.last_name || user.last,
+      admin: user.admin || user.Admin || user.isAdmin || false,
       favorites: user.favorites || user.Favorites || []
     };
+
+    console.log("Mapped userData:", userData); // Log the mapped data before sending
 
     // Return user data on successful login
     res.status(200).json({
