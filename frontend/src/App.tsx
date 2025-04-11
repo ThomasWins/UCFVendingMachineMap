@@ -8,11 +8,11 @@ const colors = {
 
 const Login = () => {
   return (
-    <div className = "w-full min-h-screen flex items-start">
-      <div className = 'relative w-1/2 h-screen'>
+    <div className = "flex w-full h-screen">
+      <div className = 'w-1/2 h-full'>
       <img src = {IMAGE} className = "w-full h-full object-cover"/>
      </div>
-     <div className = 'w-1/2 h-screen bg-white flex flex-col p-20 justify-between'>
+     <div className = 'w-1/2 h-full bg-white flex flex-col p-20 justify-between'>
      <h1 className = 'text-base text-[#060606]'>GerbertheGoat</h1></div>
 
      <div className = 'w-full flex flex-col'>
