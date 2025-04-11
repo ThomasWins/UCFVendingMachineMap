@@ -28,6 +28,8 @@ const Login = () => {
       placeholder = "Password"
       className = "w-full text-black py-4 border-b border-black outline-none focus:outline-none"/>
      </div>
+      <div className = "w-full flex flex-col mt-10">
+        <button className = "bg-[#060606] text-white py-4 rounded-md hover:bg-[#060606]">Login</button>
     </div>
   )
 }
