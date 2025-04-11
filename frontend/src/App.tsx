@@ -9,9 +9,9 @@ const colors = {
 const Login = () => {
   return (
     <div className = "w-full min-h-screen flex items-start">
-      <div className = 'w-1/2 h-full flex flex-col'>
-      <img src = {IMAGE} className = "w-full h-full object-cover">
-      </img></div>
+      <div className = 'relative w-1/2 h-full flex flex-col'>
+      <img src = {IMAGE} className = "w-full h-full object-cover"/>
+     </div>
     </div>
   )
 }
