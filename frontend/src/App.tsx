@@ -2,14 +2,14 @@ import IMAGE from './assets/imagetrial2.png';
 
 const colors = {
   primary: '#060606',
-  background: '#f5f5f5',
+  background: 'black',
   disabled: '#d9d9d9',
 }
 
 const Login = () => {
   return (
     <div className = "flex w-full h-screen">
-      <div className = 'w-full h-full'>
+      <div className = 'w-1/2 h-full'>
       <img src = {IMAGE} className = "w-full h-full object-cover"/>
      </div>
      <div className = 'w-1/2 h-full bg-white flex flex-col p-20 justify-between'>
