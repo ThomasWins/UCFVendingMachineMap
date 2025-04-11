@@ -13,7 +13,7 @@ const Login = () => {
       <img src = {IMAGE} className = "w-full h-full object-cover"/>
      </div>
      <div className = 'w-1/2 h-full bg-white flex flex-col p-20 justify-between'>
-     <h1 className = 'text-base text-[#060606]'>GerbertheGoat</h1></div>
+     <h1 className = 'text-base text-[#060606]'>GerbertheGoat</h1>
 
      
 
@@ -31,6 +31,7 @@ const Login = () => {
       <div className = "w-full flex flex-col mt-10">
         <button className = "bg-[#060606] text-white py-4 rounded-md hover:bg-[#060606]">Login</button>
         </div>
+    </div>
     </div>
   )
 }
