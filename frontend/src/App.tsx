@@ -10,7 +10,7 @@ const Login = () => {
   return (
     <div className = "flex w-full h-screen">
       <div className = 'w-1/2 h-full'>
-      <img src = {IMAGE} className = "w-full h-full object-cover"/>
+      <img id= "UCFimage" src = {IMAGE} className = "w-full h-full object-cover"/>
      </div>
      <div className = 'w-1/2 h-full bg-white flex flex-col p-20 justify-between'>
      <h1 className = 'text-base text-[#060606]'>GerbertheGoat</h1>
