@@ -9,7 +9,7 @@ const colors = {
 const Login = () => {
   return (
     <div className = "flex w-full h-screen">
-      <div className = 'w-1/2 h-full'>
+      <div className = 'w-full h-full'>
       <img src = {IMAGE} className = "w-full h-full object-cover"/>
      </div>
      <div className = 'w-1/2 h-full bg-white flex flex-col p-20 justify-between'>
