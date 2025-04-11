@@ -30,6 +30,7 @@ const Login = () => {
      </div>
       <div className = "w-full flex flex-col mt-10">
         <button className = "bg-[#060606] text-white py-4 rounded-md hover:bg-[#060606]">Login</button>
+        <button className = "bg-[#060606] text-white py-4 rounded-md hover:bg-[#060606]">Create Account</button>
         </div>
     </div>
     </div>
