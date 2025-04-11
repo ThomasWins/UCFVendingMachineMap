@@ -12,8 +12,12 @@ const Login = () => {
       <div className = 'relative w-1/2 h-full flex flex-col'>
       <img src = {IMAGE} className = "w-full h-full object-cover"/>
      </div>
-     <div className = 'w-1/2 h-full bg-white flex flex-col p-10'>
+     <div className = 'w-1/2 h-full bg-white flex flex-col p-20 justify-between'>
      <h1 className = 'text-base text-[#060606]'>GerbertheGoat</h1></div>
+
+     <div classNmae = 'w-full flex flex-col'>
+      <h3 className = 'text-2xl font-semibold mb-4'>Login</h3>
+     </div>
     </div>
   )
 }
