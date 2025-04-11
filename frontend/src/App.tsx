@@ -1,4 +1,4 @@
-import IMAGE from './assets/reflectionpond.jpg';
+import IMAGE from './assets/imagetrial2.png';
 
 const colors = {
   primary: '#060606',
