@@ -15,6 +15,15 @@ const Login = () => {
      <div className = 'w-1/2 h-full bg-white flex flex-col p-20 justify-between'>
      <h1 className = 'text-base text-[#060606]'>GerbertheGoat</h1></div>
 
+     <div className = "w-full flex flex-col">
+      <input type = "text"
+      placeholder = "Username"
+      className = "w-full text-black py-4 border-b border-black outline-none focus:outline-none"/>
+      <input type = "password"
+      placeholder = "Password"
+      className = "w-full text-black py-4 border-b border-black outline-none focus:outline-none"/>
+     </div>
+
      <div className = 'w-full flex flex-col'>
       <h3 className = 'text-2xl font-semibold mb-4'>Login</h3>
      </div>
