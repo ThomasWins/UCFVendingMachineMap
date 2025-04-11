@@ -2,7 +2,7 @@ import IMAGE from './assets/imagetrial2.png';
 
 const colors = {
   primary: '#060606',
-  background: 'black',
+  background: '#0f0000',
   disabled: '#d9d9d9',
 }
 
