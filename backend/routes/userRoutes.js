@@ -8,4 +8,13 @@ router.post('/login', userController.loginUser);
 router.post('/:userId/favorites', userController.addFavorite);
 router.delete('/:userId/favorites/:vendingId', userController.removeFavorite);
 
+// Submit a new vending machine request
+router.post('/:userId/vending-requests', userController.submitVendingRequest);
+
+// Get all vending machine requests (admin only)
+router.get('/:userId/vending-requests', userController.getVendingRequests);
+
+// Update a vending request status (admin only)
+router.patch('/:userId/vending-requests/:requestId', userController.updateVendingRequest);
+
 module.exports = router;

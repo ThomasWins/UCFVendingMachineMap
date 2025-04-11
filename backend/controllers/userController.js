@@ -1,5 +1,7 @@
 // backend/controllers/userController.js
 const User = require('../models/userModel');
+// Add this line to import the new model
+const VendingRequest = require('../models/vendingRequestModel');
 
 exports.registerUser = async (req, res) => {
   try {
@@ -115,6 +117,95 @@ exports.removeFavorite = async (req, res) => {
     user.favorites = user.favorites.filter(id => id !== parseInt(vendingId));
     await user.save();
     return res.status(200).json({ message: 'Favorite removed successfully' });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+exports.submitVendingRequest = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const { coordinates, description } = req.body;
+    
+    // Validate input
+    if (!coordinates || !description) {
+      return res.status(400).json({ error: 'Coordinates and description are required' });
+    }
+    
+    // Find the user by userId
+    const user = await User.findOne({ userId: parseInt(userId) });
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    
+    // Create a new vending machine request
+    const request = new VendingRequest({
+      userId: user.userId,
+      userLogin: user.login,
+      coordinates,
+      description,
+      status: 'pending',
+      submittedAt: new Date()
+    });
+    
+    await request.save();
+    return res.status(201).json({ 
+      message: 'Vending machine request submitted successfully',
+      requestId: request._id 
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+exports.getVendingRequests = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    
+    // Find the user and check if they're an admin
+    const user = await User.findOne({ userId: parseInt(userId) });
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    
+    if (!user.admin) {
+      return res.status(403).json({ error: 'Access denied' });
+    }
+    
+    // Get all pending requests
+    const requests = await VendingRequest.find().sort({ submittedAt: -1 });
+    return res.status(200).json({ requests });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+exports.updateVendingRequest = async (req, res) => {
+  try {
+    const { userId, requestId } = req.params;
+    const { status, adminComment } = req.body;
+    
+    // Validate admin status
+    const user = await User.findOne({ userId: parseInt(userId) });
+    if (!user || !user.admin) {
+      return res.status(403).json({ error: 'Access denied' });
+    }
+    
+    // Update request status
+    const request = await VendingRequest.findById(requestId);
+    if (!request) {
+      return res.status(404).json({ error: 'Request not found' });
+    }
+    
+    request.status = status;
+    request.adminComment = adminComment;
+    request.processedAt = new Date();
+    request.processedBy = user.userId;
+    
+    await request.save();
+    return res.status(200).json({ 
+      message: 'Vending request updated successfully'
+    });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
