@@ -1,5 +1,5 @@
 import PageTitle from '../components/PageTitle.tsx';
-import Login from '../components/AccountCreation.tsx';
+import CreateAccount from '../components/CreateAccount.tsx';
 
 const LoginPage = () =>
 {
