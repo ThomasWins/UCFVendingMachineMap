@@ -8,12 +8,20 @@ const colors = {
 
 const Login = () => {
   return (
-    <div className = "flex w-full h-screen">
-      <div className = 'w-1/2 h-full'>
-      <img src = {IMAGE} className = "w-full h-full object-cover"/>
-     </div>
-     <div className = 'w-1/2 h-full bg-white flex flex-col p-20 justify-between'>
-     <h1 className = 'text-base text-[#060606]'>GerbertheGoat</h1>
+    <div className="flex w-full h-screen">
+      {/* Left side with image */}
+      <div className="w-1/2 h-full">
+        <img
+          src={IMAGE}
+          alt="Login visual"
+          className="w-full h-full object-cover"
+        />
+      </div>
+
+      {/* Right side with login form */}
+      <div className="w-1/2 h-full bg-white flex flex-col p-20 justify-between">
+        <div>
+          <h1 className="text-base text-[#060606] mb-10">GerbertheGoat</h1>
 
           <div className="w-full flex flex-col mb-6">
             <h3 className="text-2xl font-semibold mb-4">Login</h3>
@@ -36,8 +44,9 @@ const Login = () => {
           </button>
         </div>
       </div>
-    
+    </div>
   );
 };
+
 
 export default Login;
