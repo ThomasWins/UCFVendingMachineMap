@@ -1,7 +1,16 @@
+import IMAGE from './assets/imagetrial2.png';
+
 function PageTitle()
 {
    return(
-     <h1 id="title">COP 4331 MERN Stack Demo</h1>
+     <div className="w-1/2 h-full">
+        <img
+          src={IMAGE}
+          alt="Login visual"
+          className="w-full h-full object-cover"
+        />
+      </div>
+     <h1 id="title">GERBER THE GOAT</h1>
    );
 };
 
