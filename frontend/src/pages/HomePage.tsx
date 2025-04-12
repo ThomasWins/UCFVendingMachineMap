@@ -1,6 +1,6 @@
-import PageTitle from '../components/PageTitle';
-import LoggedInName from '../components/LoggedInName';
-import CardUI from '../components/CardUI';
+import navbar from '../components/navbar';
+import homeBody from '../components/homeBody';
+import showcaseMap from '../components/showcaseMap';
 
 const CardPage = () =>
 {
