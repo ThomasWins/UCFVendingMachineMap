@@ -1,0 +1,81 @@
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+function Register() {
+  const [message, setMessage] = useState('');
+  const [loginName, setLoginName] = useState('');
+  const [loginPassword, setPassword] = useState('');
+  const [confPassword, setConfPassword] = useState('');
+  const navigate = useNavigate();
+
+  async function doCreateAccount(event: React.FormEvent) {
+    event.preventDefault();
+
+    if (loginPassword !== confPassword) {
+      setMessage('Passwords do not match.');
+      return;
+    }
+
+    const obj = { login: loginName, password: loginPassword };
+    const js = JSON.stringify(obj);
+
+    try {
+      const response = await fetch('/api/register', { // New API endpoint 
+        method: 'POST',
+        body: js,
+        headers: { 'Content-Type': 'application/json' }
+      });
+
+      const res = await response.json();
+
+      if (res.error) {
+        setMessage(res.error);
+      } else {
+        const user = {
+          firstName: res.firstName,
+          lastName: res.lastName,
+          id: res.id
+        };
+        localStorage.setItem('user_data', JSON.stringify(user));
+        setMessage('');
+        navigate('/cards'); // Set to home page later (wherever we want new user directed)
+      }
+    } catch (error) {
+      alert(error.toString());
+    }
+  }
+
+  return (
+    <div id="loginDiv">
+      <span id="inner-title">CREATE AN ACCOUNT</span><br />
+      <input
+        type="text"
+        id="loginName"
+        placeholder="Username"
+        onChange={(e) => setLoginName(e.target.value)}
+      /><br />
+      <input
+        type="password"
+        id="loginPassword"
+        placeholder="Password"
+        onChange={(e) => setPassword(e.target.value)}
+      /><br />
+      <input
+        type="password"
+        id="confirmPassword"
+        placeholder="Confirm Password"
+        onChange={(e) => setConfPassword(e.target.value)}
+      /><br />
+      <input
+        type="submit"
+        id="createAccountButton"
+        className="buttons"
+        value="Create Account"
+        onClick={doCreateAccount} 
+      />
+      <span id="loginResult">{message}</span>
+    </div>
+  );
+}
+
+export default Register;
