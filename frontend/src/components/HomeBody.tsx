@@ -13,7 +13,6 @@ const HomeBody = () => {
   return (
     <div id="container">
       <h1 id="title">Vending Machine UCF Map</h1>
-      <button onClick={goToMap} id="mapButton">Go to Map</button>
       <video
         id="mapvid"
         src={MAP_GIF}
@@ -23,6 +22,7 @@ const HomeBody = () => {
         muted
         playsInline
       />
+      <button onClick={goToMap} id="mapButton">Go to Map</button>
     </div>
   );
 };
