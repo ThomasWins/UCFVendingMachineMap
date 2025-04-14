@@ -12,10 +12,10 @@ const HomeBody = () => {
 
   return (
     <div id="container">
-      <h1>Vending Machine UCF Map</h1>
-      <button onClick={goToMap}>Go to Map</button>
+      <h1 id="title">Vending Machine UCF Map</h1>
+      <button onClick={goToMap} id="mapButton">Go to Map</button>
       <video
-        id="gif"
+        id="mapvid"
         src={MAP_GIF}
         alt="Showcase video"
       />
