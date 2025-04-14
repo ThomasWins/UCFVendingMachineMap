@@ -60,9 +60,10 @@ function Login() {
         type="submit"
         id="loginButton"
         className="buttons"
-        value="Do It"
+        value="Login"
         onClick={doLogin}
       />
+      <a href="https://gerberthegoat.com/createaccount" name="CreateAccount" id="createAccount" target="_blank">Sign Up</a>
       <span id="loginResult">{message}</span>
     </div>
   );
