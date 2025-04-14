@@ -1,6 +1,6 @@
 import navbar from '../components/navbar';
 import PageTitle from '../components/PageTitle';
-import homeBody from '../components/homeBody';
+import HomeBody from '../components/HomeBody';
 
 
 const CardPage = () =>
@@ -9,7 +9,7 @@ const CardPage = () =>
         <div>
             <navbar />
             <PageTitle />
-            <homeBody />
+            <HomeBody />
         </div>
     );
 }
