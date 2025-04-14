@@ -43,6 +43,7 @@ function Login() {
 
   return (
     <div id="loginDiv">
+      <a href="./Home" id="createAccount">TEMP Home Page</a>
       <span id="inner-title">PLEASE LOG IN</span><br />
       <input
         type="text"
@@ -64,7 +65,6 @@ function Login() {
         onClick={doLogin}
       />
       <a href="./CreateAccount" id="createAccount">Sign Up</a>
-      <a href="./Home" id="createAccount">TEMP Home Page</a>
       <span id="loginResult">{message}</span>
     </div>
   );
