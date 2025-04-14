@@ -63,7 +63,7 @@ function Login() {
         value="Login"
         onClick={doLogin}
       />
-      <a href="../pages/AccountCreationPage.tsx" id="createAccount">Sign Up</a>
+      <a href="./CreateAccount" id="createAccount">Sign Up</a>
       <span id="loginResult">{message}</span>
     </div>
   );
