@@ -63,7 +63,7 @@ function Login() {
         value="Login"
         onClick={doLogin}
       />
-      <a href="https://gerberthegoat.com/createaccount" name="CreateAccount" id="createAccount" target="_blank">Sign Up</a>
+      <a href="../pages/AccountCreationPage.tsx" id="createAccount">Sign Up</a>
       <span id="loginResult">{message}</span>
     </div>
   );
