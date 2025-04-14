@@ -14,10 +14,10 @@ const HomeBody = () => {
     <div id="container">
       <h1>Vending Machine UCF Map</h1>
       <button onClick={goToMap}>Go to Map</button>
-      <img
+      <video
         id="gif"
         src={MAP_GIF}
-        alt="UCF Map GIF"
+        alt="Showcase video"
       />
     </div>
   );
