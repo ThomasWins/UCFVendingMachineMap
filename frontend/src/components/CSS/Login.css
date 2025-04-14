@@ -44,3 +44,18 @@
   margin-top: 15px;
   color: red;
 }
+
+#createAccountButton {
+  background-color: #007bff;
+  color: white;
+  padding: 10px;
+  width: 100%;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+#createAccountButton:hover {
+  background-color: #0056b3;
+}
