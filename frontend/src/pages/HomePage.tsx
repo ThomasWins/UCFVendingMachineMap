@@ -1,14 +1,15 @@
 import navbar from '../components/navbar';
+import PageTitle from '../components/PageTitle';
 import homeBody from '../components/homeBody';
-import showcaseMap from '../components/showcaseMap';
+
 
 const CardPage = () =>
 {
     return(
         <div>
             <navbar />
+            <PageTitle />
             <homeBody />
-            <showcaseMap />
         </div>
     );
 }
