@@ -6,7 +6,7 @@ const LoginPage = () =>
 {
 
     return(
-      <div>
+      <div id="LoginBody">
         <img
         src={IMAGE}
         alt="Login Visual"
