@@ -11,10 +11,11 @@ const HomeBody = () => {
   };
 
   return (
-    <div style={styles.container}>
-      <h1 style={styles.title}>Vending Machine UCF Map</h1>
+    <div id="container">
+      <h1>Vending Machine UCF Map</h1>
       <button onClick={goToMap} style={styles.button}>Go to Map</button>
       <img
+        id="gif"
         src={MAP_GIF}
         alt="UCF Map GIF"
         style={styles.mp4}
