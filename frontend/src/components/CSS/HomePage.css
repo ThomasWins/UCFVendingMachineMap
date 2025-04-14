@@ -17,7 +17,7 @@ container: {
     cursor: 'pointer',
     marginBottom: '30px',
   },
-  gif: {
+  video: {
     width: '80%',
     maxWidth: '1000px',
     height: 'auto',
