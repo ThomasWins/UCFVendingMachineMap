@@ -3,7 +3,7 @@ import PageTitle from '../components/PageTitle';
 import HomeBody from '../components/HomeBody';
 
 
-const CardPage = () =>
+const HomePage = () =>
 {
     return(
         <div>
