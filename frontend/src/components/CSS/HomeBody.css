@@ -23,10 +23,12 @@
   border-radius: 8px;
   cursor: pointer;
   margin-top: 30px;
+  transition: all 0.3s ease;
 }
 
 #mapButton:hover {
   background-color: #0056b3;
+  transform: scale(1.05);
 }
 
 #mapvid {
