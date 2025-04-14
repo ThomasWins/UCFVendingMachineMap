@@ -13,7 +13,7 @@ const HomeBody = () => {
   return (
     <div id="container">
       <h1>Vending Machine UCF Map</h1>
-      <button onClick={goToMap} style={styles.button}>Go to Map</button>
+      <button onClick={goToMap}>Go to Map</button>
       <img
         id="gif"
         src={MAP_GIF}
