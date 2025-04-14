@@ -1,3 +1,5 @@
+import './CSS/PageTitle.css';
+
 function PageTitle()
 {
    return(
