@@ -18,6 +18,10 @@ const HomeBody = () => {
         id="mapvid"
         src={MAP_GIF}
         alt="Showcase video"
+        autoPlay
+        loop
+        muted
+        playsInline
       />
     </div>
   );
