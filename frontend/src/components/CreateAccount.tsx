@@ -74,6 +74,7 @@ function Register() {
         onClick={doCreateAccount} 
       />
       <span id="loginResult">{message}</span>
+      <a href="./" id="Login">Already have an Account?</a>
     </div>
   );
 }
