@@ -1,13 +1,13 @@
-container: {
+#container: {
     textAlign: 'center',
     padding: '40px',
   },
-title: {
+#title: {
     fontSize: '2.5rem',
     fontWeight: 'bold',
     marginBottom: '20px',
   },
- mapButton: {
+ #mapButton: {
     padding: '12px 24px',
     fontSize: '1.2rem',
     backgroundColor: '#007bff',
@@ -17,7 +17,7 @@ title: {
     cursor: 'pointer',
     marginBottom: '30px',
   },
- mapVid: {
+ #mapVid: {
     width: '80%',
     maxWidth: '1000px',
     height: 'auto',
