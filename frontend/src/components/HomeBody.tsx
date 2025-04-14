@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import MAP_GIF from '../assets/Desktop_2025.04.14_-_16.54.12.02.mp4'; // PLACEHOLDER (Change to gif or picture of map?)
+import MAP_GIF from '../assets/showcaseVideo.mp4'; // PLACEHOLDER (Change to gif or picture of map?)
 import './CSS/HomeBody.css';
 
 const HomeBody = () => {
