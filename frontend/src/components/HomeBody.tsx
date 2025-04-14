@@ -18,7 +18,6 @@ const HomeBody = () => {
         id="gif"
         src={MAP_GIF}
         alt="UCF Map GIF"
-        style={styles.mp4}
       />
     </div>
   );
