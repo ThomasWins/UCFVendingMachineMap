@@ -2,12 +2,12 @@ container: {
     textAlign: 'center',
     padding: '40px',
   },
-  title: {
+.title: {
     fontSize: '2.5rem',
     fontWeight: 'bold',
     marginBottom: '20px',
   },
-  button: {
+ .button: {
     padding: '12px 24px',
     fontSize: '1.2rem',
     backgroundColor: '#007bff',
@@ -17,7 +17,7 @@ container: {
     cursor: 'pointer',
     marginBottom: '30px',
   },
-  video: {
+ .video: {
     width: '80%',
     maxWidth: '1000px',
     height: 'auto',
