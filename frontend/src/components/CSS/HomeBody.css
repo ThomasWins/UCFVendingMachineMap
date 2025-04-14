@@ -25,6 +25,10 @@
   margin-top: 30px;
 }
 
+#mapButton:hover {
+  background-color: #0056b3;
+}
+
 #mapvid {
   width: 80%;
   max-width: 1000px;
