@@ -14,4 +14,4 @@ const CardPage = () =>
     );
 }
 
-export default CardPage;
+export default HomePage;
