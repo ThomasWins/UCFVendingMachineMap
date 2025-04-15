@@ -5,6 +5,7 @@ import LoginPage from './pages/LoginPage';
 import AccountCreationPage from './pages/AccountCreationPage';
 import HomePage from './pages/HomePage';
 import Logout from './pages/LogoutPage';
+import TheGoat from './page/TheGoatPage';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/createAccount" element={<AccountCreationPage />} />
         <Route path="/home" element={<HomePage />} />
         <Route path="/logout" element={<Logout />} />
+        <Route path="/secret" element={<TheGoat />} />
       </Routes>
     </Router>
   );
