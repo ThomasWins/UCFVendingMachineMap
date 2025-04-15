@@ -14,11 +14,16 @@
 }
 
 #description {
-  color: var(--gray40-a0aaba);
+  color: #959595; // light grey
+  font-size: 1.2rem;
   letter-spacing: -.01em;
   position: relative;
   text-align: center;
   font-family: Cera pro, Trebuchet MS, sans-serif;
+
+  width: 80%;
+  max-width: 1000px;
+  height: auto;
 }
 
 #mapButton {
