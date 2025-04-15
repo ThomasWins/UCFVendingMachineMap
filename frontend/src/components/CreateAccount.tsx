@@ -18,8 +18,8 @@ function Register() {
       setMessage('Passwords do not match.');
       return;
     }
-    if (loginPassword.length < 8) {
-      setMessage('Password has to be 8 characters or longer.');
+    if (loginPassword.length < 6) {
+      setMessage('Password has to be 6 characters or longer.');
       return;
     }
 
