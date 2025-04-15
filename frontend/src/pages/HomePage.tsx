@@ -1,4 +1,4 @@
-import navbar from '../components/navbar';
+import navbar from '../components/navBar';
 import PageTitle from '../components/PageTitle';
 import HomeBody from '../components/HomeBody';
 
@@ -7,7 +7,7 @@ const HomePage = () =>
 {
     return(
         <div>
-            <navbar />
+            <navBar />
             <PageTitle />
             <HomeBody />
         </div>
