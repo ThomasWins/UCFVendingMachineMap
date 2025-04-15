@@ -5,8 +5,8 @@ const userController = require('../controllers/userController');
 
 router.post('/register', userController.registerUser);
 router.post('/login', userController.loginUser);
-router.post('/:userId/favorites', userController.addFavorite);
-router.delete('/:userId/favorites/:vendingId', userController.removeFavorite);
+router.post('/favorites/add', userController.addFavorite);
+router.post('/favorites/remove', userController.removeFavorite);
 
 // Submit a new vending machine request
 router.post('/:userId/vending-requests', userController.submitVendingRequest);

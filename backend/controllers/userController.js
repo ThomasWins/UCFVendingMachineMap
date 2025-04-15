@@ -77,8 +77,7 @@ exports.loginUser = async (req, res) => {
 
 exports.addFavorite = async (req, res) => {
   try {
-    const { userId } = req.params;
-    const { vendingId } = req.body;
+    const { userId, vendingId } = req.body;
 
     // Find the user by userId
     const user = await User.findOne({ userId: parseInt(userId) });
@@ -91,8 +90,6 @@ exports.addFavorite = async (req, res) => {
       user.favorites.push(vendingId);
       await user.save();
       return res.status(200).json({ message: 'Favorite added successfully' });
-
-      // Otherwise, inform that it's already a favorite
     } else {
       return res.status(400).json({ error: 'Favorite already exists' });
     }
@@ -103,7 +100,7 @@ exports.addFavorite = async (req, res) => {
 
 exports.removeFavorite = async (req, res) => {
   try {
-    const { userId, vendingId } = req.params;
+    const { userId, vendingId } = req.body;
 
     // Find the user by userId
     const user = await User.findOne({ userId: parseInt(userId) });
@@ -112,7 +109,7 @@ exports.removeFavorite = async (req, res) => {
     }
 
     // Remove vendingId from favorites
-    user.favorites = user.favorites.filter(id => id !== parseInt(vendingId));
+    user.favorites = user.favorites.filter(id => id !== vendingId);
     await user.save();
     return res.status(200).json({ message: 'Favorite removed successfully' });
   } catch (error) {
