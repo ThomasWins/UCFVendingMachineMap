@@ -23,7 +23,13 @@ function Register() {
       return;
     }
 
-    const obj = { login: loginName, password: loginPassword };
+    const obj = {
+    firstName,
+    lastName,
+    login: loginName,
+    password: loginPassword
+    };
+
     const js = JSON.stringify(obj);
 
     try {
