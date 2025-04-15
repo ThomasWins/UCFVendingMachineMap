@@ -45,7 +45,7 @@ function Login() {
   
         localStorage.setItem('user_data', JSON.stringify(user));
         setMessage('');
-        navigate('/Home');
+        navigate('/home');
       } else {
         setMessage('An unexpected error occurred.');
       }
@@ -57,7 +57,7 @@ function Login() {
 
   return (
     <div id="loginDiv">
-      <a href="./Home" id="createAccount">TEMP Home Page</a>
+      <a href="./home" id="createAccount">TEMP Home Page</a>
       <span id="inner-title">PLEASE LOG IN</span><br />
       <form onSubmit={doLogin}>
         <input
