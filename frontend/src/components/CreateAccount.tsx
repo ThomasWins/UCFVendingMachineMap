@@ -51,7 +51,7 @@ function Register() {
         };
         localStorage.setItem('user_data', JSON.stringify(user));
         setMessage('');
-        navigate('/Home'); // Set to home page later (wherever we want new user directed)
+        navigate('/home'); // Set to home page later (wherever we want new user directed)
       }
     } catch (error) {
       alert(error.toString());
