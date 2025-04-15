@@ -4,7 +4,7 @@ import './App.css';
 import LoginPage from './pages/LoginPage';
 import AccountCreationPage from './pages/AccountCreationPage';
 import HomePage from './pages/HomePage';
-import Logout from './components/Logout';
+import Logout from './pages/LogoutPage';
 
 function App() {
   return (
