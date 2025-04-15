@@ -24,11 +24,11 @@
 
 
 #machine a {
-  color: lemonchiffon !important;
+  color: palegoldenrod !important;
 }
 
 #machine a:hover {
-  color: palegoldenrod !important;
+  color:  yellow !important;
 }
 
 
