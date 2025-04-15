@@ -75,6 +75,20 @@ exports.loginUser = async (req, res) => {
   }
 };
 
+//
+exports.logoutUser = (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      console.error('Logout failed:', err);
+      return res.status(500).json({ error: 'Logout failed' });
+    }
+
+    res.clearCookie('connect.sid'); 
+    res.status(200).json({ message: 'Logged out successfully' });
+  });
+};
+//
+
 exports.addFavorite = async (req, res) => {
   try {
     const { userId, vendingId } = req.body;
