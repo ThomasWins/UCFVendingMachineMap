@@ -15,7 +15,7 @@ function Login() {
     const js = JSON.stringify(obj);
   
     try {
-      const response = await fetch('https://gerberthegoat.com/api/users/login', {
+      const response = await fetch('/api/users/login', {
         method: 'POST',
         body: js,
         headers: { 'Content-Type': 'application/json' }
