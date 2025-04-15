@@ -1,52 +1,22 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import './CSS/navbar.css';
 
-const navbar = () => {
-  const navigate = useNavigate();
-
-const handleLogout = () => {
-  localStorage.removeItem('user_data');
-  navigate('/login');
-};
-
-
-
+const NavBar: React.FC = () => {
   return (
-    <nav style={styles.nav}>
-      <div style={styles.logo}>MyApp</div>
-      <ul style={styles.navList}>
-        <li onClick={() => navigate('/map')} style={styles.navItem}>View Map</li>
-        <li onClick={() => navigate('/account')} style={styles.navItem}>View Account</li> 
-        <li onClick={handleLogout} style={styles.navItem}>Logout</li>
+    <nav className="navbar">
+      <div className="navbar-logo">
+        <Link to="/">MyApp</Link>
+      </div>
+      <ul className="navbar-links">
+        <li><Link to="/home">Home</Link></li>
+        <li><Link to="/about">About</Link></li>
+        <li><Link to="/dashboard">Dashboard</Link></li>
+        <li><Link to="/profile">Profile</Link></li>
+        <li><Link to="/logout">Logout</Link></li>
       </ul>
     </nav>
   );
-};
-
-const styles = {
-  nav: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    backgroundColor: '#333',
-    padding: '1rem',
-    color: 'white',
-  },
-  logo: {
-    fontSize: '1.5rem',
-    fontWeight: 'bold',
-  },
-  navList: {
-    display: 'flex',
-    gap: '1.5rem',
-    listStyle: 'none',
-    margin: 0,
-    padding: 0,
-    cursor: 'pointer',
-  },
-  navItem: {
-    transition: '0.3s',
-  },
 };
 
 export default NavBar;
