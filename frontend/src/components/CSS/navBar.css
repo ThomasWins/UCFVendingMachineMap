@@ -22,6 +22,16 @@
   font-weight: bold;
 }
 
+
+#machine a {
+  color: lemonchiffon !important;
+}
+
+#machine a:hover {
+  color: palegoldenrod !important;
+}
+
+
 .navbar-links {
   list-style: none;
   display: flex;
