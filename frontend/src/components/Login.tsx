@@ -81,7 +81,7 @@ function Login() {
           value="Login"
         />
       </form>
-      <a href="./CreateAccount" id="createAccount">Sign Up</a>
+      <a href="./createAccount" id="createAccount">Sign Up</a>
       <span id="loginResult">{message}</span>
     </div>
   );
