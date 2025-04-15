@@ -7,13 +7,13 @@ const Logout: React.FC = () => {
   useEffect(() => {
     const logout = async () => {
       try {
-        const response = await fetch('/api/users/logout', { // api endpoint
+        const res = await fetch('/api/users/logout', {
           method: 'POST',
-          credentials: 'include',
+          credentials: 'include', // important if using cookies
         });
 
-        if (response.ok) {
-          localStorage.removeItem('user_data'); // Is this a thing?
+        if (res.ok) {
+          localStorage.removeItem('user_data');
           navigate('/');
         } else {
           console.error('Logout failed');
