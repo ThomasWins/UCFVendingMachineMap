@@ -19,4 +19,4 @@ const NavBar: React.FC = () => {
   );
 };
 
-export default navBar;
+export default NavBar;
