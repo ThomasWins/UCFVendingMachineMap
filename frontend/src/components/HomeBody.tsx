@@ -13,6 +13,8 @@ const HomeBody = () => {
   return (
     <div id="container">
       <h1 id="title">Vending Machine UCF Map</h1>
+      <h2 id="description">Displays the locations of vending machines across the UCF campus, helping students and visitors easily find snacks and drinks nearby.</h2>
+      <video
       <video
         id="mapvid"
         src={MAP_GIF}
