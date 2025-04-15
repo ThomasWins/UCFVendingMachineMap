@@ -1,6 +1,6 @@
 // backend/controllers/userController.js
 const User = require('../models/userModel');
-// Add this line to import the new model
+const Vending = require('../models/vendingModel');
 const VendingRequest = require('../models/vendingRequestModel');
 
 exports.registerUser = async (req, res) => {
