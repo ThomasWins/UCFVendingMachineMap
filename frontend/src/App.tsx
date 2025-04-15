@@ -5,7 +5,7 @@ import LoginPage from './pages/LoginPage';
 import AccountCreationPage from './pages/AccountCreationPage';
 import HomePage from './pages/HomePage';
 import Logout from './pages/LogoutPage';
-import TheGoat from './page/TheGoatPage';
+import TheGoat from './pages/TheGoatPage';
 
 function App() {
   return (
