@@ -12,6 +12,9 @@ const Logout: React.FC = () => {
           credentials: 'include', // important if using cookies
         });
 
+        const data = await res.json();
+        console.log('Logout response:', res.status, data);
+
         if (res.ok) {
           localStorage.removeItem('user_data');
           navigate('/');
