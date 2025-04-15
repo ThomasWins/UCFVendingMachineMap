@@ -41,8 +41,6 @@ exports.loginUser = async (req, res) => {
 
     // Find the user by login
     const user = await User.findOne({ login });
-    console.log("User document keys:", Object.keys(user._doc)); // Log all available fields
-    console.log("Complete user object:", JSON.stringify(user._doc, null, 2)); // Log the whole user document
 
     // Check if user exists
     if (!user) {
