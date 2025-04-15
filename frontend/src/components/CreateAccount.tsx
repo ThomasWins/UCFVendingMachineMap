@@ -4,6 +4,8 @@ import './CSS/Login.css';
 
 function Register() {
   const [message, setMessage] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [loginName, setLoginName] = useState('');
   const [loginPassword, setPassword] = useState('');
   const [confPassword, setConfPassword] = useState('');
@@ -14,6 +16,10 @@ function Register() {
 
     if (loginPassword !== confPassword) {
       setMessage('Passwords do not match.');
+      return;
+    }
+    if (loginPassword.length < 8) {
+      setMessage('Password has to be 8 characters or longer.');
       return;
     }
 
@@ -50,11 +56,26 @@ function Register() {
     <div id="loginDiv">
       <span id="inner-title">CREATE AN ACCOUNT</span><br />
       <input
+      type="text"
+      id="firstName"
+      placeholder="First Name"
+      onChange={(e) => setFirstName(e.target.value)}
+      /><br />
+      
+      <input
+      type="text"
+      id="lastName"
+      placeholder="Last Name"
+      onChange={(e) => setLastName(e.target.value)}
+      /><br />
+
+      <input
         type="text"
         id="loginName"
         placeholder="Username"
         onChange={(e) => setLoginName(e.target.value)}
       /><br />
+      
       <input
         type="password"
         id="loginPassword"
