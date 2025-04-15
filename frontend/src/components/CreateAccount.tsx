@@ -21,7 +21,7 @@ function Register() {
     const js = JSON.stringify(obj);
 
     try {
-      const response = await fetch('/api/register', { // New API endpoint 
+      const response = await fetch('/api/users/register', { // New API endpoint 
         method: 'POST',
         body: js,
         headers: { 'Content-Type': 'application/json' }
