@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './CSS/Login.css';
 
-
 function Login() {
   const [message, setMessage] = useState('');
   const [loginName, setLoginName] = useState('');
@@ -22,22 +21,36 @@ function Login() {
         headers: { 'Content-Type': 'application/json' }
       });
 
+      // Catch unauthorized access
+      if (response.status === 401) {
+        const errorData = await response.json();
+        setMessage(errorData.error || 'User/Password combination incorrect');
+        return;
+      }
+
+      // Catch other possible errors
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
       const res = await response.json();
 
-      if (res.id <= 0) {
-        setMessage('User/Password combination incorrect');
-      } else {
+      if (res.success) {
         const user = {
-          firstName: res.firstName,
-          lastName: res.lastName,
-          id: res.id
+          firstName: res.user.firstName,
+          lastName: res.user.lastName,
+          id: res.user.userId
         };
+
         localStorage.setItem('user_data', JSON.stringify(user));
         setMessage('');
         navigate('/cards');
+      } else {
+        setMessage('An unexpected error occurred.');
       }
     } catch (error) {
-      alert(error.toString());
+      console.error('Login error:', error);
+      setMessage('An error occurred during login. Please try again.');
     }
   }
 
@@ -45,25 +58,28 @@ function Login() {
     <div id="loginDiv">
       <a href="./Home" id="createAccount">TEMP Home Page</a>
       <span id="inner-title">PLEASE LOG IN</span><br />
-      <input
-        type="text"
-        id="loginName"
-        placeholder="Username"
-        onChange={(e) => setLoginName(e.target.value)}
-      /><br />
-      <input
-        type="password"
-        id="loginPassword"
-        placeholder="Password"
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <input
-        type="submit"
-        id="loginButton"
-        className="buttons"
-        value="Login"
-        onClick={doLogin}
-      />
+      <form onSubmit={doLogin}>
+        <input
+          type="text"
+          id="loginName"
+          placeholder="Username"
+          value={loginName}
+          onChange={(e) => setLoginName(e.target.value)}
+        /><br />
+        <input
+          type="password"
+          id="loginPassword"
+          placeholder="Password"
+          value={loginPassword}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <input
+          type="submit"
+          id="loginButton"
+          className="buttons"
+          value="Login"
+        />
+      </form>
       <a href="./CreateAccount" id="createAccount">Sign Up</a>
       <span id="loginResult">{message}</span>
     </div>
