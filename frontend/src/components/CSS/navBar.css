@@ -29,6 +29,7 @@
 
 #machine a:hover {
   color:  yellow !important;
+  transform: scale(1.05);
 }
 
 
@@ -47,5 +48,6 @@
 }
 
 .navbar-links li a:hover {
-  color: #61dafb; /* Light blue hover effect */
+  color: #61dafb; // Light blue
+  transform: scale(1.05);
 }
