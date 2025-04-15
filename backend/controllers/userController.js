@@ -79,13 +79,19 @@ exports.addFavorite = async (req, res) => {
   try {
     const { userId, vendingId } = req.body;
 
-    // Find the user by userId
+    // First let's check if the vendingId exists in our collection
+    const vendingMachine = await Vending.findOne({ vendingId: parseInt(vendingId) });
+    if (!vendingMachine) {
+      return res.status(404).json({ error: 'Vending machine does not exist.' });
+    }
+
+    // Find the user by their userId.
     const user = await User.findOne({ userId: parseInt(userId) });
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
     }
 
-    // Add vendingId to favorites if not already present
+    // Add the vending machine if it's not already a favorite.
     if (!user.favorites.includes(vendingId)) {
       user.favorites.push(vendingId);
       await user.save();
@@ -102,13 +108,18 @@ exports.removeFavorite = async (req, res) => {
   try {
     const { userId, vendingId } = req.body;
 
-    // Find the user by userId
+    // Find the user by their userId.
     const user = await User.findOne({ userId: parseInt(userId) });
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
     }
 
-    // Remove vendingId from favorites
+    // Check if the vending machine is in their favorites.
+    if (!user.favorites.includes(vendingId)) {
+      return res.status(400).json({ error: 'Favorite does not exist' });
+    }
+
+    // Remove the vending machine from their favorites.
     user.favorites = user.favorites.filter(id => id !== vendingId);
     await user.save();
     return res.status(200).json({ message: 'Favorite removed successfully' });
