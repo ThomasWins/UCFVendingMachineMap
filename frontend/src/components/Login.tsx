@@ -10,38 +10,39 @@ function Login() {
 
   async function doLogin(event: React.FormEvent) {
     event.preventDefault();
-
+  
     const obj = { login: loginName, password: loginPassword };
     const js = JSON.stringify(obj);
-
+  
     try {
-      const response = await fetch('/api/users/login', {
+      const response = await fetch('https://gerberthegoat.com/api/users/login', {
         method: 'POST',
         body: js,
         headers: { 'Content-Type': 'application/json' }
       });
-
-      // Catch unauthorized access
+  
       if (response.status === 401) {
+        // Handle unauthorized access
         const errorData = await response.json();
         setMessage(errorData.error || 'User/Password combination incorrect');
         return;
       }
-
-      // Catch other possible errors
+  
       if (!response.ok) {
-        throw new Error('Network response was not ok');
+        // Handle other potential errors
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Network response was not ok');
       }
-
+  
       const res = await response.json();
-
+  
       if (res.success) {
         const user = {
           firstName: res.user.firstName,
           lastName: res.user.lastName,
-          id: res.user.userId
+          id: res.user.userId // Ensure this matches the field name returned by your backend
         };
-
+  
         localStorage.setItem('user_data', JSON.stringify(user));
         setMessage('');
         navigate('/cards');
@@ -49,8 +50,8 @@ function Login() {
         setMessage('An unexpected error occurred.');
       }
     } catch (error) {
-      console.error('Login error:', error);
-      setMessage('An error occurred during login. Please try again.');
+      console.error('Login error:', error); // Debugging line
+      setMessage(error.message || 'An error occurred during login. Please try again.');
     }
   }
 
