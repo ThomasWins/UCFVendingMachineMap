@@ -29,8 +29,8 @@ const HomeBody = () => {
       />
 
       <div id="buttons-row">
-        <button onClick={goToMap} id="mapButton">Go to Map</button>
-        <button onClick={goToContributions} id="contributionButton">View Contributions</button>
+        <button onClick={goToMap} id="mapButton">Go to the Map</button>
+        <button onClick={goToContributions} id="contributionButton">Your Contributions</button>
       </div>
       
 
