@@ -1,4 +1,3 @@
-import React, { useRef } from 'react';
 import NavBar from '../components/NavBar';
 import HomeBody from '../components/HomeBody';
 
