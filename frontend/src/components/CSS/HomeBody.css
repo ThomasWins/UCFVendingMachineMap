@@ -27,7 +27,7 @@
   margin: 0 auto;
 }
 
-#mapButton {
+#buttons-row {
   width: auto;
   margin: auto;
   padding: 12px 24px;
@@ -41,7 +41,11 @@
   transition: all 0.3s ease;
 }
 
-#mapButton:hover {
+#contributionButton {
+  color: Gray;
+}
+
+#buttons-row:hover {
   background-color: #0056b3;
   transform: scale(1.05);
 }
