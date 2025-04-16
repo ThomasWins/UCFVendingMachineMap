@@ -54,7 +54,7 @@
     margin-left: 5px;
     padding: 12px 24px;
     font-size: 1.2rem;
-    background-color: gray;
+    background-color: gray 30;
     color: #fff;
     border: none;
     border-radius: 8px;
@@ -69,7 +69,7 @@
 }
 
 #contributionButton:hover {
-  background-color: #0056b3;
+  background-color: gray 60;
   transform: scale(1.05);
 }
 
