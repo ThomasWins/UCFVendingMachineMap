@@ -64,6 +64,12 @@
   margin-top:30px;
 }
 
+#aboutUs {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-top: 10px;
+  font-family: Cera pro, Trebuchet MS, sans-serif;
+}
 h3 {
   font-size: 2rem;
   font-weight: bold;
