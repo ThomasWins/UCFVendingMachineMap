@@ -10,6 +10,10 @@ const HomeBody = () => {
     navigate('/map');
   };
 
+  const goToContributions = () => {
+    navigate('/profile/contributions');
+  }
+
   return (
     <div id="container">
       <h1 id="title">Vending Machine UCF Map</h1>
@@ -23,7 +27,12 @@ const HomeBody = () => {
         muted
         playsInline
       />
-      <button onClick={goToMap} id="mapButton">Go to Map</button>
+
+      <div id="buttons-row">
+        <button onClick={goToMap} id="mapButton">Go to Map</button>
+        <button onClick={goToContributions} id="contributionButton">View Contributions</button>
+      </div>
+      
 
       <div id="aboutContainer">
         <h1 id="aboutUs">About us</h1>
