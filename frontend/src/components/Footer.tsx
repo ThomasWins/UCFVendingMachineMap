@@ -23,7 +23,6 @@ const Footer: React.FC = () => {
         <div className="footer-section">
           <h4>Contact</h4>
           <p>Email: contact@ucfvending.com</p>
-          <p>Phone: (407) 555-1234</p>
         </div>
 
         <div className="footer-section social-icons">
