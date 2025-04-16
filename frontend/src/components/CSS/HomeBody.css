@@ -62,6 +62,7 @@
   height: auto;
   margin: auto;
   margin-top:60px;
+  scroll-margin-top: 60px;
 }
 
 html {
