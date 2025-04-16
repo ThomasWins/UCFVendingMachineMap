@@ -64,13 +64,13 @@
   margin-top:30px;
 }
 
-.h3 {
+h3 {
   font-size: 2rem;
   font-weight: bold;
   margin-top: 10px;
   font-family: Cera pro, Trebuchet MS, sans-serif;
 }
-.p {
+p {
   color: #959595; // light grey
   font-size: 1.5rem;
   letter-spacing: -.01em;
