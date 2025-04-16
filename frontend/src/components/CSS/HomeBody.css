@@ -61,8 +61,12 @@
   max-width: 1000px;
   height: auto;
   margin: auto;
-  margin-top:30px;
+  margin-top:50%;
 }
+
+div {
+  scroll-behavior: smooth;
+ }
 
 #aboutUs {
   font-size: 2.5rem;
