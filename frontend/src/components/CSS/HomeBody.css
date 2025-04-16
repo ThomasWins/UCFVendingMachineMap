@@ -35,30 +35,32 @@
 
 #mapButton {
   width: auto;
-  margin: auto;
-  padding: 12px 24px;
-  font-size: 1.2rem;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  margin-top: 30px;
-  transition: all 0.3s ease;
+    margin-left: auto;
+    margin-right: 5px;
+    padding: 12px 24px;
+    font-size: 1.2rem;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 30px;
+    transition: all 0.3s ease;
 }
 
 #contributionButton {
   width: auto;
-  margin: auto;
-  padding: 12px 24px;
-  font-size: 1.2rem;
-  background-color: #007bff;
-  color: #Gray;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  margin-top: 30px;
-  transition: all 0.3s ease;
+    margin-right: auto;
+    margin-left: 5px;
+    padding: 12px 24px;
+    font-size: 1.2rem;
+    background-color: gray;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 30px;
+    transition: all 0.3s ease;
 }
 
 #mapButton:hover {
