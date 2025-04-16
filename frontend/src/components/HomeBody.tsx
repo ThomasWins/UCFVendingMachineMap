@@ -25,8 +25,6 @@ const HomeBody = () => {
       />
       <button onClick={goToMap} id="mapButton">Go to Map</button>
 
-      <hr></hr>
-
       <div id="aboutContainer">
         <h1 id="aboutUs">About us</h1>
         <p>
