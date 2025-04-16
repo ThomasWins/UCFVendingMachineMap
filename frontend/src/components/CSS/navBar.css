@@ -16,7 +16,7 @@
 
 
 .navbar-logo a {
-  color: white;
+  color: #fdbb2d;
   font-size: 1.5rem;
   text-decoration: none;
   font-weight: bold;
@@ -24,11 +24,11 @@
 
 
 #machine a {
-  color: palegoldenrod !important;
+  color: #fdbb2d !important;
 }
 
 #machine a:hover {
-  color:  yellow !important;
+  color:  darkyellow !important;
   transform: scale(1.05);
 }
 
