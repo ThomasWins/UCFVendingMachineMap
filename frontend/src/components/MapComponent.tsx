@@ -1,4 +1,4 @@
-import './mapStyles.css';
+import './CSS/mapStyles.css';
 import mapboxgl from 'mapbox-gl';
 import { useEffect, useRef, useState } from 'react';
 
