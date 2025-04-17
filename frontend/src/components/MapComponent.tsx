@@ -507,7 +507,7 @@ return (
 
           {/* This had to be done slightly differently then the function due to the half stars and this setting what would be input into the database so I added some styling here that should probably be taken somewhere else but im not going to do it*/}
           <div>
-            <my-h3>Rate this Vending Machine</my-h3>
+            <div className="my-h3">Rate this Vending Machine</div>
             {[1, 2, 3, 4, 5].map((star) => (
               <div
                 key={star}
@@ -549,7 +549,7 @@ return (
           </div>
           {/*This just allows the users to write comments and preps them for database, I currently think this is ugly so CHANGE At SOME POINT !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/}
           <div>
-            <my-h3>Leave a Review PLACEHOLDER</my-h3>
+            <div className="my-h3">Leave a Review PLACEHOLDER</div>
             <input
               type="text"
               value={userComment}
