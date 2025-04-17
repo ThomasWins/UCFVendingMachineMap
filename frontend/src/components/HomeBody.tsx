@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import MAP_GIF from '../assets/showcaseVideo.mp4';
-import VID1 from '../assets/vendingFilter.mp4';
+/*import VID1 from '../assets/vendingFilter.mp4';
 import VID2 from '../assets/favoritesVideo.mp4';
 import VID3 from '../assets/reviewVideo.mp4';
-import VID4 from '../assets/addMachineVideo.mp4';
+import VID4 from '../assets/addMachineVideo.mp4';*/
 import './CSS/HomeBody.css';
 
 const HomeBody = () => {
@@ -49,7 +49,7 @@ const HomeBody = () => {
           <p>
             Browse an up-to-date map of all vending machines around campus. Use filters to narrow down machines by location, item type (snacks, drinks, healthy options), or availability.
           </p>
-
+        /*
           <video
             id="aboutVid"
             src={VID1}
@@ -59,6 +59,8 @@ const HomeBody = () => {
             muted
             playsInline
           />
+
+          */
         </div>
         
         <div id="aboutRight">
@@ -66,7 +68,7 @@ const HomeBody = () => {
           <p>
             Logged-in users can mark machines as favorites, making it easy to revisit your go-to snack spots without searching every time.
           </p>
-
+           /*
           <video
             id="aboutVid"
             src={VID2}
@@ -76,6 +78,7 @@ const HomeBody = () => {
             muted
             playsInline
           />
+          */
         </div>
 
         <div id="aboutLeft">
@@ -83,7 +86,7 @@ const HomeBody = () => {
           <p>
             Leave reviews and feedback on vending machines. Help others know if a machine is often empty, has card issues, or stocks your favorite items.
           </p>
-
+           /*
           <video
             id="aboutVid"
             src={VID3}
@@ -93,6 +96,8 @@ const HomeBody = () => {
             muted
             playsInline
           />
+
+          */
         </div>
 
         <div id="aboutRight">
@@ -101,6 +106,7 @@ const HomeBody = () => {
             Know about a vending machine that’s not on the map? Contribute to the community by adding its location and details.
           </p>
 
+           /*
           <video
             id="aboutVid"
             src={VID4}
@@ -110,6 +116,8 @@ const HomeBody = () => {
             muted
             playsInline
           />
+
+          */
         </div>
         
         <h3>Real-Time Campus Overview</h3>
