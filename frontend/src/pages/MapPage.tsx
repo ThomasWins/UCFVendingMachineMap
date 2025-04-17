@@ -1,10 +1,10 @@
-import Map from '../components/MapComponent';
+import MapComponent from '../components/MapComponent';
 
 const HomePage = () => {
 
 return (
   <div>
-    <Map /> 
+    <MapComponent /> 
   </div>
   );
 };
