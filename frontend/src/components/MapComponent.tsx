@@ -501,9 +501,9 @@ return (
             </span>
           </div>
 
-          <p>Type: {selectedVending.type}</p>
-          <p><strong>Description</strong></p>
-          <p>{selectedVending.description}</p>
+          <div className="my-p"></div>Type: {selectedVending.type}</div>
+          <div className="my-p"><strong>Description</strong></div>
+          <div className="my-p">{selectedVending.description}</div>
 
           {/* This had to be done slightly differently then the function due to the half stars and this setting what would be input into the database so I added some styling here that should probably be taken somewhere else but im not going to do it*/}
           <div>
