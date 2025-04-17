@@ -75,7 +75,7 @@ const MapComponent = () => {
 
 // does some api stuff idk im frontend
 useEffect(() => {
-  fetch('https://merntest.michaelwebsite.xyz/api/vending')
+  fetch('https://gerberthegoat.com/api/vending')
     .then(res => res.json())
     .then(data => setVendingData(data))
     .catch(err => console.error('Error fetching vending data:', err));
