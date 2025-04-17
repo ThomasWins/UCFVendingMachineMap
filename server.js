@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const session = require('express-session');
 
 const app = express();
 
@@ -21,6 +22,14 @@ connectDB();
 
 app.use(cors());
 app.use(bodyParser.json());
+
+// Session Configuration
+app.use(session({
+    secret: 'secret_key',
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: true }
+}));
 
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');

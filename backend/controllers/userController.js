@@ -52,8 +52,8 @@ exports.loginUser = async (req, res) => {
       return res.status(401).json({ error: 'Invalid login credentials' });
     }
 
-    // User data object with more variations and with the raw _doc object
-    const userData = {
+    // Create a session for the user
+    req.session.user = {
       userId: user._id || user.userId || user.UserId,
       login: user.login || user.Login || user.username || user.userName || user.Username || user.UserName,
       firstName: user.firstName || user.FirstName || user.firstname || user.first_name || user.first,
@@ -62,12 +62,12 @@ exports.loginUser = async (req, res) => {
       favorites: user.favorites || user.Favorites || []
     };
 
-    console.log("Mapped userData:", userData); // Log the mapped data before sending
+    console.log("Mapped userData:", req.session.user); // Log the mapped data before sending
 
     // Return user data on successful login
     res.status(200).json({
       success: true,
-      user: userData
+      user: req.session.user
     });
   } catch (error) {
     console.error("Login error:", error);
@@ -75,7 +75,6 @@ exports.loginUser = async (req, res) => {
   }
 };
 
-//
 exports.logoutUser = (req, res) => {
   req.session.destroy((err) => {
     if (err) {
@@ -83,11 +82,10 @@ exports.logoutUser = (req, res) => {
       return res.status(500).json({ error: 'Logout failed' });
     }
 
-    res.clearCookie('connect.sid'); 
+    res.clearCookie('connect.sid');
     res.status(200).json({ message: 'Logged out successfully' });
   });
 };
-//
 
 exports.addFavorite = async (req, res) => {
   try {
