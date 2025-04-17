@@ -45,5 +45,27 @@ router.post('/:id/comment', async (req, res) => {
   }
 });
 
+router.post('/:id/updateRating', async (req, res) => {
+  const { userId, rating } = req.body;
+  const vendingId = req.params.id;
+
+  try {
+    const vending = await Vending.findById(vendingId);
+    if (!vending) return res.status(404).json({ error: 'Vending machine not found' });
+
+    const existingRatingIndex = vending.ratings.findIndex(r => r.userId === userId);
+    if (existingRatingIndex !== -1) {
+      vending.ratings[existingRatingIndex].rating = rating;
+    } else {
+      vending.ratings.push({ userId, rating });
+    }
+
+    await vending.save();
+    res.status(200).json({ success: true, message: 'rating updated ', vending });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 module.exports = router;
 
