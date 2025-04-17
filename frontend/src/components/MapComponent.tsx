@@ -241,8 +241,6 @@ useEffect(() => {
     const prevRating = selectedVending.ratings.find(r => r.userId === currentUserId);
     setUserRating(prevRating?.rating || 0);
 
-    const prevComment = selectedVending.comments.find(c => c.userId === currentUserId);
-    setUserComment(prevComment?.comment || '');
   }
 }, [selectedVending, currentUserId]);
 
