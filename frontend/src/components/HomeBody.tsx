@@ -39,31 +39,80 @@ const HomeBody = () => {
         <p>
           We are a team of 5 computer science students who want to make students' lives easier. Our interactive UCF Vending Machine Map is designed to help students and visitors quickly locate snack and drink machines across the UCF campus. Whether you're rushing between classes or just exploring campus, our map makes it easy to find exactly what you're craving.
         </p>
+        
+        <div id="aboutLeft">
+          <h3>Find Vending Machines Near You</h3>
+          <p>
+            Browse an up-to-date map of all vending machines around campus. Use filters to narrow down machines by location, item type (snacks, drinks, healthy options), or availability.
+          </p>
 
-        <h3>Find Vending Machines Near You</h3>
-        <p>
-          Browse an up-to-date map of all vending machines around campus. Use filters to narrow down machines by location, item type (snacks, drinks, healthy options), or availability.
-        </p>
+          <video
+            id="aboutVid"
+            src={../assets/vendingFilter.mp4}
+            alt="Filters video"
+            autoPlay
+            loop
+            muted
+            playsInline
+          />
+        </div>
+        
+        <div id="aboutRight">
+          <h3>Save Favorites</h3>
+          <p>
+            Logged-in users can mark machines as favorites, making it easy to revisit your go-to snack spots without searching every time.
+          </p>
 
-        <h3>Save Favorites</h3>
-        <p>
-          Logged-in users can mark machines as favorites, making it easy to revisit your go-to snack spots without searching every time.
-        </p>
+          <video
+            id="aboutVid"
+            src={../assets/favoritesVideo.mp4}
+            alt="Favorites video"
+            autoPlay
+            loop
+            muted
+            playsInline
+          />
+        </div>
 
-        <h3>Leave Reviews</h3>
-        <p>
-          Leave reviews and feedback on vending machines. Help others know if a machine is often empty, has card issues, or stocks your favorite items.
-        </p>
+        <div id="aboutLeft">
+          <h3>Leave Reviews</h3>
+          <p>
+            Leave reviews and feedback on vending machines. Help others know if a machine is often empty, has card issues, or stocks your favorite items.
+          </p>
 
-        <h3>Add New Machines</h3>
-        <p>
-          Know about a vending machine that’s not on the map? Contribute to the community by adding its location and details.
-        </p>
+          <video
+            id="aboutVid"
+            src={../assets/reviewVideo.mp4}
+            alt="Reviews video"
+            autoPlay
+            loop
+            muted
+            playsInline
+          />
+        </div>
 
+        <div id="aboutRight">
+          <h3>Add New Machines</h3>
+          <p>
+            Know about a vending machine that’s not on the map? Contribute to the community by adding its location and details.
+          </p>
+
+          <video
+            id="aboutVid"
+            src={../assets/addMachineVideo.mp4}
+            alt="Favorites video"
+            autoPlay
+            loop
+            muted
+            playsInline
+          />
+        </div>
+        
         <h3>Real-Time Campus Overview</h3>
         <p>
           See all vending machines at a glance, with real-time updates and a clean, mobile-friendly interface designed for quick access on the go.
         </p>
+
       </div>
     </div>
   );
