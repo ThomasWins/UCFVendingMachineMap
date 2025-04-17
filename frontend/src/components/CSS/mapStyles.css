@@ -13,16 +13,6 @@ body {
   border: none;
 }
 
-h3 {
-  display: block;
-  font-size: 1.17em;
-  margin-block-start: 1em;
-  margin-block-end: 1em;
-  margin-inline-start: 0px;
-  margin-inline-end: 0px;
-  font-weight: bold;
-  unicode-bidi: isolate;
-}
 /*menu part (area that opens up on the side with all of the buttons)*/
 .menu-title-box {
   font-size: 28px;
