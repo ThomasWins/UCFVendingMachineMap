@@ -1,6 +1,6 @@
 import MapComponent from '../components/MapComponent';
 
-const HomePage = () => {
+const MapPage = () => {
 
 return (
   <div>
