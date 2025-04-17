@@ -120,7 +120,7 @@ exports.addFavorite = async (req, res) => {
 
 exports.removeFavorite = async (req, res) => {
   try {
-    const { userId, vendingId } = req.body;
+    const { userId, vendingId } = req.params;
 
     // Find the user by their userId.
     const user = await User.findOne({ userId: parseInt(userId) });
@@ -129,12 +129,12 @@ exports.removeFavorite = async (req, res) => {
     }
 
     // Check if the vending machine is in their favorites.
-    if (!user.favorites.includes(vendingId)) {
+    if (!user.favorites.includes(parseInt(vendingId))) {
       return res.status(400).json({ error: 'Favorite does not exist' });
     }
 
     // Remove the vending machine from their favorites.
-    user.favorites = user.favorites.filter(id => id !== vendingId);
+    user.favorites = user.favorites.filter(id => id !== parseInt(vendingId));
     await user.save();
     return res.status(200).json({ message: 'Favorite removed successfully' });
   } catch (error) {
