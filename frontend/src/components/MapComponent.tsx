@@ -109,9 +109,35 @@ const renderMarkers = (mapInstance: mapboxgl.Map) => {
 
 
 
-// set the rating for the user if it is changed
-const handleRatingChange = (rating: number) => {
-  setUserRating(rating);
+// set the rating for the user if it is changed this now works when clicking on stars!
+const handleRatingChange = async (rating) => {
+  setUserRating(rating); 
+
+  if (selectedVending && currentUserId) {
+    const payload = {
+      userId: currentUserId,
+      rating: rating,
+    };
+
+    try {
+      const response = await fetch(`/api/vending/${selectedVending._id}/updateRating`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.success) {
+        console.log('Rating updated successfully!');
+        setSelectedVending(data.vending);
+      } else {
+        console.error('failed to update rating:', data.error || data.message);
+      }
+    } catch (error) {
+      console.error('error updating ratng:', error);
+    }
+  }
 };
 
 // basic setup for mapbox very important probably should put my accessToken in a .env file but idk how to
