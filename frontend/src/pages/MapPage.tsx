@@ -1,11 +1,10 @@
 import MapComponent from '../components/MapComponent';
-import PageTitle from '../components/PageTitle';
 
 const MapPage = () => {
 
 return (
   <div>
-    <PageTitle />
+    <h1>Map Page</h1>
     <MapComponent /> 
   </div>
   );
