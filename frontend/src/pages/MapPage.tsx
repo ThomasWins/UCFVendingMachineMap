@@ -1,3 +1,12 @@
+import Map from '../components/MapComponent';
 
-// Actual map showing vending machines
-// I think michael is doing this ??
+const HomePage = () => {
+
+return (
+  <div>
+    <Map /> 
+  </div>
+  );
+};
+
+export default MapPage;
