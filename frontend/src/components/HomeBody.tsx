@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import MAP_GIF from '../assets/showcaseVideo.mp4'; // PLACEHOLDER (Change to gif or picture of map?)
+import MAP_GIF from '../assets/showcaseVideo.mp4';
+import VID1 from '../assets/vendingFilter.mp4';
+import VID2 from '../assets/favoritesVideo.mp4';
+import VID3 from '../assets/reviewVideo.mp4';
+import VID4 from '../assets/addMachineVideo.mp4';
 import './CSS/HomeBody.css';
 
 const HomeBody = () => {
@@ -48,7 +52,7 @@ const HomeBody = () => {
 
           <video
             id="aboutVid"
-            src={../assets/vendingFilter.mp4}
+            src={VID1}
             alt="Filters video"
             autoPlay
             loop
@@ -65,7 +69,7 @@ const HomeBody = () => {
 
           <video
             id="aboutVid"
-            src={../assets/favoritesVideo.mp4}
+            src={VID2}
             alt="Favorites video"
             autoPlay
             loop
@@ -82,7 +86,7 @@ const HomeBody = () => {
 
           <video
             id="aboutVid"
-            src={../assets/reviewVideo.mp4}
+            src={VID3}
             alt="Reviews video"
             autoPlay
             loop
@@ -99,7 +103,7 @@ const HomeBody = () => {
 
           <video
             id="aboutVid"
-            src={../assets/addMachineVideo.mp4}
+            src={VID4}
             alt="Favorites video"
             autoPlay
             loop
