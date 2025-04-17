@@ -501,7 +501,7 @@ return (
             </span>
           </div>
 
-          <div className="my-p"></div>Type: {selectedVending.type}</div>
+          <div className="my-p">Type: {selectedVending.type}</div>
           <div className="my-p"><strong>Description</strong></div>
           <div className="my-p">{selectedVending.description}</div>
 
