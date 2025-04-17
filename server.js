@@ -7,7 +7,7 @@ const session = require('express-session');
 const app = express();
 
 // MongoDB connection
-const url = "mongodb+srv://santycastro2004:jQvXXiFa1oUpqFJF@cluster0.iggc36l.mongodb.net/BigProject?retryWrites=tru>
+const url = "mongodb+srv://santycastro2004:jQvXXiFa1oUpqFJF@cluster0.iggc36l.mongodb.net/BigProject?retryWrites=true&w=majority";
 async function connectDB() {
     try {
         await mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
