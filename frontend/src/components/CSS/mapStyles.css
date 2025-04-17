@@ -556,4 +556,29 @@ body {
 
 /* section where i am putting the late changes to fix the erorrs in formatting when importing my code to gerberthegoat*/
 
+.my-p {
+  display: block;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  unicode-bidi: isolate;
+  color: #5e5e5e;
+}
+
+.my-h3 {
+    display: block;
+    font-size: 1.17em;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+    unicode-bidi: isolate;
+    color: #5e5e5e;
+}
+
+
+
+
 
