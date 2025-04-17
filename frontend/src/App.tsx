@@ -6,7 +6,7 @@ import AccountCreationPage from './pages/AccountCreationPage';
 import HomePage from './pages/HomePage';
 import Logout from './pages/LogoutPage';
 import TheGoat from './pages/TheGoatPage';
-import Map from './pages/MapPage';
+import MapPage from './pages/MapPage';
 
 function App() {
   return (
@@ -15,7 +15,7 @@ function App() {
         <Route path="/" element={<LoginPage />} />
         <Route path="/createAccount" element={<AccountCreationPage />} />
         <Route path="/home" element={<HomePage />} />
-        <Route path="/map" element={<Map />} />
+        <Route path="/map" element={<MapPage />} />
         <Route path="/logout" element={<Logout />} />
         <Route path="/secret" element={<TheGoat />} />
       </Routes>
