@@ -164,26 +164,6 @@ const handleRatingChange = async (rating) => {
     return () => mapInstance.remove();
   }, []);
 
-    mapboxgl.accessToken = 'pk.eyJ1IjoibWljYWFsbGUiLCJhIjoiY203dHAwM2N1MXdpbjJsb240djF3cWVnMCJ9.lIqkPrRisBYi0eR9iBjMOQ';
-
-    const mapInstance = new mapboxgl.Map({
-      container: mapContainerRef.current,
-      style: 'mapbox://styles/mapbox/standard',
-      center: originalCenter,
-      pitch: 45,
-      zoom: 15.8,
-      maxBounds: [
-        [-81.2256, 28.58065],
-        [-81.1716, 28.62415],
-      ],
-    });
-
-    mapInstance.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
-    setMap(mapInstance);
-
-    return () => mapInstance.remove();
-  }, []);
-
 
 // this is the second mapbox instance made when the vending request popup is made. We probably need a third for the admin stuff
 useEffect(() => {
