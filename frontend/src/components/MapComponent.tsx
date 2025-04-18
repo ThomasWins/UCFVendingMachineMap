@@ -143,6 +143,30 @@ const handleRatingChange = async (rating) => {
 // basic setup for mapbox very important probably should put my accessToken in a .env file but idk how to
   useEffect(() => {
     if (!mapContainerRef.current) return;
+    document.body.style.margin = '0';
+    document.body.style.overflow = 'hidden';
+    document.body.style.padding = '0';
+    document.body.style.color = '#5e5e5e';
+
+    mapboxgl.accessToken = 'pk.eyJ1IjoibWljYWFsbGUiLCJhIjoiY203dHAwM2N1MXdpbjJsb240djF3cWVnMCJ9.lIqkPrRisBYi0eR9iBjMOQ';
+
+    const mapInstance = new mapboxgl.Map({
+      container: mapContainerRef.current,
+      style: 'mapbox://styles/mapbox/standard',
+      center: originalCenter,
+      pitch: 45,
+      zoom: 15.8,
+      maxBounds: [
+        [-81.2256, 28.58065],
+        [-81.1716, 28.62415],
+      ],
+    });
+
+    mapInstance.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
+    setMap(mapInstance);
+
+    return () => mapInstance.remove();
+  }, []);
 
     mapboxgl.accessToken = 'pk.eyJ1IjoibWljYWFsbGUiLCJhIjoiY203dHAwM2N1MXdpbjJsb240djF3cWVnMCJ9.lIqkPrRisBYi0eR9iBjMOQ';
 
