@@ -1,6 +1,7 @@
 #mapPage {
   margin: 0;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: hidden;
   padding: 0;
   color: #5e5e5e;
 }
