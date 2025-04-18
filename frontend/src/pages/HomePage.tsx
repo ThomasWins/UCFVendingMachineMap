@@ -9,7 +9,7 @@ return (
     <NavBar /> 
     <HomeBody />
     <div id="footerContainer">
-      <Footer id="footerSite" />
+      <Footer />
     </div>
   </div>
   );
