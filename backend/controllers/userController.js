@@ -87,6 +87,34 @@ exports.logoutUser = (req, res) => {
   });
 };
 
+exports.getUserProfile = async (req, res) => {
+
+  try {
+    // Obtain the userId as a parameter
+    const userId = req.params.userId;
+
+    // Find the user
+    const user = await User.findOne({ userId: parseInt(userId) }).select('login firstName lastName favorites');
+
+    // Throw an error if the user is not found
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    // Return the user's profile
+    res.status(200).json({
+      login: user.login,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      favorites: user.favorites,
+    });
+
+    // Catch any other errors.
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 exports.addFavorite = async (req, res) => {
   try {
     const { userId, vendingId } = req.body;
@@ -144,18 +172,18 @@ exports.submitVendingRequest = async (req, res) => {
   try {
     const { userId } = req.params;
     const { coordinates, description } = req.body;
-    
+
     // Validate input
     if (!coordinates || !description) {
       return res.status(400).json({ error: 'Coordinates and description are required' });
     }
-    
+
     // Find the user by userId
     const user = await User.findOne({ userId: parseInt(userId) });
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
     }
-    
+
     // Create a new vending machine request
     const request = new VendingRequest({
       userId: user.userId,
@@ -165,11 +193,11 @@ exports.submitVendingRequest = async (req, res) => {
       status: 'pending',
       submittedAt: new Date()
     });
-    
+
     await request.save();
-    return res.status(201).json({ 
+    return res.status(201).json({
       message: 'Vending machine request submitted successfully',
-      requestId: request._id 
+      requestId: request._id
     });
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -179,17 +207,17 @@ exports.submitVendingRequest = async (req, res) => {
 exports.getVendingRequests = async (req, res) => {
   try {
     const { userId } = req.params;
-    
+
     // Find the user and check if they're an admin
     const user = await User.findOne({ userId: parseInt(userId) });
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
     }
-    
+
     if (!user.admin) {
       return res.status(403).json({ error: 'Access denied' });
     }
-    
+
     // Get all pending requests
     const requests = await VendingRequest.find().sort({ submittedAt: -1 });
     return res.status(200).json({ requests });
@@ -202,26 +230,26 @@ exports.updateVendingRequest = async (req, res) => {
   try {
     const { userId, requestId } = req.params;
     const { status, adminComment } = req.body;
-    
+
     // Validate admin status
     const user = await User.findOne({ userId: parseInt(userId) });
     if (!user || !user.admin) {
       return res.status(403).json({ error: 'Access denied' });
     }
-    
+
     // Update request status
     const request = await VendingRequest.findById(requestId);
     if (!request) {
       return res.status(404).json({ error: 'Request not found' });
     }
-    
+
     request.status = status;
     request.adminComment = adminComment;
     request.processedAt = new Date();
     request.processedBy = user.userId;
-    
+
     await request.save();
-    return res.status(200).json({ 
+    return res.status(200).json({
       message: 'Vending request updated successfully'
     });
   } catch (error) {
@@ -233,26 +261,26 @@ exports.getUserContributions = async (req, res) => {
   try {
     const { userId } = req.params;
     const { status } = req.query; // Optional filter for approved/pending/rejected
-    
+
     // Validate user exists
     const user = await User.findOne({ userId: parseInt(userId) });
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
     }
-    
+
     // Build query to find user's contributions
     const query = { userId: parseInt(userId) };
-    
+
     // Add status filter if provided
     if (status) {
       query.status = status;
     }
-    
+
     // Retrieve the user's contributions
     const contributions = await VendingRequest.find(query)
       .sort({ submittedAt: -1 });
-    
-    return res.status(200).json({ 
+
+    return res.status(200).json({
       contributions,
       counts: {
         total: contributions.length,
