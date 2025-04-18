@@ -10,6 +10,7 @@ router.post('/logout', userController.logoutUser);
 
 // User's favorites
 router.post('/favorites/add', userController.addFavorite);
+router.get('/:userId/favorites', userController.retrieveFavorites);
 router.delete('/:userId/favorites/:vendingId', userController.removeFavorite);
 
 // User's profile

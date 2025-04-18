@@ -168,6 +168,30 @@ exports.removeFavorite = async (req, res) => {
   }
 };
 
+exports.retrieveFavorites = async (req, res) => {
+  try {
+    // Obtain the userId as a parameter
+    const userId = req.params.userId;
+
+    // Find the user
+    const user = await User.findOne({ userId: parseInt(userId) });
+
+    // Throw an error if the user is not found
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    // Retrieve favorite vending machines
+    const favoriteVendingMachines = await Vending.find({ id: { $in: user.favorites } })
+      .select('name building type');
+
+    // Return favorite vending machines
+    res.status(200).json(favoriteVendingMachines);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 exports.submitVendingRequest = async (req, res) => {
   try {
     const { userId } = req.params;
