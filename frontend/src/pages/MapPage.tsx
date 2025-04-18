@@ -4,7 +4,7 @@ import React from 'react';
 const MapPage: React.FC = () => {
 
 return (
-  <div>
+  <div id="mapPage">
     <MapComponent /> 
   </div>
   );

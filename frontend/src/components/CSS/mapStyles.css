@@ -1,7 +1,7 @@
-html,
-body {
+#mapPage {
   margin: 0;
-  overflow: hidden;
+  overflow-x: hidden !important;
+  overflow-y: hidden !important;
   padding: 0;
   color: #5e5e5e;
 }

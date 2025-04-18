@@ -1,9 +1,9 @@
-body {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  overflow-x: hidden;
-}
+#footerContainer {
+   width: 100vw;
+   overflow-x: hidden;
+   box-sizing: border-box;
+   position: relative;
+ }
 
 .footer {
   background-color: #222;
