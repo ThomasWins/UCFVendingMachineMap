@@ -101,15 +101,19 @@ exports.getUserProfile = async (req, res) => {
       return res.status(404).json({ error: 'User not found' });
     }
 
+    // Retrieve favorite vending machines
+    const favoriteVendingMachines = await Vending.find({ id: { $in: user.favorites } })
+      .select('name building type');
+
     // Return the user's profile
     res.status(200).json({
       login: user.login,
       firstName: user.firstName,
       lastName: user.lastName,
-      favorites: user.favorites,
+      favorites: favoriteVendingMachines,
     });
 
-    // Catch any other errors.
+    // Catch any other errors
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
