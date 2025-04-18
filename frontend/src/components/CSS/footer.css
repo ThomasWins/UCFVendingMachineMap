@@ -1,17 +1,8 @@
 #footerContainer {
   width: 100vw;
   overflow-x: hidden;
-}
-
-#footerSite {
-  background-color: #222;
-  color: white;
-  padding: 20px;
-  width: 100%;
-  position: relative;
-  bottom: 0;
-  left: 0;
   box-sizing: border-box;
+  position: relative;
 }
 
 .footer {
