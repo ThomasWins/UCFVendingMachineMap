@@ -8,9 +8,7 @@ return (
   <div>
     <NavBar /> 
     <HomeBody />
-    <div id="footerContainer">
-      <Footer />
-    </div>
+    <Footer />
   </div>
   );
 };
