@@ -228,3 +228,40 @@ exports.updateVendingRequest = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
+exports.getUserContributions = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const { status } = req.query; // Optional filter for approved/pending/rejected
+    
+    // Validate user exists
+    const user = await User.findOne({ userId: parseInt(userId) });
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    
+    // Build query to find user's contributions
+    const query = { userId: parseInt(userId) };
+    
+    // Add status filter if provided
+    if (status) {
+      query.status = status;
+    }
+    
+    // Retrieve the user's contributions
+    const contributions = await VendingRequest.find(query)
+      .sort({ submittedAt: -1 });
+    
+    return res.status(200).json({ 
+      contributions,
+      counts: {
+        total: contributions.length,
+        approved: contributions.filter(c => c.status === 'approved').length,
+        pending: contributions.filter(c => c.status === 'pending').length,
+        rejected: contributions.filter(c => c.status === 'rejected').length
+      }
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
