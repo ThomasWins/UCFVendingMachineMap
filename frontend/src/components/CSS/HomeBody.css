@@ -3,8 +3,6 @@
   display: flex;
   text-align: center;
   padding: 40px;
-   overflow-y: auto;
-  
 }
 
 #title {
