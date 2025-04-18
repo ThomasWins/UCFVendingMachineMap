@@ -5,10 +5,12 @@ import Footer from '../components/Footer';
 const HomePage = () => {
 
 return (
-  <div id="homeContainer">
+  <div>
     <NavBar /> 
     <HomeBody />
-    <Footer />
+    <div id="footerContainer>
+    <Footer id="footerSite" />
+    </div>
   </div>
   );
 };
