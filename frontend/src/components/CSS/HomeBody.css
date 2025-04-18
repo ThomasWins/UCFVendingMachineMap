@@ -1,10 +1,13 @@
 #container {
   flex-direction: column;
   display: flex;
-  overflow y:auto;
   text-align: center;
   padding: 40px;
   
+}
+
+html, body {
+    overflow-y: visible;
 }
 
 #title {
