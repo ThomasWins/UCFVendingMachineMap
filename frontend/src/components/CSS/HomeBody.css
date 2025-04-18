@@ -3,11 +3,8 @@
   display: flex;
   text-align: center;
   padding: 40px;
+   overflow-y: visible;
   
-}
-
-html, body {
-    overflow-y: visible;
 }
 
 #title {
