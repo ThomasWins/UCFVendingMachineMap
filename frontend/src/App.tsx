@@ -7,6 +7,7 @@ import HomePage from './pages/HomePage';
 import Logout from './pages/LogoutPage';
 import TheGoat from './pages/TheGoatPage';
 import MapPage from './pages/MapPage';
+import ProfilePage from './pages/ProfilePage';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/map" element={<MapPage />} />
         <Route path="/logout" element={<Logout />} />
         <Route path="/secret" element={<TheGoat />} />
+        <Route path="/profile" element={<ProfilePage/>} />
       </Routes>
     </Router>
   );

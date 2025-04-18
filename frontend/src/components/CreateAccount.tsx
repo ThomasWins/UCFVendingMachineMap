@@ -57,9 +57,12 @@ function Register() {
       alert(error.toString());
     }
   }
+  const sendToLogin = () => {
+    navigate('../');
+  };
 
   return (
-    <div id="loginDiv">
+    <div id="createDiv">
       <span id="inner-title">CREATE AN ACCOUNT</span><br />
       <input
       type="text"
@@ -102,7 +105,9 @@ function Register() {
         onClick={doCreateAccount}  // implement this backend
       />
       <span id="loginResult">{message}</span>
-      <a href="./" id="Login">Already have an Account?</a>
+      <button id="loginButton" className="signUpButton" onClick={sendToLogin}>
+        Already have an account? Log in
+      </button>
     </div>
   );
 }

@@ -1,21 +1,26 @@
+import React, { useState } from 'react';
 import PageTitle from '../components/PageTitle.tsx';
 import Login from '../components/Login.tsx';
-import IMAGE from '../assets/imagetrial2.png';
+import IMAGE from '../assets/vendingmachinetrial.jpg';
+import CreateAccount from '../components/CreateAccount.tsx';
+import '../components/CSS/LoginPage.css';
+import '../components/CSS/PageTitle.css';
 
-const LoginPage = () =>
-{
+const LoginPage = () => {
 
-    return(
-      <div id="LoginBody">
-        <img
-        src={IMAGE}
-        alt="Login Visual"
-        style={{ width: '200px', margin: '20px auto', display: 'block' }}
-        />
-        <PageTitle />
-        <Login />
-      </div>
-    );
-};
-
+  return (
+    <div id="LoginBody">
+  <div className="container">
+    <div className="left">
+      <img src={IMAGE} alt="Login visual" />
+    </div>
+    <div id="loginForm">
+      <PageTitle />
+      <Login />
+    </div>
+  </div>
+</div>
+  );
+  }
 export default LoginPage;
+

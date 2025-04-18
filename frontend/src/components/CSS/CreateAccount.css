@@ -1,0 +1,37 @@
+#createDiv {
+    width: 300px;
+    margin: 50px auto;
+    padding: 30px;
+    background-color: #f5f5f5;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  #inner-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    display: block;
+  }
+  
+  #createDiv input[type="text"],
+  #createDiv input[type="password"] {
+    width: 90%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+  }
+  
+  #loginButton {
+    background-color: #007bff;
+    color: white;
+    padding: 10px;
+    width: 100%;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: all 0.3s ease;
+  }

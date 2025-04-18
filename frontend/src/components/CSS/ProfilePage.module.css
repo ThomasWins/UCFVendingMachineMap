@@ -1,0 +1,49 @@
+.container {
+    display: flex;
+    padding: 1rem;
+    max-width: 900px;
+    margin: auto;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background-color: #fafafa;
+    height: 100vh;
+  }
+  
+  .leftPanel {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .profileImage {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ccc;
+  }
+  
+  .rightPanel {
+    align-content: center;
+    flex: 2;
+    padding-left: 2rem;
+    
+  }
+  
+  .menu {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .menu li {
+    padding: 0.5rem 0;
+    cursor: pointer;
+    font-weight: 500;
+    color: #333;
+  }
+  
+  .menu li:hover {
+    color: #007bff;
+  }
+  

@@ -1,5 +1,13 @@
-#LoginBody {
-  justify-content: center;
-  text-align: center;
-  margin: auto;
+
+@import url('https://fonts.googleapis.com/css2?family=Winky+Rough:ital,wght@0,300..900;1,300..900&display=swap');
+
+
+.title {
+  font-family: "Winky Rough", sans-serif;
+  font-optical-sizing: auto;
+  font-size: 3.5rem;
+  font-weight: 400;
+  font-style: normal;
+  color:black;
 }
+

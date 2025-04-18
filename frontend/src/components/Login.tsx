@@ -54,11 +54,14 @@ function Login() {
       setMessage(error.message || 'An error occurred during login. Please try again.');
     }
   }
+  const sendToSignup = () => {
+    navigate('/createAccount');
+  };
 
   return (
     <div id="loginDiv">
       <a href="./home" id="createAccount">TEMP Home Page</a>
-      <span id="inner-title">PLEASE LOG IN</span><br />
+      <span id="inner-title">LOG IN</span><br />
       <form onSubmit={doLogin}>
         <input
           type="text"
@@ -73,6 +76,7 @@ function Login() {
           placeholder="Password"
           value={loginPassword}
           onChange={(e) => setPassword(e.target.value)}
+          
         />
         <input
           type="submit"
@@ -81,7 +85,9 @@ function Login() {
           value="Login"
         />
       </form>
-      <a href="./createAccount" id="createAccount">Sign Up</a>
+      <button id="loginButton" className="signUpButton" onClick={sendToSignup}>
+        Sign Up
+      </button>
       <span id="loginResult">{message}</span>
     </div>
   );
