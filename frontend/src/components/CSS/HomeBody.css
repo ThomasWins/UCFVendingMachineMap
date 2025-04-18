@@ -1,6 +1,7 @@
 #container {
   flex-direction: column;
   display: flex;
+  overflow y:auto;
   text-align: center;
   padding: 40px;
   
