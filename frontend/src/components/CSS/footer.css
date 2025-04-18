@@ -1,10 +1,8 @@
-#footer {
+.footer body {
   margin: 0;
   padding: 0;
-}
-#footer * {
-  overflow-x: hidden;
   box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 .footer {
