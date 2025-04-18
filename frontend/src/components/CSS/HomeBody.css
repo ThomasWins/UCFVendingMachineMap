@@ -102,14 +102,14 @@ html {
   margin-top: 10px;
   font-family: Cera pro, Trebuchet MS, sans-serif;
 }
-h3 {
+#aboutContainer h3 {
   font-size: 2rem;
   font-weight: bold;
   margin-top: 10px;
   font-family: Cera pro, Trebuchet MS, sans-serif;
 }
 
-p {
+#aboutContainer p {
   color: #959595; /* light grey */
   font-size: 1.5rem;
   letter-spacing: -.01em;
