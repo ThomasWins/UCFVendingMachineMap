@@ -35,7 +35,7 @@ interface MapComponentProps {
 }
 
 // set up all of the things that will be changed i.e checks for popups (mostly)
-const MapComponent = () => {
+const MapComponent = ({ isVendingRequestPopupOpen: initialPopupOpen }: MapComponentProps) => {
   const mapContainerRef = useRef<HTMLDivElement | null>(null);
   const [map, setMap] = useState<mapboxgl.Map | null>(null);
   const [isTilted, setIsTilted] = useState<boolean>(true);
@@ -76,7 +76,11 @@ const MapComponent = () => {
 
   const [vendingData, setVendingData] = useState([]);
 
-
+useEffect(() => {
+    // Set the local state based on the initial prop
+    setIsVendingRequestPopupOpen(initialPopupOpen);
+}, [initialPopupOpen]);
+  
 // does some api stuff idk im frontend
 useEffect(() => {
   fetch('https://gerberthegoat.com/api/vending')
