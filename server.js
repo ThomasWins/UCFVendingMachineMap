@@ -19,8 +19,6 @@ async function connectDB() {
 
 connectDB();
 
-app.set('trust proxy', 1);
-
 app.use(cors({
     origin: 'https://gerberthegoat.com',
     credentials: true
