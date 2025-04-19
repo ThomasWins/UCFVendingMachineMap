@@ -280,6 +280,11 @@ useEffect(() => {
   }
 }, [selectedVending, currentUserId]);
 
+useEffect(() => {
+  if (location.state?.openPopup) {
+    setIsVendingRequestPopupOpen(true);
+  }
+}, [location.state]);
 
 useEffect(() => {
     if (map && vendingData.length > 0) {
