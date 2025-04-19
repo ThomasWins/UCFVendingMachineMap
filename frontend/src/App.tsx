@@ -14,8 +14,7 @@ function App() {
   return (
     <Router >
       <Routes>
-        <Route path="/" element={<HomePage />} /> {/* Changed to HomePage */}
-        <Route path="/login" element={<LoginPage />} /> {/* Added login route */}
+        <Route path="/" element={<LoginPage />} />
         <Route path="/createAccount" element={<AccountCreationPage />} />
         <Route path="/home" element={<HomePage />} />
         <Route path="/map" element={<MapPage />} />
