@@ -35,7 +35,7 @@ interface MapComponentProps {
 }
 
 // set up all of the things that will be changed i.e checks for popups (mostly)
-const MapComponent = ({isVendingRequestPopupOpen}) => {
+const MapComponent = () => {
   const mapContainerRef = useRef<HTMLDivElement | null>(null);
   const [map, setMap] = useState<mapboxgl.Map | null>(null);
   const [isTilted, setIsTilted] = useState<boolean>(true);
