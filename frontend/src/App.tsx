@@ -8,6 +8,7 @@ import Logout from './pages/LogoutPage';
 import TheGoat from './pages/TheGoatPage';
 import MapPage from './pages/MapPage';
 import ProfilePage from './pages/ProfilePage';
+import AdminPage from './pages/AdminPage';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/logout" element={<Logout />} />
         <Route path="/secret" element={<TheGoat />} />
         <Route path="/profile" element={<ProfilePage/>} />
+        <Route path="/admin" element={<AdminPage/>} />
       </Routes>
     </Router>
   );
