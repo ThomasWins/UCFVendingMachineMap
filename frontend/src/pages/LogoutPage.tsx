@@ -17,7 +17,7 @@ const Logout: React.FC = () => {
 
         if (res.ok) {
           localStorage.removeItem('user_data');
-          navigate('/');
+          navigate('/home');
         } else {
           console.error('Logout failed');
         }
