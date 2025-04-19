@@ -47,6 +47,20 @@
     transition: all 0.3s ease;
 }
 
+#mapButton2 {
+  display: block;          
+  margin: 30px auto 0;     
+  padding: 12px 24px;
+  font-size: 1.2rem;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+
 #contributionButton {
   width: auto;
     margin-right: auto;
@@ -62,33 +76,19 @@
     transition: all 0.3s ease;
 }
 
-#loginButton2 {
-  width: auto;
-    margin-right: auto;
-    margin-left: 5px;
-    padding: 12px 24px;
-    font-size: 1.2rem;
-    background-color: #38bb38;
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    margin-top: 30px;
-    transition: all 0.3s ease;
-}
 
 #mapButton:hover {
   background-color: #0056b3;
   transform: scale(1.05);
 }
 
-#contributionButton:hover {
-  background-color: #50575e;
+#mapButton2:hover {
+  background-color: #0056b3;
   transform: scale(1.05);
 }
 
-#loginButton2:hover {
-  background-color: green;
+#contributionButton:hover {
+  background-color: #50575e;
   transform: scale(1.05);
 }
 
