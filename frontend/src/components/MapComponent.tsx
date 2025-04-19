@@ -1,6 +1,7 @@
 import './CSS/mapStyles.css';
 import mapboxgl from 'mapbox-gl';
 import { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 // map styles imports (basically what allows us to change between maps)
 import sataliteImage from './photos/satalite.png';
