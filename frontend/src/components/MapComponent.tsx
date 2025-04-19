@@ -115,7 +115,8 @@ const renderMarkers = (mapInstance: mapboxgl.Map) => {
     }
   });
 };
-
+const navigate = useNavigate();
+  
 const goHome = () => {
     navigate('/home');
   };
