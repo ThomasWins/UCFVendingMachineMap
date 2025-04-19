@@ -23,16 +23,17 @@ const NavBar: React.FC = () => {
       <ul className="navbar-links">
         <li><a href="/home#">Home</a></li>
         <li><a href="/home#aboutContainer">About</a></li>
-        <li id="machine"><Link to="/map" state={{ openPopup: true }}>Add Machine</Link></li>
 
         {isLoggedIn ? (
           <>
+            <li id="machine"><Link to="/map" state={{ openPopup: true }}>Add Machine</Link></li>
             <li><Link to="/profile">Profile</Link></li>
             <li className="separator">|</li> {/* separator bar */}
             <li><Link to="/logout">Logout</Link></li>
           </>
         ) : (
           <>
+            <li id="machine"><Link to="/">Add Machine</Link></li>
             <li><Link to="/">Login</Link></li>
             <li className="separator">|</li> {/* separator bar */}
             <li id="last"><Link to="/createAccount">Sign Up</Link></li>
