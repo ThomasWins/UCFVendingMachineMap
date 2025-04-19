@@ -23,7 +23,7 @@ const Footer: React.FC = () => {
 
         <div className="footer-section">
           <h4>Contact</h4>
-          <p>Email: contact@ucfvending.com</p>
+          <p>Email: FakeEmail@vending.com</p>
         </div>
 
         <div className="footer-section social-icons">
@@ -37,6 +37,7 @@ const Footer: React.FC = () => {
 
       <div className="footer-bottom">
         <p>&copy; {new Date().getFullYear()} UCF Vending Locator. All rights reserved.</p>
+        <p>Disclaimer: We are not at all affiliated with UCF.</p>
       </div>
     </footer>
   );
