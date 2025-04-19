@@ -84,9 +84,6 @@ exports.loginUser = async (req, res) => {
 };
 
 exports.logoutUser = (req, res) => {
-  if (!req.session.user) {
-    return res.status(200).json({ message: 'No active session to log out of.' });
-  }
 
   req.session.destroy((err) => {
     if (err) {
