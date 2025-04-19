@@ -62,6 +62,21 @@
     transition: all 0.3s ease;
 }
 
+#loginButton {
+  width: auto;
+    margin-right: auto;
+    margin-left: 5px;
+    padding: 12px 24px;
+    font-size: 1.2rem;
+    background-color: lime;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 30px;
+    transition: all 0.3s ease;
+}
+
 #mapButton:hover {
   background-color: #0056b3;
   transform: scale(1.05);
@@ -69,6 +84,11 @@
 
 #contributionButton:hover {
   background-color: #50575e;
+  transform: scale(1.05);
+}
+
+#loginButton:hover {
+  background-color: green;
   transform: scale(1.05);
 }
 
