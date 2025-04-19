@@ -32,7 +32,7 @@ const HomeBody = () => {
   }
 
   return (
-    <div id="container" classname="home-page-des">
+    <div id="container" className="home-page-des">
       <h1 id="title">Vending Machine UCF Map</h1>
       <h2 id="description">Displays the locations of vending machines across the UCF campus, helping students and visitors easily find snacks and drinks nearby.</h2>
       <video
