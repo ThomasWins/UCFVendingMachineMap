@@ -7,6 +7,7 @@ const HomeBody = () => {
   const navigate = useNavigate();
 
   const goToMap = () => {
+    window.scrollTo(0, 0);
     navigate('/map');
   };
 
