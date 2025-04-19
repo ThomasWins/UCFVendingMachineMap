@@ -28,12 +28,12 @@ const NavBar: React.FC = () => {
         {isLoggedIn ? (
           <>
             <li><Link to="/profile">Profile</Link></li>
-            <li><Link to="/logout">Logout</Link></li>
+            <li id="last"><Link to="/logout">Logout</Link></li>
           </>
         ) : (
           <>
             <li><Link to="/">Login</Link></li>
-            <li><Link to="/createAccount">Sign Up</Link></li>
+            <li id="last"><Link to="/createAccount">Sign Up</Link></li>
           </>
         )}
       </ul>
