@@ -64,6 +64,11 @@ exports.loginUser = async (req, res) => {
 
     console.log("Mapped userData:", req.session.user); // Log the mapped data before sending
 
+    res.cookie('session_id', req.sessionID, {
+      httpOnly: true,
+      secure: false
+    });
+
     // Return user data on successful login
     res.status(200).json({
       success: true,
@@ -82,7 +87,7 @@ exports.logoutUser = (req, res) => {
       return res.status(500).json({ error: 'Logout failed' });
     }
 
-    res.clearCookie('connect.sid');
+    res.clearCookie('session_id');
     res.status(200).json({ message: 'Logged out successfully' });
   });
 };
