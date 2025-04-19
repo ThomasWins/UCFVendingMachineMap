@@ -15,6 +15,18 @@ const HomeBody = () => {
     navigate('/profile/contributions');
   }
 
+  const _ud = localStorage.getItem('user_data');
+  let isLoggedIn = false;
+
+  try {
+    const userData = _ud ? JSON.parse(_ud) : null; 
+    if (userData && userData.id) {
+      isLoggedIn = true;
+    }
+  } catch (e) {
+    console.error("Error parsing user_data:", e);
+  }
+
   return (
     <div id="container">
       <h1 id="title">Vending Machine UCF Map</h1>
@@ -30,8 +42,19 @@ const HomeBody = () => {
       />
 
       <div id="buttons-row">
-        <button onClick={goToMap} id="mapButton">Go to the Map</button>
-        <button onClick={goToContributions} id="contributionButton">Your Contributions</button>
+
+        {isLoggedIn ? (
+          <>
+            <button onClick={goToMap} id="mapButton">Go to the Map</button>
+            <button onClick={goToContributions} id="contributionButton">Your Contributions</button>
+          </>
+        ) : (
+          <>
+            <button onClick={goToMap} id="mapButton">Go to the Map</button>
+            <button onClick={navigate('/')} id="contributionButton">Login</button>
+          </>
+        )}
+        
       </div>
       
 
