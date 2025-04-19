@@ -30,8 +30,12 @@ import {
   countRatings,
 } from './mapStdlib';
 
+interface MapComponentProps {
+  isVendingRequestPopupOpen: boolean;
+}
+
 // set up all of the things that will be changed i.e checks for popups (mostly)
-const MapComponent = () => {
+const MapComponent = ({isVendingRequestPopupOpen}) => {
   const mapContainerRef = useRef<HTMLDivElement | null>(null);
   const [map, setMap] = useState<mapboxgl.Map | null>(null);
   const [isTilted, setIsTilted] = useState<boolean>(true);
