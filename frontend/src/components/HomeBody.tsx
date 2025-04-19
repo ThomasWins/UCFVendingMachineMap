@@ -54,8 +54,7 @@ const HomeBody = () => {
           </>
         ) : (
           <>
-            <button onClick={goToMap} id="mapButton">Go to the Map</button>
-            <button onClick={goToLogin} id="loginButton2">Login/Signup</button>
+            <button onClick={goToMap} id="mapButton2">Go to the Map</button>
           </>
         )}
         
