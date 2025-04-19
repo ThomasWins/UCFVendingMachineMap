@@ -28,11 +28,13 @@ const NavBar: React.FC = () => {
         {isLoggedIn ? (
           <>
             <li><Link to="/profile">Profile</Link></li>
-            <li id="last"><Link to="/logout">Logout</Link></li>
+            <li className="separator">|</li> {/* separator bar */}
+            <li><Link to="/logout">Logout</Link></li>
           </>
         ) : (
           <>
             <li><Link to="/">Login</Link></li>
+            <li className="separator">|</li> {/* separator bar */}
             <li id="last"><Link to="/createAccount">Sign Up</Link></li>
           </>
         )}
