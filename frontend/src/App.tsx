@@ -20,7 +20,6 @@ function App() {
         <Route path="/map" element={<MapPage />} />
         <Route path="/logout" element={<Logout />} />
         <Route path="/secret" element={<TheGoat />} />
-        <Route path="/profile" element={<ProfilePage/>} />
         <Route path="/admin" element={<AdminPage/>} />
       </Routes>
     </Router>
