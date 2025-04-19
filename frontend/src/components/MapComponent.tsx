@@ -174,7 +174,12 @@ const handleRatingChange = async (rating) => {
     setMap(mapInstance);
 
     return () => mapInstance.remove();
-  }, []);
+    // Reset scroll styles
+    document.body.style.overflow = 'auto';
+    document.body.style.margin = '';
+    document.body.style.padding = '';
+    document.body.style.color = '';
+    }, []);
 
 
 // this is the second mapbox instance made when the vending request popup is made. We probably need a third for the admin stuff
