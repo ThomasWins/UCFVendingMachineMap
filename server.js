@@ -19,7 +19,13 @@ async function connectDB() {
 
 connectDB();
 
-app.use(cors());
+app.set('trust proxy', 1);
+
+app.use(cors({
+    origin: 'https://gerberthegoat.com',
+    credentials: true
+}));
+
 app.use(bodyParser.json());
 
 // Session Configuration
@@ -27,16 +33,12 @@ app.use(session({
     secret: 'secret_key',
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: true }
+    cookie: {
+        secure: true,
+        httpOnly: true,
+        sameSite: 'none'
+    }
 }));
-
-// cors header setup
-app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE, OPTIONS');
-  next();
-});
 
 // Import routes
 const userRoutes = require('./backend/routes/userRoutes');

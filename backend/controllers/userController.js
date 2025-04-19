@@ -64,38 +64,44 @@ exports.loginUser = async (req, res) => {
 
     console.log("Mapped userData:", req.session.user); // Log the mapped data before sending
 
-    res.cookie('session_id', req.sessionID, {
-      httpOnly: true,
-      secure: false
-    });
+    // Save the session
+    req.session.save((err) => {
+      if (err) {
+        console.error("Session save error:", err);
+        return res.status(500).json({ error: 'Session save failed' });
+      }
 
-    // Return user data on successful login
-    res.status(200).json({
-      success: true,
-      user: req.session.user
+      res.status(200).json({
+        success: true,
+        user: req.session.user
+      });
     });
   } catch (error) {
     console.error("Login error:", error);
     res.status(500).json({ error: error.message });
-  }
+  }   
+
 };
 
 exports.logoutUser = (req, res) => {
-
-  // Check if there's an active session
   if (!req.session.user) {
     return res.status(200).json({ message: 'No active session to log out of.' });
   }
 
-  // Terminate the session, handle any error that might occur
   req.session.destroy((err) => {
     if (err) {
       console.error('Logout failed:', err);
       return res.status(500).json({ error: 'Logout failed' });
     }
 
-    // Clear the cookie and send a succesful message
-    res.clearCookie('session_id');
+    // Clear the actual session cookie
+    res.clearCookie('connect.sid', {
+      path: '/',
+      httpOnly: true,
+      secure: true,
+      sameSite: 'none'
+    });
+
     res.status(200).json({ message: 'Logged out successfully' });
   });
 };
