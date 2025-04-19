@@ -15,6 +15,10 @@ const HomeBody = () => {
     navigate('/profile/contributions');
   }
 
+  const goToLogin = () => {
+    navigate('/');
+  }
+
   const _ud = localStorage.getItem('user_data');
   let isLoggedIn = false;
 
@@ -51,6 +55,7 @@ const HomeBody = () => {
         ) : (
           <>
             <button onClick={goToMap} id="mapButton">Go to the Map</button>
+            <button onClick={goToLogin} id="loginButton">Login/Signup</button>
           </>
         )}
         
