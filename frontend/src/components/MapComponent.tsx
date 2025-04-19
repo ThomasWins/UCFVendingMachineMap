@@ -115,7 +115,9 @@ const renderMarkers = (mapInstance: mapboxgl.Map) => {
   });
 };
 
-
+const goHome = () => {
+    navigate('/home');
+  };
 
 // set the rating for the user if it is changed this now works when clicking on stars!
 const handleRatingChange = async (rating) => {
@@ -619,7 +621,7 @@ return (
           Submit Vending Request
         </p>
         <p className="menu-link">Admin Portal</p>
-        <p className="menu-link">About</p>
+        <p className="menu-link" onClick={goHome} >Home</p>
       </div>
     </div>
     {/* this is for the popup for submitting a new vending machine request, I personally thought the popup-backdrop filter on the background was really cool*/}
