@@ -6,11 +6,14 @@ import '../components/CSS/PageTitle.css';
 import '../components/CSS/Login.css';
 import '../components/CSS/CreateAccount.css';
 import '../components/CSS/createPage.css';
+import NavBar from '../components/NavBar.tsx';
+import Footer from '../components/Footer.tsx';
 
 const LoginPage = () => {
 
   return (
     <div id="LoginBody">
+      <NavBar />
   <div className="container">
     <div className="left">
       <img src={IMAGE} alt="Login visual" />
@@ -20,6 +23,7 @@ const LoginPage = () => {
       <CreateAccount />
     </div>
   </div>
+  <Footer />
 </div>
   );
   }
