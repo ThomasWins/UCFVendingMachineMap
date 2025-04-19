@@ -62,7 +62,7 @@
     transition: all 0.3s ease;
 }
 
-#loginButton {
+#loginButton2 {
   width: auto;
     margin-right: auto;
     margin-left: 5px;
@@ -87,7 +87,7 @@
   transform: scale(1.05);
 }
 
-#loginButton:hover {
+#loginButton2:hover {
   background-color: green;
   transform: scale(1.05);
 }
