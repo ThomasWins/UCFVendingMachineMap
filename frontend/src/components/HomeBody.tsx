@@ -51,7 +51,6 @@ const HomeBody = () => {
         ) : (
           <>
             <button onClick={goToMap} id="mapButton">Go to the Map</button>
-            <button onClick={navigate('/')} id="contributionButton">Login</button>
           </>
         )}
         
