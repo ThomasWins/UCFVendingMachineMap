@@ -36,8 +36,7 @@ const Footer: React.FC = () => {
       </div>
 
       <div className="footer-bottom">
-        <p>&copy; {new Date().getFullYear()} UCF Vending Locator. All rights reserved.</p>
-        <p>Disclaimer: We are not at all affiliated with UCF.</p>
+        <p>&copy; {new Date().getFullYear()} UCF Vending Locator. All rights reserved.    Disclaimer: We are not at all affiliated with UCF</p>
       </div>
     </footer>
   );
