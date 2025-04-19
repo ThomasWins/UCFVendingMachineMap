@@ -1,71 +1,105 @@
 import React, { useEffect, useState } from 'react';
 
-interface VendingRequest {
+type RequestType = {
   _id: string;
   userId: number;
   userLogin: string;
-  coordinates: { latitude: number; longitude: number };
+  coordinates: {
+    latitude: number;
+    longitude: number;
+  };
   description: string;
-  status: string;
+  status: 'pending' | 'approved' | 'rejected';
   submittedAt: string;
   adminComment?: string;
-}
+};
 
 const AdminPage: React.FC = () => {
-  const [requests, setRequests] = useState<VendingRequest[]>([]);
-  const [comments, setComments] = useState<{ [key: string]: string }>({});
+  const [requests, setRequests] = useState<RequestType[]>([]);
+  const [userId, setUserId] = useState<number | null>(null); // Set this with session or props
+  const [error, setError] = useState('');
+  const [commentMap, setCommentMap] = useState<{ [key: string]: string }>({});
 
-  // Fetch requests from backend
   useEffect(() => {
-    fetch('/api/vending-requests')
-      .then(res => res.json())
-      .then(data => setRequests(data))
-      .catch(err => console.error('Error fetching requests:', err));
+    // Mock userId for testing. Replace this with session storage or prop
+    const storedUser = sessionStorage.getItem('user');
+    if (storedUser) {
+      const parsedUser = JSON.parse(storedUser);
+      setUserId(parsedUser.userId);
+    }
   }, []);
 
-  const handleCommentChange = (id: string, comment: string) => {
-    setComments(prev => ({ ...prev, [id]: comment }));
-  };
+  useEffect(() => {
+    if (userId !== null) {
+      fetch(`/api/vending-requests/${userId}`)
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.requests) setRequests(data.requests);
+          else setError(data.error || 'Could not fetch requests');
+        })
+        .catch((err) => setError(err.message));
+    }
+  }, [userId]);
 
-  const handleUpdate = (id: string, status: string) => {
-    fetch(`/api/vending-requests/${id}`, {
-      method: 'PATCH',
+  const handleDecision = async (requestId: string, status: 'approved' | 'rejected') => {
+    const comment = commentMap[requestId] || '';
+    const res = await fetch(`/api/vending-requests/${userId}/${requestId}`, {
+      method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        status,
-        adminComment: comments[id] || '',
-        processedBy: 999, // Replace with actual admin ID if needed
-      }),
-    })
-      .then(res => res.json())
-      .then(updated => {
-        setRequests(prev =>
-          prev.map(r => (r._id === updated._id ? updated : r))
-        );
-      })
-      .catch(err => console.error('Error updating request:', err));
+      body: JSON.stringify({ status, adminComment: comment }),
+    });
+
+    const data = await res.json();
+    if (res.ok) {
+      // Refresh the request list
+      setRequests((prev) =>
+        prev.map((req) =>
+          req._id === requestId
+            ? { ...req, status, adminComment: comment, processedAt: new Date().toISOString() }
+            : req
+        )
+      );
+    } else {
+      alert(data.error || 'Failed to update request');
+    }
   };
+
+  if (error) return <div>Error: {error}</div>;
 
   return (
     <div className="admin-page">
-      <h2>Vending Machine Requests</h2>
-      {requests.map(req => (
-        <div key={req._id} className="request-card">
-          <p><strong>User:</strong> {req.userLogin}</p>
-          <p><strong>Description:</strong> {req.description}</p>
-          <p><strong>Status:</strong> {req.status}</p>
-          <p><strong>Location:</strong> ({req.coordinates.latitude}, {req.coordinates.longitude})</p>
-          <textarea
-            placeholder="Admin comment"
-            value={comments[req._id] || ''}
-            onChange={(e) => handleCommentChange(req._id, e.target.value)}
-          />
-          <button onClick={() => handleUpdate(req._id, 'approved')}>Approve</button>
-          <button onClick={() => handleUpdate(req._id, 'rejected')}>Reject</button>
-        </div>
-      ))}
+      <h1>Admin Panel - Vending Machine Requests</h1>
+      {requests.length === 0 ? (
+        <p>No vending requests found.</p>
+      ) : (
+        <ul>
+          {requests.map((req) => (
+            <li key={req._id} style={{ border: '1px solid #ccc', marginBottom: '10px', padding: '10px' }}>
+              <p><strong>User:</strong> {req.userLogin} (ID: {req.userId})</p>
+              <p><strong>Description:</strong> {req.description}</p>
+              <p><strong>Coordinates:</strong> ({req.coordinates.latitude}, {req.coordinates.longitude})</p>
+              <p><strong>Status:</strong> {req.status}</p>
+              {req.status === 'pending' && (
+                <>
+                  <textarea
+                    placeholder="Add admin comment..."
+                    value={commentMap[req._id] || ''}
+                    onChange={(e) =>
+                      setCommentMap({ ...commentMap, [req._id]: e.target.value })
+                    }
+                    style={{ width: '100%', marginBottom: '10px' }}
+                  />
+                  <button onClick={() => handleDecision(req._id, 'approved')}>Approve</button>
+                  <button onClick={() => handleDecision(req._id, 'rejected')} style={{ marginLeft: '10px' }}>Reject</button>
+                </>
+              )}
+              {req.adminComment && <p><strong>Admin Comment:</strong> {req.adminComment}</p>}
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };
