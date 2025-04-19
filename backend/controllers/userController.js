@@ -3,6 +3,7 @@ const User = require('../models/userModel');
 const Vending = require('../models/vendingModel');
 const VendingRequest = require('../models/vendingRequestModel');
 
+// User Registration
 exports.registerUser = async (req, res) => {
   try {
     const { login, password, userId, firstName, lastName, admin, favorites } = req.body;
@@ -35,6 +36,7 @@ exports.registerUser = async (req, res) => {
   }
 };
 
+// User Login
 exports.loginUser = async (req, res) => {
   try {
     const { login, password } = req.body;
@@ -83,6 +85,7 @@ exports.loginUser = async (req, res) => {
 
 };
 
+// User Logout
 exports.logoutUser = (req, res) => {
 
   req.session.destroy((err) => {
@@ -103,6 +106,7 @@ exports.logoutUser = (req, res) => {
   });
 };
 
+// Retrieve User's Profile
 exports.getUserProfile = async (req, res) => {
 
   try {
@@ -135,6 +139,7 @@ exports.getUserProfile = async (req, res) => {
   }
 };
 
+// User can add favorite vending machines
 exports.addFavorite = async (req, res) => {
   try {
     const { userId, vendingId } = req.body;
@@ -164,6 +169,7 @@ exports.addFavorite = async (req, res) => {
   }
 };
 
+// User can remove favorite vending machines
 exports.removeFavorite = async (req, res) => {
   try {
     const { userId, vendingId } = req.params;
@@ -188,6 +194,7 @@ exports.removeFavorite = async (req, res) => {
   }
 };
 
+// User can retrieve favorite vending machines
 exports.retrieveFavorites = async (req, res) => {
   try {
     // Obtain the userId as a parameter
@@ -212,6 +219,7 @@ exports.retrieveFavorites = async (req, res) => {
   }
 };
 
+// User can submit a vending machine to be added to the map
 exports.submitVendingRequest = async (req, res) => {
   try {
     const { userId } = req.params;
@@ -248,6 +256,7 @@ exports.submitVendingRequest = async (req, res) => {
   }
 };
 
+// Admin can view active vending machine requests
 exports.getVendingRequests = async (req, res) => {
   try {
     const { userId } = req.params;
@@ -270,6 +279,7 @@ exports.getVendingRequests = async (req, res) => {
   }
 };
 
+// Admin can update the status of the vending machine requests
 exports.updateVendingRequest = async (req, res) => {
   try {
     const { userId, requestId } = req.params;
@@ -301,6 +311,7 @@ exports.updateVendingRequest = async (req, res) => {
   }
 };
 
+// User can view their contributions to the map
 exports.getUserContributions = async (req, res) => {
   try {
     const { userId } = req.params;
