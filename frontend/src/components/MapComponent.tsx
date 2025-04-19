@@ -1,6 +1,6 @@
 import './CSS/mapStyles.css';
 import mapboxgl from 'mapbox-gl';
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 // map styles imports (basically what allows us to change between maps)
 import sataliteImage from './photos/satalite.png';
@@ -30,12 +30,8 @@ import {
   countRatings,
 } from './mapStdlib';
 
-interface MapComponentProps {
-  isVendingRequestPopupOpen: boolean;
-}
-
 // set up all of the things that will be changed i.e checks for popups (mostly)
-const MapComponent: React.FC<MapComponentProps> = ({ isVendingRequestPopupOpen }) => {
+const MapComponent = () => {
   const mapContainerRef = useRef<HTMLDivElement | null>(null);
   const [map, setMap] = useState<mapboxgl.Map | null>(null);
   const [isTilted, setIsTilted] = useState<boolean>(true);
@@ -48,7 +44,7 @@ const MapComponent: React.FC<MapComponentProps> = ({ isVendingRequestPopupOpen }
   const [selectedVending, setSelectedVending] = useState<any | null>(null); // Add state for selected vending machine
 
   const [isVendingPopupOpen, setIsVendingPopupOpen] = useState<boolean>(false); // State for vending popup visibility
-  const [isVendingRequestPopupOpen, setIsVendingRequestPopupOpen] = React.useState(isVendingRequestPopupOpen);
+  const [isVendingRequestPopupOpen, setIsVendingRequestPopupOpen] = useState(false);
 
   const requestMarkerRef = useRef<mapboxgl.Marker | null>(null);
   const [requestCoords, setRequestCoords] = useState<[number, number] | null>(null);
@@ -751,6 +747,12 @@ return (
 };
 
 export default MapComponent;
+
+
+
+
+
+
 
 
 
