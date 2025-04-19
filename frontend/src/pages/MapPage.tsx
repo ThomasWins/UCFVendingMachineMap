@@ -7,7 +7,7 @@ const MapPage: React.FC = () => {
   const [isVendingRequestPopupOpen, setIsVendingRequestPopupOpen] = useState(false);
 
   useEffect(() => {
-    if (location.state && location.state.openPopup) {
+    if (location.state?.openPopup) {
       setIsVendingRequestPopupOpen(true);  // Open the popup when navigating from the "Add Machine" link
     }
   }, [location]);
