@@ -12,7 +12,7 @@
   font-family: Cera pro, Trebuchet MS, sans-serif;
 }
 
-#description {
+.home-page-des #description {
   color: #959595; // light grey
   font-size: 1.2rem;
   letter-spacing: -.01em;
