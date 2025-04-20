@@ -54,7 +54,6 @@ exports.loginUser = async (req, res) => {
       return res.status(401).json({ error: 'Invalid login credentials' });
     }
 
-    /*
     // Create a session for the user
     req.session.user = {
       userId: user._id || user.userId || user.UserId,
@@ -64,21 +63,21 @@ exports.loginUser = async (req, res) => {
       admin: user.admin || user.Admin || user.isAdmin || false,
       favorites: user.favorites || user.Favorites || []
     };
-    */
 
-    // Store userId in the session
-    req.session.userId = user.userId;
+    console.log("Mapped userData:", req.session.user); // Log the mapped data before sending
 
-    res.status(200).json({
-      success: true,
-      userId: user.userId,
-      login: user.login,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      admin: user.admin,
-      favorites: user.favorites,
+    // Save the session
+    req.session.save((err) => {
+      if (err) {
+        console.error("Session save error:", err);
+        return res.status(500).json({ error: 'Session save failed' });
+      }
+
+      res.status(200).json({
+        success: true,
+        user: req.session.user
+      });
     });
-
   } catch (error) {
     console.error("Login error:", error);
     res.status(500).json({ error: error.message });
@@ -88,13 +87,14 @@ exports.loginUser = async (req, res) => {
 
 // User Logout
 exports.logoutUser = (req, res) => {
+
   req.session.destroy((err) => {
     if (err) {
       console.error('Logout failed:', err);
       return res.status(500).json({ error: 'Logout failed' });
     }
 
-    // Clear the session cookie
+    // Clear the actual session cookie
     res.clearCookie('connect.sid', {
       path: '/',
       httpOnly: true,
@@ -108,16 +108,13 @@ exports.logoutUser = (req, res) => {
 
 // Retrieve User's Profile
 exports.getUserProfile = async (req, res) => {
-  try {
-    // Obtain the userId from the session
-    const userId = req.session.userId;
 
-    if (!userId) {
-      return res.status(401).json({ error: 'User is not logged in' });
-    }
+  try {
+    // Obtain the userId as a parameter
+    const userId = req.params.userId;
 
     // Find the user
-    const user = await User.findOne({ userId }).select('login firstName lastName favorites');
+    const user = await User.findOne({ userId: parseInt(userId) }).select('login firstName lastName favorites');
 
     // Throw an error if the user is not found
     if (!user) {
@@ -135,6 +132,8 @@ exports.getUserProfile = async (req, res) => {
       lastName: user.lastName,
       favorites: favoriteVendingMachines,
     });
+
+    // Catch any other errors
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -143,12 +142,7 @@ exports.getUserProfile = async (req, res) => {
 // User can add favorite vending machines
 exports.addFavorite = async (req, res) => {
   try {
-    const userId = req.session.userId;
-    const { vendingId } = req.body;
-
-    if (!userId) {
-      return res.status(401).json({ error: 'User is not logged in' });
-    }
+    const { userId, vendingId } = req.body;
 
     // First let's check if the vendingId exists in our collection
     const vendingMachine = await Vending.findOne({ vendingId: parseInt(vendingId) });
@@ -157,12 +151,12 @@ exports.addFavorite = async (req, res) => {
     }
 
     // Find the user by their userId.
-    const user = await User.findOne({ userId });
+    const user = await User.findOne({ userId: parseInt(userId) });
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
     }
 
-    // Add the vending machine if it's not already a favorite
+    // Add the vending machine if it's not already a favorite.
     if (!user.favorites.includes(vendingId)) {
       user.favorites.push(vendingId);
       await user.save();
@@ -178,15 +172,10 @@ exports.addFavorite = async (req, res) => {
 // User can remove favorite vending machines
 exports.removeFavorite = async (req, res) => {
   try {
-    const userId = req.session.userId;
-    const { vendingId } = req.params;
-
-    if (!userId) {
-      return res.status(401).json({ error: 'User is not logged in' });
-    }
+    const { userId, vendingId } = req.params;
 
     // Find the user by their userId.
-    const user = await User.findOne({ userId });
+    const user = await User.findOne({ userId: parseInt(userId) });
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
     }
@@ -208,14 +197,11 @@ exports.removeFavorite = async (req, res) => {
 // User can retrieve favorite vending machines
 exports.retrieveFavorites = async (req, res) => {
   try {
-    const userId = req.session.userId;
-
-    if (!userId) {
-      return res.status(401).json({ error: 'User is not logged in' });
-    }
+    // Obtain the userId as a parameter
+    const userId = req.params.userId;
 
     // Find the user
-    const user = await User.findOne({ userId });
+    const user = await User.findOne({ userId: parseInt(userId) });
 
     // Throw an error if the user is not found
     if (!user) {
@@ -236,12 +222,8 @@ exports.retrieveFavorites = async (req, res) => {
 // User can submit a vending machine to be added to the map
 exports.submitVendingRequest = async (req, res) => {
   try {
-    const userId = req.session.userId;
+    const { userId } = req.params;
     const { coordinates, description } = req.body;
-
-    if (!userId) {
-      return res.status(401).json({ error: 'User is not logged in' });
-    }
 
     // Validate input
     if (!coordinates || !description) {
@@ -249,7 +231,7 @@ exports.submitVendingRequest = async (req, res) => {
     }
 
     // Find the user by userId
-    const user = await User.findOne({ userId });
+    const user = await User.findOne({ userId: parseInt(userId) });
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
     }
@@ -277,14 +259,10 @@ exports.submitVendingRequest = async (req, res) => {
 // Admin can view active vending machine requests
 exports.getVendingRequests = async (req, res) => {
   try {
-    const userId = req.session.userId;
-
-    if (!userId) {
-      return res.status(401).json({ error: 'Admin is not logged in' });
-    }
+    const { userId } = req.params;
 
     // Find the user and check if they're an admin
-    const user = await User.findOne({ userId });
+    const user = await User.findOne({ userId: parseInt(userId) });
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
     }
@@ -304,16 +282,11 @@ exports.getVendingRequests = async (req, res) => {
 // Admin can update the status of the vending machine requests
 exports.updateVendingRequest = async (req, res) => {
   try {
-    const userId = req.session.userId;
-    const { requestId } = req.params;
+    const { userId, requestId } = req.params;
     const { status, adminComment } = req.body;
 
-    if (!userId) {
-      return res.status(401).json({ error: 'Admin not logged in' });
-    }
-
     // Validate admin status
-    const user = await User.findOne({ userId });
+    const user = await User.findOne({ userId: parseInt(userId) });
     if (!user || !user.admin) {
       return res.status(403).json({ error: 'Access denied' });
     }
@@ -338,19 +311,14 @@ exports.updateVendingRequest = async (req, res) => {
   }
 };
 
-
 // User can view their contributions to the map
 exports.getUserContributions = async (req, res) => {
   try {
-    const userId = req.session.userId;
+    const { userId } = req.params;
     const { status } = req.query; // Optional filter for approved/pending/rejected
 
-    if (!userId) {
-      return res.status(401).json({ error: 'User is not logged in' });
-    }
-
     // Validate user exists
-    const user = await User.findOne({ userId });
+    const user = await User.findOne({ userId: parseInt(userId) });
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
     }
@@ -380,4 +348,3 @@ exports.getUserContributions = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
-
