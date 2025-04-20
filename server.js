@@ -4,6 +4,8 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
+const multer = require('multer');
+const upload = multer({ dest: 'uploads/' });
 
 const app = express();
 
