@@ -145,7 +145,7 @@ exports.addFavorite = async (req, res) => {
     const { userId, vendingId } = req.body;
 
     // First let's check if the vendingId exists in our collection
-    const vendingMachine = await Vending.findOne({ vendingId: parseInt(vendingId) });
+    const vendingMachine = await Vending.findOne({ id: parseInt(vendingId) });
     if (!vendingMachine) {
       return res.status(404).json({ error: 'Vending machine does not exist.' });
     }
