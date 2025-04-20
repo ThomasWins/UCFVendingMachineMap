@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const session = require('express-session');
+const cookieParser = require('cookie-parser');
 
 const app = express();
 
@@ -19,30 +20,35 @@ async function connectDB() {
 
 connectDB();
 
-app.use(cors({
-    origin: 'https://gerberthegoat.com',
-    credentials: true
-}));
-
+// Middleware
 app.use(bodyParser.json());
+app.use(cookieParser());
+
+// CORS Configuration
+const corsOptions = {
+    origin: 'https://gerberthegoat.com',
+    credentials: true,
+  };
+
+  app.use(cors(corsOptions));
 
 // Session Configuration
 app.use(session({
     secret: 'secret_key',
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
     cookie: {
         secure: true,
         httpOnly: true,
-        sameSite: 'none'
+        maxAge: 2 * 60 * 60 * 1000
     }
 }));
 
-// Import routes
+// Import Routes
 const userRoutes = require('./backend/routes/userRoutes');
 const vendingRoutes = require('./backend/routes/vendingRoutes');
 
-// Use routes
+// User and Vending Routes
 app.use('/api/users', userRoutes);
 app.use('/api/vending', vendingRoutes);
 
