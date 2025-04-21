@@ -131,6 +131,7 @@ exports.getUserProfile = async (req, res) => {
       firstName: user.firstName,
       lastName: user.lastName,
       favorites: favoriteVendingMachines,
+      userId: user.userId,
     });
 
     // Catch any other errors
