@@ -75,18 +75,38 @@ const MapComponent = ({ isVendingRequestPopupOpen: initialPopupOpen }: MapCompon
   const [userData, setUserData] = useState<any | null>(null);
   const [currentUserId, setCurrentUserId] = useState<string>('');
   const [currentUserName, setCurrentUserName] = useState<string>('');
-   
-    useEffect(() => {
+
+
+  //test to see if it works 
+   useEffect(() => {
+  const fetchFullUserData = async (userId: string) => {
+    try {
+      const response = await fetch(`https://gerberthegoat.com/api/users/${userId}`);
+
+      if (!response.ok) {
+        throw new Error('failed to get the user data');
+      }
+
+      const user_data = await response.json();
+
+      setUserData(user_data);
+      setCurrentUserId(user_data.userId.toString());
+      setCurrentUserName(`${user_data.firstName} ${user_data.lastName}`);
+    } catch (err: any) {
+      console.error('Error fetching user profile:', err.message);
+    }
+  };
 
   const storedUserData = localStorage.getItem('user_data');
 
   if (storedUserData) {
+    const localUser = JSON.parse(storedUserData);
 
-    const user = JSON.parse(storedUserData);
-
-    setUserData(user);
-    setCurrentUserId(user.userId.toString());
-    setCurrentUserName(`${user.firstName} ${user.lastName}`);
+    if (localUser?.userId) {
+      fetchFullUserData(localUser.userId.toString());
+    } else {
+      console.error('userId not found in stored user_data');
+    }
   } else {
     console.error('User data not found in localStorage');
   }
