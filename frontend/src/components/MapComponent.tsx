@@ -64,33 +64,41 @@ const MapComponent = ({ isVendingRequestPopupOpen: initialPopupOpen }: MapCompon
   const [requestCoords, setRequestCoords] = useState<[number, number] | null>(null);
 
   // check for user login idk if this will work
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-  const [user, setUser] = useState<any | null>(null);
-  const navigate = useNavigate();
+ const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+const [user, setUser] = useState<any | null>(null);
+const [currentUserId, setCurrentUserId] = useState<string>('');
+const [currentUserName, setCurrentUserName] = useState<string>('');
+const navigate = useNavigate();
 
-  // useeffect for the check
-  useEffect(() => {
-    const _ud = localStorage.getItem('user_data');
-    let loggedIn = false;
-    let userData = null;
+useEffect(() => {
+  // reference it from local storage i dont really know how to do this im just using thomases implementation 
+  const _ud = localStorage.getItem('user_data');
+  let loggedIn = false;
+  let userData = null;
 
-    try {
-      userData = _ud ? JSON.parse(_ud) : null;
-      if (userData && userData.id) {
-        loggedIn = true;
-        setUser(userData);
-      }
-    } catch (error) {
-      console.error('Error reading user data from localStorage:', error);
+  try {
+    userData = _ud ? JSON.parse(_ud) : null;
+    if (userData && userData.id) {
+      loggedIn = true;
+      setUser(userData); 
+
+      // set currentUserId and currentUserName based on the user data because I dont feel like changing that much
+      setCurrentUserId(userData.id.toString()); // change to fit old format also  
+      setCurrentUserName(`${userData.Firstname} ${userData.Lastname}`); // combine first and last name so when people submit a comment it looks better
     }
+  } catch (error) {
+    console.error('Error reading user data from localStorage:', error);
+  }
 
-    setIsLoggedIn(loggedIn);
+  // update state maybe change idk if this will work
+  setIsLoggedIn(loggedIn);
 
-    if (!loggedIn) {
-      navigate('/login'); // Redirect to login page if not logged in
-    }
-  }, [navigate]);
-
+  // redirect that currently doesn't lead anywhere
+  if (!loggedIn) {
+    navigate('/login');
+  }
+}, [navigate]);
+  
   // important for filling out the vending form STILL NEEDS IMAGE AREA!!!!!!!!!!!!!!!!!!!!!!!!!
   const [vendingForm, setVendingForm] = useState({
     building: '',
