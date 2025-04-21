@@ -81,7 +81,7 @@ const MapComponent = ({ isVendingRequestPopupOpen: initialPopupOpen }: MapCompon
    useEffect(() => {
   const fetchFullUserData = async (userId: string) => {
     try {
-      const response = await fetch(`https://gerberthegoat.com/api/users/${userId}`);
+      const response = await fetch(`https://gerberthegoat.com/api/profile/${userId}`);
 
       if (!response.ok) {
         throw new Error('failed to get the user data');
