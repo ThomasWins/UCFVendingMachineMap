@@ -183,7 +183,7 @@ exports.getUserInfo = async (req, res) => {
       login: user.login,
       firstName: user.firstName,
       lastName: user.lastName,
-      favorites: favoriteVendingMachines,
+      favorites: user.favorites,
       userId: user.userId,
     });
 
