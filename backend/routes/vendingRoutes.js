@@ -1,6 +1,49 @@
 const express = require('express');
 const router = express.Router();
 const Vending = require('../models/vendingModel');
+const multer = require('multer');
+const path = require('path');
+const User = require('../models/userModel');
+
+
+// Multer Storage
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'uploads/'); // Directory where images go
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + path.extname(file.originalname)); // filename with timestamp
+  }
+});
+const upload = multer({ storage });
+
+// POST /api/vending/upload
+router.post('/upload', upload.single('image'), async (req, res) => {
+  try {
+    const { building, description, type, lat, lng } = req.body;
+    const imageUrl = req.file ? `/uploads/${req.file.filename}` : null;
+
+    const newVending = new Vending({
+      building,
+      description,
+      type,
+      coordinates: [parseFloat(lng), parseFloat(lat)],
+      imageUrl,
+      userId: req.session.user.userId,
+      userLogin: req.session.user.login,
+      ratings: [],
+      comments: []
+    });
+
+    await newVending.save();
+    res.status(201).json({
+      success: true,
+      vending: newVending
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
 
 // get all of the vending machines from the database
 router.get('/', async (req, res) => {
