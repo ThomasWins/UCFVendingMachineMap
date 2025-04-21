@@ -199,6 +199,30 @@ const handleRatingChange = async (rating) => {
   }
 };
 
+  //call for the api on favorites
+useEffect(() => {
+  const fetchUserFavorites = async () => {
+    if (userData?.userId) {
+      try {
+        const response = await fetch(`https://gerberthegoat.com/api/users/${userData.userId}/favorites`);
+        if (!response.ok) {
+          throw new Error('Failed to fetch favorites');
+        }
+        const favoriteVendingMachines = await response.json();
+        console.log('Favorite vending machines:', favoriteVendingMachines);
+        setVendingData(favoriteVendingMachines); 
+      } catch (err) {
+        console.error('Error fetching favorites:', err.message);
+      }
+    }
+  };
+  
+  if (userData) {
+    fetchUserFavorites();
+  }
+}, [userData]);
+
+
 // basic setup for mapbox very important probably should put my accessToken in a .env file but idk how to
   useEffect(() => {
     if (!mapContainerRef.current) return;
@@ -537,26 +561,17 @@ return (
       <button className="favorites-close-button" onClick={toggleFavorites}>×</button>
       <h2>Favorites</h2>
       
-       {/* Log the Favorites directly in JSX */}
-  {console.log('Favorites:', userData?.Favorites)}
-      
-      {userData?.Favorites?.length === 0 ? (
+{vendingData?.length === 0 ? (
   <p>No favorites yet. Favorite a vending machine to see it here.</p>
 ) : (
-  userData?.Favorites?.map(favId => {
-    const favoriteVending = vendingData.find(vending => vending.id === favId);
-    return favoriteVending ? (
-      <div
-        key={favoriteVending.id}
-        className="vending-item"
-        onClick={() => centerMapOnVending(favoriteVending.coordinates)}
-      >
-        <strong>{favoriteVending.name}</strong><br />
-        <span>{favoriteVending.building} - {favoriteVending.type}</span>
-      </div>
-    ) : null;
-  })
+  vendingData.map(favVending => (
+    <div key={favVending.id} className="vending-item" onClick={() => centerMapOnVending(favVending.coordinates)}>
+      <strong>{favVending.name}</strong><br />
+      <span>{favVending.building} - {favVending.type}</span>
+    </div>
+  ))
 )}
+
 
     </div>
     {/*formatting for the vending machine popup (i.e clicking on a marker)*/}
