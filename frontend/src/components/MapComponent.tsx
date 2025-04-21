@@ -90,7 +90,7 @@ const MapComponent = ({ isVendingRequestPopupOpen: initialPopupOpen }: MapCompon
         const user_data = await response.json();
         
         setUserData(user_data);
-        setCurrentUserId(user_data.userId);  
+        setCurrentUserId(Number(user_data.userId));    
         setCurrentUserName(`${user_data.firstName} ${user_data.lastName}`);
       } catch (err: any) {
         console.error('Error fetching user profile:', err.message);
