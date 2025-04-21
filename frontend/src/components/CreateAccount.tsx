@@ -104,10 +104,11 @@ function Register() {
         value="Create Account"
         onClick={doCreateAccount}  // implement this backend
       />
+      <Link to="/" id="myLink> Already have an account? Log in </Link >
+        
       <span id="loginResult">{message}</span>
-      <button id="loginButton" className="signUpButton" onClick={sendToLogin}>
-        Already have an account? Log in
-      </button>
+      
+
     </div>
   );
 }
