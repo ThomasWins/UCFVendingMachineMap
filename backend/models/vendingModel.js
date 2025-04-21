@@ -1,43 +1,26 @@
 const mongoose = require('mongoose');
 
 const vendingSchema = new mongoose.Schema({
-  building: {
-    type: String,
-    required: true
-  },
-  description: {
-    type: String,
-    required: true
-  },
-  type: {
-    type: String,
-    required: true
-  },
-  coordinates: {
-    type: [Number], // [longitude, latitude]
-    required: true
-  },
-  imageUrl: {
-    type: String,
-    required: false
-  },
-  userId: {
-    type: Number, // Store the userId who submitted the vending
-    required: true
-  },
-  userLogin: {
-    type: String, // Store user's login info for reference
-    required: true
-  },
-  ratings: {
-    type: [Number],
-    default: []
-  },
-  comments: {
-    type: [String],
-    default: []
-  }
+  id: { type: Number, required: true, unique: true },
+  name: { type: String, required: true },
+  coordinates: { type: [Number], required: true }, 
+  building: { type: String, required: true },
+  type: { type: String, required: true }, 
+  imageUrl: { type: String, required: true },
+  ratings: [
+    {
+      userId: { type: String, required: true },
+      rating: { type: Number, required: true },
+    }
+  ],
+  comments: [
+    {
+      userId: { type: String, required: true },
+      userName: { type: String, required: true },
+      rating: { type: Number, required: true },
+      comment: { type: String, required: true },
+    }
+  ]
 });
 
-module.exports = mongoose.model('Vending', vendingSchema);
-
+module.exports = mongoose.model('Vending', vendingSchema, 'vendingMachines');
