@@ -20,6 +20,9 @@ const upload = multer({ storage });
 // POST /api/vending/upload
 router.post('/upload', upload.single('image'), async (req, res) => {
   try {
+    if (!req.file) {
+      return res.status(400).json({ error: 'No image file provided' });
+    }
     const { building, description, type, lat, lng } = req.body;
     const imageUrl = req.file ? `/uploads/${req.file.filename}` : null;
 
