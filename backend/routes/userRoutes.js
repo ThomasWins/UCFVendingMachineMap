@@ -2,6 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/userController');
+const upload = require('../middleware/upload');
 
 // User's basic operations
 router.post('/register', userController.registerUser);
@@ -20,7 +21,7 @@ router.get('/profile/:userId', userController.getUserProfile);
 router.get('/info/:userId', userController.getUserInfo);
 
 // Submit a new vending machine request
-router.post('/:userId/vending-requests', userController.submitVendingRequest);
+router.post('/:userId/vending-requests', upload.single('image'), userController.submitVendingRequest);
 
 // Get all vending machine requests (admin only)
 router.get('/:userId/vending-requests', userController.getVendingRequests);
