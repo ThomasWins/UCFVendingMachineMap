@@ -41,6 +41,10 @@
   transform: scale(1.05);
 }
 
+#myLink {
+  margin-top:10px;
+}
+
 #loginResult {
   display: block;
   margin-top: 15px;
