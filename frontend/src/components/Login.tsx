@@ -55,7 +55,6 @@ async function doLogin(event: React.FormEvent) {
 
   return (
     <div id="loginDiv">
-      <a href="./home" id="createAccount">TEMP Home Page</a>
       <span id="inner-title">LOG IN</span><br />
       <form onSubmit={doLogin}>
         <input
@@ -80,6 +79,7 @@ async function doLogin(event: React.FormEvent) {
           value="Login"
         />
       </form>
+      <Link to="/createAccount">Sign Up</Link>
       <button id="loginButton" className="signUpButton" onClick={sendToSignup}>
         Sign Up
       </button>
