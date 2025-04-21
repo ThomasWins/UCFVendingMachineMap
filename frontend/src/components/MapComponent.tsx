@@ -163,7 +163,7 @@ const goHome = () => {
   };
 
 const goAdmin = () => {
-    navigate('/admin');
+  window.open('/admin', '_blank');
 };
 
 // set the rating for the user if it is changed this now works when clicking on stars!
