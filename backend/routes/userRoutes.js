@@ -16,6 +16,9 @@ router.delete('/:userId/favorites/:vendingId', userController.removeFavorite);
 // User's profile
 router.get('/profile/:userId', userController.getUserProfile);
 
+// user info
+router.get('/info/:userId', userController.getUserInfo);
+
 // Submit a new vending machine request
 router.post('/:userId/vending-requests', userController.submitVendingRequest);
 
