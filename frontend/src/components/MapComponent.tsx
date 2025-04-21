@@ -78,40 +78,38 @@ const MapComponent = ({ isVendingRequestPopupOpen: initialPopupOpen }: MapCompon
 
 
   //test to see if it works 
-   useEffect(() => {
-  const fetchFullUserData = async (userId: string) => {
-    try {
-      const response = await fetch(`https://gerberthegoat.com/api/profile/${userId}`);
+ useEffect(() => {
+    const fetchFullUserData = async (userId: number) => {
+      try {
+        const response = await fetch(`https://gerberthegoat.com/api/profile/${userId}`);
 
-      if (!response.ok) {
-        throw new Error('failed to get the user data');
+        if (!response.ok) {
+          throw new Error('Failed to get the user data');
+        }
+
+        const user_data = await response.json();
+        
+        setUserData(user_data);
+        setCurrentUserId(user_data.userId);  
+        setCurrentUserName(`${user_data.firstName} ${user_data.lastName}`);
+      } catch (err: any) {
+        console.error('Error fetching user profile:', err.message);
       }
+    };
+    const storedUserData = localStorage.getItem('user_data');
 
-      const user_data = await response.json();
+    if (storedUserData) {
+      const localUser = JSON.parse(storedUserData);
 
-      setUserData(user_data);
-      setCurrentUserId(user_data.userId.toString());
-      setCurrentUserName(`${user_data.firstName} ${user_data.lastName}`);
-    } catch (err: any) {
-      console.error('Error fetching user profile:', err.message);
-    }
-  };
-
-  const storedUserData = localStorage.getItem('user_data');
-
-  if (storedUserData) {
-    const localUser = JSON.parse(storedUserData);
-
-    if (localUser?.userId) {
-      fetchFullUserData(localUser.userId.toString());
+      if (localUser?.userId) {
+        fetchFullUserData(localUser.userId);
+      } else {
+        console.error('userId not found in stored user_data');
+      }
     } else {
-      console.error('userId not found in stored user_data');
+      console.error('User data not found in localStorage');
     }
-  } else {
-    console.error('User data not found in localStorage');
-  }
-}, []);
-
+  }, []);
 
 
   // this is just a spot I thought looked good at the center of ucf, important for centering later
