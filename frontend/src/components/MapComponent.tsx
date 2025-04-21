@@ -505,10 +505,10 @@ return (
       <button className="favorites-close-button" onClick={toggleFavorites}>×</button>
       <h2>Favorites</h2>
 
-      {user_data?.Favorites?.length === 0 ? (
+      {userData?.Favorites?.length === 0 ? (
   <p>No favorites yet. Favorite a vending machine to see it here.</p>
 ) : (
-  user_data?.Favorites?.map(favId => {
+  userData?.Favorites?.map(favId => {
     const favoriteVending = vendingData.find(vending => vending.id === favId);
     return favoriteVending ? (
       <div
