@@ -18,10 +18,10 @@ exports.registerUser = async (req, res) => {
     const assignId = await User.findOne().sort({ userId: -1 }).limit(1);
     const nextUserId = assignId ? assignId.userId + 1 : 1;
 
-    // Create a new user without hashing the password
+    // Create a new user
     const newUser = new User({
       login,
-      password,  // Store password as plain text for now
+      password,
       userId: nextUserId,
       firstName,
       lastName,
@@ -49,7 +49,7 @@ exports.loginUser = async (req, res) => {
       return res.status(401).json({ error: 'Invalid login credentials' });
     }
 
-    // Check if password matches (simple comparison since passwords aren't hashed)
+    // Check if password matches
     if (user.password !== password) {
       return res.status(401).json({ error: 'Invalid login credentials' });
     }

@@ -11,6 +11,4 @@ const userSchema = new mongoose.Schema({
   favorites: [{ type: Number }],
 }, { collection: 'Users' });
 
-// Add hashing here later
-
 module.exports = mongoose.model('User', userSchema);
