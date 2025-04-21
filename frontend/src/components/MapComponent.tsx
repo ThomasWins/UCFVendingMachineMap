@@ -88,9 +88,11 @@ const MapComponent = ({ isVendingRequestPopupOpen: initialPopupOpen }: MapCompon
         }
 
         const user_data = await response.json();
+
+        console.log('userId check:', user_data.userId);
         
         setUserData(user_data);
-        setCurrentUserId(Number(user_data.userId));    
+        setCurrentUserId(user_data.userId);    
         setCurrentUserName(`${user_data.firstName} ${user_data.lastName}`);
       } catch (err: any) {
         console.error('Error fetching user profile:', err.message);
