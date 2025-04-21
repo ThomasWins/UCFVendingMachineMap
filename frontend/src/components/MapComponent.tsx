@@ -536,8 +536,10 @@ return (
     <div className={`favorites-popup ${isFavoritesOpen ? 'open' : ''}`}>
       <button className="favorites-close-button" onClick={toggleFavorites}>×</button>
       <h2>Favorites</h2>
-     console.log('User Favorites:', userData?.favorites);
-     console.log('Vending Data:', vendingData);
+      
+       {/* Log the Favorites directly in JSX */}
+  {console.log('Favorites:', userData?.Favorites)}
+      
       {userData?.Favorites?.length === 0 ? (
   <p>No favorites yet. Favorite a vending machine to see it here.</p>
 ) : (
