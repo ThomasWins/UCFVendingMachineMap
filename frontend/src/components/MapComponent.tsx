@@ -70,53 +70,43 @@ const [currentUserId, setCurrentUserId] = useState<string>('');
 const [currentUserName, setCurrentUserName] = useState<string>('');
 const navigate = useNavigate();
 
-useEffect(() => {
-  // reference it from local storage i dont really know how to do this im just using thomases implementation 
-  const _ud = localStorage.getItem('user_data');
-  let loggedIn = false;
-  let userData = null;
+  useEffect(() => {
+    const _ud = localStorage.getItem('user_data');
+    let loggedIn = false;
+    let userData = null;
 
-  try {
-    userData = _ud ? JSON.parse(_ud) : null;
-    if (userData && userData.id) {
-      loggedIn = true;
-      setUser(userData); 
-
-      // set currentUserId and currentUserName based on the user data because I dont feel like changing that much
-      setCurrentUserId(userData.id.toString()); // change to fit old format also  
-      setCurrentUserName(`${userData.Firstname} ${userData.Lastname}`); // combine first and last name so when people submit a comment it looks better
-    }
-  } catch (error) {
-    console.error('Error reading user data from localStorage:', error);
-
-    if (userData) {
+    if (_ud) {
       try {
-        // test
-        const parsedUserData = JSON.parse(userData);
+        userData = JSON.parse(_ud);
+        console.log('User data from localStorage:', userData); 
+        if (userData && userData._id) {
+          loggedIn = true;
+          setUser(userData);
+          setCurrentUserId(userData._id.toString()); 
+          setCurrentUserName(`${userData.firstName} ${userData.lastName}`); 
 
-        console.log('User Data:', parsedUserData);
 
-        console.log('User ID:', parsedUserData._id);
-        console.log('Login:', parsedUserData.login);
-        console.log('First Name:', parsedUserData.firstName);
-        console.log('Last Name:', parsedUserData.lastName);
-        console.log('Admin:', parsedUserData.admin);
-        console.log('Favorites:', parsedUserData.favorites);
+          console.log('User ID:', userData._id);
+          console.log('First Name:', userData.firstName);
+          console.log('Last Name:', userData.lastName);
+          console.log('Favorites:', userData.favorites);
+          console.log('Admin Status:', userData.admin);
+        }
       } catch (error) {
-        console.error('Error parsing user data from localStorage:', error);
+        console.error('Error reading or parsing user data from localStorage:', error);
       }
     } else {
       console.log('No user data found in localStorage.');
     }
 
-  // update state maybe change idk if this will work
-  setIsLoggedIn(loggedIn);
 
-  // redirect that currently doesn't lead anywhere
-  if (!loggedIn) {
-    navigate('/login');
-  }
-}, [navigate]);
+    setIsLoggedIn(loggedIn);
+
+
+    if (!loggedIn) {
+      navigate('/login');
+    }
+  }, [navigate]);
   
   // important for filling out the vending form STILL NEEDS IMAGE AREA!!!!!!!!!!!!!!!!!!!!!!!!!
   const [vendingForm, setVendingForm] = useState({
