@@ -34,7 +34,16 @@ import {
 interface MapComponentProps {
   isVendingRequestPopupOpen: boolean;
 }
-
+interface VendingForm {
+  building: string;
+  description: string;
+  type: string;
+  coordinates: {
+    lat: number;
+    lng: number;
+  };
+  image: File | null;
+}
 // set up all of the things that will be changed i.e checks for popups (mostly)
 const MapComponent = ({ isVendingRequestPopupOpen: initialPopupOpen }: MapComponentProps) => {
   const mapContainerRef = useRef<HTMLDivElement | null>(null);
@@ -60,6 +69,7 @@ const MapComponent = ({ isVendingRequestPopupOpen: initialPopupOpen }: MapCompon
     description: '',
     type: '',
     coordinates: { lat: 0, lng: 0 },
+    image: null,
   });
 
   // this is just a spot I thought looked good at the center of ucf, important for centering later
@@ -233,51 +243,54 @@ const handleVendingFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTex
 
 
 // handles the submit form mostly with checks and stuff PLACEHOLDER IMPLEMENT THIS INTO THE API WITH BUFFER FOR ADMIN CHECK!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-const handleVendingRequestSubmit = (e: React.FormEvent) => {
+const handleVendingRequestSubmit = async (e: React.FormEvent) => {
   e.preventDefault();
 
-    if (!vendingForm.building) {
-    alert('Please fill out the building field.');
+  if (!vendingForm.building || !vendingForm.description || !vendingForm.type || !requestCoords) {
+    alert('Please fill out all required fields.');
     return;
   }
 
-  if (!vendingForm.description) {
-    alert('Please fill out the description field.');
-    return;
+  const formData = new FormData();
+  formData.append('building', vendingForm.building);
+  formData.append('description', vendingForm.description);
+  formData.append('type', vendingForm.type);
+  formData.append('lat', requestCoords[1].toString());
+  formData.append('lng', requestCoords[0].toString());
+  
+  if (vendingForm.image) {
+    formData.append('image', vendingForm.image);
   }
 
-  if (!vendingForm.type) {
-    alert('Please select a vending machine type.');
-    return;
+  try {
+    const response = await fetch('/api/vending/upload', {
+      method: 'POST',
+      body: formData,
+      credentials: 'include' // Important for sessions
+    });
+
+    if (!response.ok) {
+      throw new Error('Upload failed');
+    }
+
+    const data = await response.json();
+    
+    // Reset form and close popup on success
+    setVendingForm({
+      building: '',
+      description: '',
+      type: '',
+      coordinates: { lat: 0, lng: 0 },
+      image: null
+    });
+    setIsVendingRequestPopupOpen(false);
+    
+    
+
+  } catch (error) {
+    console.error('Error uploading:', error);
+    alert('Failed to upload vending machine data');
   }
-
-  if (!requestCoords) {
-    alert('Please click on the map to place a marker.');
-    return;
-  }
-  const isFormValid = () => {
-  return (
-    vendingForm.building &&
-    vendingForm.description &&
-    vendingForm.type &&
-    requestCoords !== null
-  );
-};
-
-  const submissionData = {
-    ...vendingForm,
-    coordinates: requestCoords,
-  };
-
-  // tester for submissions
-  console.log('Submitting vending machine request:', submissionData);
-
-  // reset the form for later and submit it
-  setVendingForm({ building: '', description: '', type: '' });
-  setRequestCoords(null);
-  requestMarkerRef.current.remove();
-  requestMarkerRef.current = null;
-  setIsVendingRequestPopupOpen(false);
 };
 
 
@@ -674,11 +687,16 @@ return (
               onChange={handleVendingFormChange}
             />
             {/*this is not correctly formatting for submitting a user CHANGE WHEN IMPLEMENTING MULTER FOR FILE SUBMISSIONS*/}
-            <label htmlFor="image">Import image</label>
-            <textarea
+            <label htmlFor="image">Upload image</label>
+            <input
+              type="file"
               id="image"
               name="image"
-              placeholder="some sort of import here or somewhere idk i just copy and pasted the description parameters but probably use multer in the backend to store it"
+              accept="image/*"
+              onChange={(e) => setVendingForm(prev => ({
+                ...prev,
+                image: e.target.files?.[0] || null
+              }))}
             />
             {/*snacks or drinks I also have a combo but i havent implemented that anywhere else, i guess just change the filter to show those too regardless of the filter*/}
             <label htmlFor="type">Type</label>
