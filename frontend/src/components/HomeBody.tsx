@@ -24,7 +24,7 @@ const HomeBody = () => {
 
   try {
     const userData = _ud ? JSON.parse(_ud) : null; 
-    if (userData && userData.id) {
+    if (userData && userData.userId) {
       isLoggedIn = true;
     }
   } catch (e) {
