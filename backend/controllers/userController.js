@@ -114,7 +114,7 @@ exports.getUserProfile = async (req, res) => {
     const userId = req.params.userId;
 
     // Find the user
-    const user = await User.findOne({ userId: parseInt(userId) }).select('login firstName lastName favorites');
+    const user = await User.findOne({ userId: parseInt(userId) }).select('login firstName lastName favorites userId');
 
     // Throw an error if the user is not found
     if (!user) {
