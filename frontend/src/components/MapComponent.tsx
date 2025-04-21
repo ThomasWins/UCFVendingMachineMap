@@ -105,20 +105,21 @@ const MapComponent = ({ isVendingRequestPopupOpen: initialPopupOpen }: MapCompon
 
 
   // HARDCODED REMOVE LATER!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  /*
   const userData = [
     { UserId: 1, Firstname: 'bob', Lastname: 'lob', Admin: 'false', Favorites: [1, 3,4,5,6] },
   ];
   const currentUserId = '1';
   const currentUserName = 'Bob lob';
+  */ 
 
-
-
-  const [vendingData, setVendingData] = useState([]);
 
 useEffect(() => {
     // Set the local state based on the initial prop
     setIsVendingRequestPopupOpen(initialPopupOpen);
 }, [initialPopupOpen]);
+
+const [vendingData, setVendingData] = useState([]);
   
 // does some api stuff idk im frontend
 useEffect(() => {
