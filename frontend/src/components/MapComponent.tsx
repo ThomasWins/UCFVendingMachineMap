@@ -109,7 +109,6 @@ const MapComponent = ({ isVendingRequestPopupOpen: initialPopupOpen }: MapCompon
     } else {
       console.error('User data not found in localStorage');
     }
-    console.log('Fetched user data:', user_data);
   }, []);
 
 
