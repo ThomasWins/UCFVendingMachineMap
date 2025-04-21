@@ -380,6 +380,7 @@ const handleSubmitComment = async () => {
     const data = await res.json();
     if (res.ok) {
       setSelectedVending(data.vending);
+      setUserComment('');
     } else {
       console.error('Server error:', data.error || data.message);
     }
