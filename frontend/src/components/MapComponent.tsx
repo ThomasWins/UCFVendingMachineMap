@@ -1,7 +1,7 @@
 import './CSS/mapStyles.css';
 import mapboxgl from 'mapbox-gl';
 import { useEffect, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate} from 'react-router-dom';
 
 // map styles imports (basically what allows us to change between maps)
 import sataliteImage from './photos/satalite.png';
@@ -73,7 +73,7 @@ const MapComponent = ({ isVendingRequestPopupOpen: initialPopupOpen }: MapCompon
   });
 
   const [userData, setUserData] = useState<any | null>(null);
-  const [currentUserId, setCurrentUserId] = useState<string>('');
+  const [currentUserId, setCurrentUserId] = useState<number | null>(null);
   const [currentUserName, setCurrentUserName] = useState<string>('');
 
 
@@ -161,6 +161,10 @@ const navigate = useNavigate();
 const goHome = () => {
     navigate('/home');
   };
+
+const goAdmin = () => {
+  window.open('/admin', '_blank');
+};
 
 // set the rating for the user if it is changed this now works when clicking on stars!
 const handleRatingChange = async (rating) => {
@@ -667,7 +671,7 @@ return (
         >
           Submit Vending Request
         </p>
-        <p className="menu-link">Admin Portal</p>
+        <p className="menu-link" onClick={goAdmin} >Admin Portal</p>
         <p className="menu-link" onClick={goHome} >Home</p>
       </div>
     </div>
