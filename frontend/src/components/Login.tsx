@@ -79,7 +79,7 @@ async function doLogin(event: React.FormEvent) {
           value="Login"
         />
       </form>
-      <Link to="/createAccount">Sign Up</Link>
+      <Link to="/createAccount" id="myLink">Sign Up</Link>
 
       <span id="loginResult">{message}</span>
     </div>
