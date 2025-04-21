@@ -88,9 +88,11 @@ const MapComponent = ({ isVendingRequestPopupOpen: initialPopupOpen }: MapCompon
         }
 
         const user_data = await response.json();
+
+        console.log('Full user data:', user_data);
         
         setUserData(user_data);
-        setCurrentUserId(user_data.userId);  
+        setCurrentUserId(user_data.userId);    
         setCurrentUserName(`${user_data.firstName} ${user_data.lastName}`);
       } catch (err: any) {
         console.error('Error fetching user profile:', err.message);
@@ -353,6 +355,13 @@ useEffect(() => {
 // CURRENTLY USES HARDCODED USER FIX LATER
 const handleSubmitComment = async () => {
   if (!selectedVending || !userRating || !userComment) return;
+
+  console.log('Comment payload:', {
+  userId: currentUserId,
+  userName: currentUserName,
+  rating: userRating,
+  comment: userComment
+  });
 
   const payload = {
     userId: currentUserId,
