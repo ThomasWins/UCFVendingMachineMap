@@ -9,13 +9,13 @@ const vendingSchema = new mongoose.Schema({
   imageUrl: { type: String, required: true },
   ratings: [
     {
-      userId: { type: String, required: true },
+      userId: { type: Number, required: true },
       rating: { type: Number, required: true },
     }
   ],
   comments: [
     {
-      userId: { type: String, required: true },
+      userId: { type: Number, required: true },
       userName: { type: String, required: true },
       rating: { type: Number, required: true },
       comment: { type: String, required: true },
