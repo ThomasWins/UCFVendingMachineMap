@@ -34,16 +34,7 @@ import {
 interface MapComponentProps {
   isVendingRequestPopupOpen: boolean;
 }
-interface VendingForm {
-  building: string;
-  description: string;
-  type: string;
-  coordinates: {
-    lat: number;
-    lng: number;
-  };
-  image: File | null;
-}
+
 // set up all of the things that will be changed i.e checks for popups (mostly)
 const MapComponent = ({ isVendingRequestPopupOpen: initialPopupOpen }: MapComponentProps) => {
   const mapContainerRef = useRef<HTMLDivElement | null>(null);
@@ -63,58 +54,12 @@ const MapComponent = ({ isVendingRequestPopupOpen: initialPopupOpen }: MapCompon
   const requestMarkerRef = useRef<mapboxgl.Marker | null>(null);
   const [requestCoords, setRequestCoords] = useState<[number, number] | null>(null);
 
-  // check for user login idk if this will work
- const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
-const [user, setUser] = useState<any | null>(null);
-const [currentUserId, setCurrentUserId] = useState<string>('');
-const [currentUserName, setCurrentUserName] = useState<string>('');
-const navigate = useNavigate();
-
-  useEffect(() => {
-    const _ud = localStorage.getItem('user_data');
-    let loggedIn = false;
-    let userData = null;
-
-    if (_ud) {
-      try {
-        userData = JSON.parse(_ud);
-        console.log('User data from localStorage:', userData); 
-        if (userData && userData._id) {
-          loggedIn = true;
-          setUser(userData);
-          setCurrentUserId(userData._id.toString()); 
-          setCurrentUserName(`${userData.firstName} ${userData.lastName}`); 
-
-
-          console.log('User ID:', userData._id);
-          console.log('First Name:', userData.firstName);
-          console.log('Last Name:', userData.lastName);
-          console.log('Favorites:', userData.favorites);
-          console.log('Admin Status:', userData.admin);
-        }
-      } catch (error) {
-        console.error('Error reading or parsing user data from localStorage:', error);
-      }
-    } else {
-      console.log('No user data found in localStorage.');
-    }
-
-
-    setIsLoggedIn(loggedIn);
-
-
-    if (!loggedIn) {
-      navigate('/login');
-    }
-  }, [navigate]);
-  
   // important for filling out the vending form STILL NEEDS IMAGE AREA!!!!!!!!!!!!!!!!!!!!!!!!!
   const [vendingForm, setVendingForm] = useState({
     building: '',
     description: '',
     type: '',
     coordinates: { lat: 0, lng: 0 },
-    image: null,
   });
 
   // this is just a spot I thought looked good at the center of ucf, important for centering later
@@ -122,21 +67,20 @@ const navigate = useNavigate();
 
 
   // HARDCODED REMOVE LATER!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  /*
   const userData = [
     { UserId: 1, Firstname: 'bob', Lastname: 'lob', Admin: 'false', Favorites: [1, 3,4,5,6] },
   ];
   const currentUserId = '1';
   const currentUserName = 'Bob lob';
-  */ 
 
+
+
+  const [vendingData, setVendingData] = useState([]);
 
 useEffect(() => {
     // Set the local state based on the initial prop
     setIsVendingRequestPopupOpen(initialPopupOpen);
 }, [initialPopupOpen]);
-
-const [vendingData, setVendingData] = useState([]);
   
 // does some api stuff idk im frontend
 useEffect(() => {
@@ -171,6 +115,7 @@ const renderMarkers = (mapInstance: mapboxgl.Map) => {
     }
   });
 };
+const navigate = useNavigate();
   
 const goHome = () => {
     navigate('/home');
@@ -288,54 +233,51 @@ const handleVendingFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTex
 
 
 // handles the submit form mostly with checks and stuff PLACEHOLDER IMPLEMENT THIS INTO THE API WITH BUFFER FOR ADMIN CHECK!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-const handleVendingRequestSubmit = async (e: React.FormEvent) => {
+const handleVendingRequestSubmit = (e: React.FormEvent) => {
   e.preventDefault();
 
-  if (!vendingForm.building || !vendingForm.description || !vendingForm.type || !requestCoords) {
-    alert('Please fill out all required fields.');
+    if (!vendingForm.building) {
+    alert('Please fill out the building field.');
     return;
   }
 
-  const formData = new FormData();
-  formData.append('building', vendingForm.building);
-  formData.append('description', vendingForm.description);
-  formData.append('type', vendingForm.type);
-  formData.append('lat', requestCoords[1].toString());
-  formData.append('lng', requestCoords[0].toString());
-  
-  if (vendingForm.image) {
-    formData.append('image', vendingForm.image);
+  if (!vendingForm.description) {
+    alert('Please fill out the description field.');
+    return;
   }
 
-  try {
-    const response = await fetch('/api/vending/upload', {
-      method: 'POST',
-      body: formData,
-      credentials: 'include' // Important for sessions
-    });
-
-    if (!response.ok) {
-      throw new Error('Upload failed');
-    }
-
-    const data = await response.json();
-    
-    // Reset form and close popup on success
-    setVendingForm({
-      building: '',
-      description: '',
-      type: '',
-      coordinates: { lat: 0, lng: 0 },
-      image: null
-    });
-    setIsVendingRequestPopupOpen(false);
-    
-    
-
-  } catch (error) {
-    console.error('Error uploading:', error);
-    alert('Failed to upload vending machine data');
+  if (!vendingForm.type) {
+    alert('Please select a vending machine type.');
+    return;
   }
+
+  if (!requestCoords) {
+    alert('Please click on the map to place a marker.');
+    return;
+  }
+  const isFormValid = () => {
+  return (
+    vendingForm.building &&
+    vendingForm.description &&
+    vendingForm.type &&
+    requestCoords !== null
+  );
+};
+
+  const submissionData = {
+    ...vendingForm,
+    coordinates: requestCoords,
+  };
+
+  // tester for submissions
+  console.log('Submitting vending machine request:', submissionData);
+
+  // reset the form for later and submit it
+  setVendingForm({ building: '', description: '', type: '' });
+  setRequestCoords(null);
+  requestMarkerRef.current.remove();
+  requestMarkerRef.current = null;
+  setIsVendingRequestPopupOpen(false);
 };
 
 
@@ -534,29 +476,27 @@ return (
 
     {/*favorites logic NEEDS TO BE CONNECTED FOR DATABASE ASWELL*/}
     <div className={`favorites-popup ${isFavoritesOpen ? 'open' : ''}`}>
-  <button className="favorites-close-button" onClick={toggleFavorites}>×</button>
-  <h2>Favorites</h2>
+      <button className="favorites-close-button" onClick={toggleFavorites}>×</button>
+      <h2>Favorites</h2>
 
-  {/* new updated favroites check to use user data probably will work */}
-  {user && user.Favorites && user.Favorites.length === 0 ? (
-    <p>No favorites yet. Favorite a vending machine to see it here.</p>
-  ) : (
-    user?.Favorites?.map(favId => {
-      const favoriteVending = vendingData.find(vending => vending.id === favId);
-      return favoriteVending ? (
-        <div
-          key={favoriteVending.id}
-          className="vending-item"
-          onClick={() => centerMapOnVending(favoriteVending.coordinates)}
-        >
-          <strong>{favoriteVending.name}</strong><br />
-          <span>{favoriteVending.building} - {favoriteVending.type}</span>
-        </div>
-      ) : null;
-    })
-  )}
-</div>
-
+      {userData[0].Favorites.length === 0 ? (
+        <p>No favorites yet. Favorite a vending machine to see it here.</p>
+      ) : (
+        userData[0].Favorites.map(favId => {
+          const favoriteVending = vendingData.find(vending => vending.id === favId);
+          return favoriteVending ? (
+            <div
+              key={favoriteVending.id}
+              className="vending-item"
+              onClick={() => centerMapOnVending(favoriteVending.coordinates)}
+            >
+              <strong>{favoriteVending.name}</strong><br />
+              <span>{favoriteVending.building} - {favoriteVending.type}</span>
+            </div>
+          ) : null;
+        })
+      )}
+    </div>
     {/*formatting for the vending machine popup (i.e clicking on a marker)*/}
     {isVendingPopupOpen && selectedVending && (
       <div className="vending-popup">
@@ -734,16 +674,11 @@ return (
               onChange={handleVendingFormChange}
             />
             {/*this is not correctly formatting for submitting a user CHANGE WHEN IMPLEMENTING MULTER FOR FILE SUBMISSIONS*/}
-            <label htmlFor="image">Upload image</label>
-            <input
-              type="file"
+            <label htmlFor="image">Import image</label>
+            <textarea
               id="image"
               name="image"
-              accept="image/*"
-              onChange={(e) => setVendingForm(prev => ({
-                ...prev,
-                image: e.target.files?.[0] || null
-              }))}
+              placeholder="some sort of import here or somewhere idk i just copy and pasted the description parameters but probably use multer in the backend to store it"
             />
             {/*snacks or drinks I also have a combo but i havent implemented that anywhere else, i guess just change the filter to show those too regardless of the filter*/}
             <label htmlFor="type">Type</label>
@@ -829,5 +764,4 @@ return (
 };
 
 export default MapComponent;
-
 
