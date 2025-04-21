@@ -78,7 +78,7 @@ const MapComponent = ({ isVendingRequestPopupOpen: initialPopupOpen }: MapCompon
    
     useEffect(() => {
 
-  const storedUserData = localStorage.getItem('userData');
+  const storedUserData = localStorage.getItem('user_data');
 
   if (storedUserData) {
 
