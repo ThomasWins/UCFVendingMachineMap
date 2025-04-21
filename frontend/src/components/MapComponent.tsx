@@ -73,7 +73,7 @@ const MapComponent = ({ isVendingRequestPopupOpen: initialPopupOpen }: MapCompon
   });
 
   const [userData, setUserData] = useState<any | null>(null);
-  const [currentUserId, setCurrentUserId] = useState<string>('');
+  const [currentUserId, setCurrentUserId] = useState<number | null>(null);
   const [currentUserName, setCurrentUserName] = useState<string>('');
 
 
