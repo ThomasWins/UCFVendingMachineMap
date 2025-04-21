@@ -354,6 +354,13 @@ useEffect(() => {
 const handleSubmitComment = async () => {
   if (!selectedVending || !userRating || !userComment) return;
 
+  console.log('Comment payload:', {
+  userId: currentUserId,
+  userName: currentUserName,
+  rating: userRating,
+  comment: userComment
+  });
+
   const payload = {
     userId: currentUserId,
     userName: currentUserName,
