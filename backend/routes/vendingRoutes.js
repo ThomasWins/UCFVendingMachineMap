@@ -67,5 +67,45 @@ router.post('/:id/updateRating', async (req, res) => {
   }
 });
 
+router.delete('/:id/comment/:commentId', async (req, res) => {
+  const vendingId = req.params.id;
+  const commentId = req.params.commentId;
+
+  try {
+    // First, find the vencing machine by its ID
+    const vending = await Vending.findById(vendingId);
+    if (!vending) return res.status(404).json({ error: 'Vending machine not found' });
+
+    // Find the index of the comment by its ObjectId
+    const commentIndex = vending.comments.findIndex(
+      c => c._id.toString() === commentId
+    );
+
+    // If the comment is not found, return an error
+    if (commentIndex === -1) {
+      return res.status(404).json({ error: 'Comment not found' });
+    }
+
+    // Remove the comment from the array
+    vending.comments.splice(commentIndex, 1);
+
+    // Optionally, remove the rating associated with the comment if it exists
+    const ratingIndex = vending.ratings.findIndex(
+      r => r._id.toString() === commentId
+    );
+    // If the rating is found, remove it
+    if (ratingIndex !== -1) {
+      vending.ratings.splice(ratingIndex, 1);
+    }
+
+    // Save the updated vending machine information
+    await vending.save();
+    res.status(200).json({ message: 'Comment deleted successfully', vending });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+
 module.exports = router;
 
