@@ -66,22 +66,41 @@ exports.loginUser = async (req, res) => {
 
     console.log("Mapped userData:", req.session.user); // Log the mapped data before sending
 
+
+    /*
+    
     // Save the session
     req.session.save((err) => {
       if (err) {
         console.error("Session save error:", err);
         return res.status(500).json({ error: 'Session save failed' });
       }
-
+    
       res.status(200).json({
         success: true,
         user: req.session.user
       });
     });
+
+  */
+
+    // Set the session cookie
+    res.cookie('session_id', req.sessionID, {
+      httpOnly: true,
+      secure: false
+    });
+
+    // Return user data on successful login
+    res.status(200).json({
+      success: true,
+      user: req.session.user
+    });
+
+
   } catch (error) {
     console.error("Login error:", error);
     res.status(500).json({ error: error.message });
-  }   
+  }
 
 };
 
@@ -94,6 +113,7 @@ exports.logoutUser = (req, res) => {
       return res.status(500).json({ error: 'Logout failed' });
     }
 
+    /*
     // Clear the actual session cookie
     res.clearCookie('connect.sid', {
       path: '/',
@@ -101,6 +121,10 @@ exports.logoutUser = (req, res) => {
       secure: true,
       sameSite: 'none'
     });
+    */
+
+    // Clear the session cookie
+    res.clearCookie('session_id');
 
     res.status(200).json({ message: 'Logged out successfully' });
   });
