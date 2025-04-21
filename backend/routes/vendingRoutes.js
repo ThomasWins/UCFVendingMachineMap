@@ -58,14 +58,15 @@ router.get('/', async (req, res) => {
 });
 
 router.post('/:id/comment', async (req, res) => {
-  const { userId, userName, rating, comment } = req.body;
+  let { userId, userName, rating, comment } = req.body;
+  userId = parseInt(userId); 
   const vendingId = req.params.id;
 
   try {
     const vending = await Vending.findById(vendingId);
     if (!vending) return res.status(404).json({ error: 'Vending machine not found' });
 
-    // logic for updating/ adding ratings
+    // logic for updating/adding ratings
     const existingRatingIndex = vending.ratings.findIndex(r => r.userId === userId);
     if (existingRatingIndex !== -1) {
       vending.ratings[existingRatingIndex].rating = rating;
@@ -73,7 +74,7 @@ router.post('/:id/comment', async (req, res) => {
       vending.ratings.push({ userId, rating });
     }
 
-    // logic for updating/ adding comments
+    // logic for updating/adding comments
     const existingCommentIndex = vending.comments.findIndex(c => c.userId === userId);
     if (existingCommentIndex !== -1) {
       vending.comments[existingCommentIndex] = { userId, userName, rating, comment };
@@ -89,7 +90,8 @@ router.post('/:id/comment', async (req, res) => {
 });
 
 router.post('/:id/updateRating', async (req, res) => {
-  const { userId, rating } = req.body;
+  let { userId, rating } = req.body;
+  userId = parseInt(userId); 
   const vendingId = req.params.id;
 
   try {
@@ -104,11 +106,12 @@ router.post('/:id/updateRating', async (req, res) => {
     }
 
     await vending.save();
-    res.status(200).json({ success: true, message: 'rating updated ', vending });
+    res.status(200).json({ success: true, message: 'Rating updated', vending });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
+
 
 router.delete('/:id/comment/:commentId', async (req, res) => {
   const vendingId = req.params.id;
