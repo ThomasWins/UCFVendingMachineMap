@@ -671,7 +671,7 @@ return (
         >
           Submit Vending Request
         </p>
-        <p className="menu-link onClick={goAdmin} >Admin Portal</p>
+        <p className="menu-link" onClick={goAdmin} >Admin Portal</p>
         <p className="menu-link" onClick={goHome} >Home</p>
       </div>
     </div>
