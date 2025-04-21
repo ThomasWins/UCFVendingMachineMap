@@ -80,8 +80,7 @@ async function doLogin(event: React.FormEvent) {
         />
       </form>
       <Link to="/createAccount">Sign Up</Link>
-        Sign Up
-      </button>
+
       <span id="loginResult">{message}</span>
     </div>
   );
