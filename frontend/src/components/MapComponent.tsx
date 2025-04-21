@@ -63,6 +63,34 @@ const MapComponent = ({ isVendingRequestPopupOpen: initialPopupOpen }: MapCompon
   const requestMarkerRef = useRef<mapboxgl.Marker | null>(null);
   const [requestCoords, setRequestCoords] = useState<[number, number] | null>(null);
 
+  // check for user login idk if this will work
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const [user, setUser] = useState<any | null>(null);
+  const navigate = useNavigate();
+
+  // useeffect for the check
+  useEffect(() => {
+    const _ud = localStorage.getItem('user_data');
+    let loggedIn = false;
+    let userData = null;
+
+    try {
+      userData = _ud ? JSON.parse(_ud) : null;
+      if (userData && userData.id) {
+        loggedIn = true;
+        setUser(userData);
+      }
+    } catch (error) {
+      console.error('Error reading user data from localStorage:', error);
+    }
+
+    setIsLoggedIn(loggedIn);
+
+    if (!loggedIn) {
+      navigate('/login'); // Redirect to login page if not logged in
+    }
+  }, [navigate]);
+
   // important for filling out the vending form STILL NEEDS IMAGE AREA!!!!!!!!!!!!!!!!!!!!!!!!!
   const [vendingForm, setVendingForm] = useState({
     building: '',
