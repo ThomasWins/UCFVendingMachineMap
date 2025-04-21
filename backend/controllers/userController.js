@@ -56,7 +56,7 @@ exports.loginUser = async (req, res) => {
 
     // Create a session for the user
     req.session.user = {
-      userId: user._id || user.userId || user.UserId,
+      userId: user.userId || user.UserId,
       login: user.login || user.Login || user.username || user.userName || user.Username || user.UserName,
       firstName: user.firstName || user.FirstName || user.firstname || user.first_name || user.first,
       lastName: user.lastName || user.LastName || user.lastname || user.last_name || user.last,
