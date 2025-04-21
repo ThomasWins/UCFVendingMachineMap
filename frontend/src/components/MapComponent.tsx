@@ -536,12 +536,11 @@ return (
     <div className={`favorites-popup ${isFavoritesOpen ? 'open' : ''}`}>
       <button className="favorites-close-button" onClick={toggleFavorites}>×</button>
       <h2>Favorites</h2>
-     console.log('User Favorites:', userData?.favorites);
-     console.log('Vending Data:', vendingData);
-      {userData?.Favorites?.length === 0 ? (
+      
+{userData?.favorites?.length === 0 ? (
   <p>No favorites yet. Favorite a vending machine to see it here.</p>
 ) : (
-  userData?.Favorites?.map(favId => {
+  userData?.favorites?.map(favId => {
     const favoriteVending = vendingData.find(vending => vending.id === favId);
     return favoriteVending ? (
       <div
@@ -555,6 +554,7 @@ return (
     ) : null;
   })
 )}
+
 
     </div>
     {/*formatting for the vending machine popup (i.e clicking on a marker)*/}
