@@ -88,7 +88,26 @@ useEffect(() => {
     }
   } catch (error) {
     console.error('Error reading user data from localStorage:', error);
-  }
+
+    if (userData) {
+      try {
+        // test
+        const parsedUserData = JSON.parse(userData);
+
+        console.log('User Data:', parsedUserData);
+
+        console.log('User ID:', parsedUserData._id);
+        console.log('Login:', parsedUserData.login);
+        console.log('First Name:', parsedUserData.firstName);
+        console.log('Last Name:', parsedUserData.lastName);
+        console.log('Admin:', parsedUserData.admin);
+        console.log('Favorites:', parsedUserData.favorites);
+      } catch (error) {
+        console.error('Error parsing user data from localStorage:', error);
+      }
+    } else {
+      console.log('No user data found in localStorage.');
+    }
 
   // update state maybe change idk if this will work
   setIsLoggedIn(loggedIn);
