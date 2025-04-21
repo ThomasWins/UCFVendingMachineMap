@@ -2,6 +2,7 @@
 const User = require('../models/userModel');
 const Vending = require('../models/vendingModel');
 const VendingRequest = require('../models/vendingRequestModel');
+const upload = require('../middleware/upload');
 
 // User Registration
 exports.registerUser = async (req, res) => {
@@ -275,41 +276,47 @@ exports.retrieveFavorites = async (req, res) => {
 };
 
 // User can submit a vending machine to be added to the map
-exports.submitVendingRequest = async (req, res) => {
-  try {
-    const { userId } = req.params;
-    const { coordinates, description } = req.body;
+exports.submitVendingRequest = [
+  upload.single('image'), // Middleware to handle the image upload
+  async (req, res) => {
+    try {
+      const { userId } = req.params;
+      const { coordinates, description } = req.body;
+      const imagePath = req.file ? req.file.path : null;
 
-    // Validate input
-    if (!coordinates || !description) {
-      return res.status(400).json({ error: 'Coordinates and description are required' });
+      // Validate input
+      if (!coordinates || !description) {
+        return res.status(400).json({ error: 'Coordinates and description are required' });
+      }
+
+      // Find the user by userId
+      const user = await User.findOne({ userId: parseInt(userId) });
+      if (!user) {
+        return res.status(404).json({ error: 'User not found' });
+      }
+
+      // Create a new vending machine request
+      const request = new VendingRequest({
+        userId: user.userId,
+        userLogin: user.login,
+        coordinates,
+        description,
+        imagePath,
+        status: 'pending',
+        submittedAt: new Date()
+      });
+
+      await request.save();
+      return res.status(201).json({
+        message: 'Vending machine request submitted successfully',
+        requestId: request._id
+      });
+    } catch (error) {
+      res.status(500).json({ error: error.message });
     }
-
-    // Find the user by userId
-    const user = await User.findOne({ userId: parseInt(userId) });
-    if (!user) {
-      return res.status(404).json({ error: 'User not found' });
-    }
-
-    // Create a new vending machine request
-    const request = new VendingRequest({
-      userId: user.userId,
-      userLogin: user.login,
-      coordinates,
-      description,
-      status: 'pending',
-      submittedAt: new Date()
-    });
-
-    await request.save();
-    return res.status(201).json({
-      message: 'Vending machine request submitted successfully',
-      requestId: request._id
-    });
-  } catch (error) {
-    res.status(500).json({ error: error.message });
   }
-};
+];
+
 
 // Admin can view active vending machine requests
 exports.getVendingRequests = async (req, res) => {

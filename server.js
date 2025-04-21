@@ -4,9 +4,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
-const multer = require('multer');
 const path = require('path');
-const router = express.Router();
 
 const app = express();
 
@@ -31,9 +29,9 @@ app.use(cookieParser());
 const corsOptions = {
     origin: 'https://gerberthegoat.com',
     credentials: true,
-  };
+};
 
-  app.use(cors(corsOptions));
+app.use(cors(corsOptions));
 
 // Session Configuration
 app.use(session({
@@ -55,37 +53,9 @@ const vendingRoutes = require('./backend/routes/vendingRoutes');
 app.use('/api/users', userRoutes);
 app.use('/api/vending', vendingRoutes);
 
+// Static route to serve uploaded files
+app.use('/uploads', express.static('uploads'));
+
 app.listen(5000, () => {
     console.log("Server is running on port 5000");
 });
-
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-      cb(null, 'uploads/'); 
-    },
-    filename: (req, file, cb) => {
-      
-      const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-      cb(null, uniqueSuffix + path.extname(file.originalname));
-    }
-  });
-  
-  // File filter to only accept images
-  const fileFilter = (req, file, cb) => {
-    if (file.mimetype.startsWith('image/')) {
-      cb(null, true);
-    } else {
-      cb(new Error('Not an image! Please upload an image.'), false);
-    }
-  };
-  
-  const upload = multer({ 
-    storage: storage,
-    fileFilter: fileFilter,
-    limits: {
-      fileSize: 5 * 1024 * 1024 // 5MB limit
-    }
-  });
-  
-  
-  app.use('/uploads', express.static('uploads'));
