@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import './CSS/Login.css';
 
 function Login() {
@@ -80,7 +80,6 @@ async function doLogin(event: React.FormEvent) {
         />
       </form>
       <Link to="/createAccount">Sign Up</Link>
-      <button id="loginButton" className="signUpButton" onClick={sendToSignup}>
         Sign Up
       </button>
       <span id="loginResult">{message}</span>
