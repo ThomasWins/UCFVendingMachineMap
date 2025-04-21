@@ -506,23 +506,24 @@ return (
       <button className="favorites-close-button" onClick={toggleFavorites}>×</button>
       <h2>Favorites</h2>
 
-      {userData[0].Favorites.length === 0 ? (
-        <p>No favorites yet. Favorite a vending machine to see it here.</p>
-      ) : (
-        userData[0].Favorites.map(favId => {
-          const favoriteVending = vendingData.find(vending => vending.id === favId);
-          return favoriteVending ? (
-            <div
-              key={favoriteVending.id}
-              className="vending-item"
-              onClick={() => centerMapOnVending(favoriteVending.coordinates)}
-            >
-              <strong>{favoriteVending.name}</strong><br />
-              <span>{favoriteVending.building} - {favoriteVending.type}</span>
-            </div>
-          ) : null;
-        })
-      )}
+      {userData?.Favorites?.length === 0 ? (
+  <p>No favorites yet. Favorite a vending machine to see it here.</p>
+) : (
+  userData?.Favorites?.map(favId => {
+    const favoriteVending = vendingData.find(vending => vending.id === favId);
+    return favoriteVending ? (
+      <div
+        key={favoriteVending.id}
+        className="vending-item"
+        onClick={() => centerMapOnVending(favoriteVending.coordinates)}
+      >
+        <strong>{favoriteVending.name}</strong><br />
+        <span>{favoriteVending.building} - {favoriteVending.type}</span>
+      </div>
+    ) : null;
+  })
+)}
+
     </div>
     {/*formatting for the vending machine popup (i.e clicking on a marker)*/}
     {isVendingPopupOpen && selectedVending && (
