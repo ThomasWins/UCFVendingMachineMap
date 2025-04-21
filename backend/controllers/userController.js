@@ -138,7 +138,7 @@ exports.getUserProfile = async (req, res) => {
     const userId = req.params.userId;
 
     // Find the user
-    const user = await User.findOne({ userId: parseInt(userId) }).select('login firstName lastName favorites userId');
+    const user = await User.findOne({ userId: parseInt(userId) }).select('login firstName lastName favorites');
 
     // Throw an error if the user is not found
     if (!user) {
@@ -155,6 +155,35 @@ exports.getUserProfile = async (req, res) => {
       firstName: user.firstName,
       lastName: user.lastName,
       favorites: favoriteVendingMachines,
+    });
+
+    // Catch any other errors
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// Retrieve User's info
+exports.getUserInfo = async (req, res) => {
+
+  try {
+    // Obtain the userId as a parameter
+    const userId = req.params.userId;
+
+    // Find the user
+    const user = await User.findOne({ userId: parseInt(userId) }).select('login firstName lastName favorites userId');
+
+    // Throw an error if the user is not found
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    // Return the user's profile
+    res.status(200).json({
+      login: user.login,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      favorites: favoriteVendingMachines,
       userId: user.userId,
     });
 
@@ -163,6 +192,7 @@ exports.getUserProfile = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
 
 // User can add favorite vending machines
 exports.addFavorite = async (req, res) => {
