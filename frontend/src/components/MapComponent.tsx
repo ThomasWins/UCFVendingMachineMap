@@ -72,17 +72,31 @@ const MapComponent = ({ isVendingRequestPopupOpen: initialPopupOpen }: MapCompon
     image: null,
   });
 
+  const [userData, setUserData] = useState<any | null>(null);
+  const [currentUserId, setCurrentUserId] = useState<string>('');
+  const [currentUserName, setCurrentUserName] = useState<string>('');
+   
+    useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await fetch('/api/users/me', {
+          credentials: 'include',
+        });
+        const user = await response.json();
+        setUserData(user);
+        setCurrentUserId(user.userId.toString());
+        setCurrentUserName(`${user.firstName} ${user.lastName}`);
+      } catch (error) {
+        console.error('Failed to fetch user data:', error);
+      }
+    };
+
+    fetchUserData();
+  }, []);
+
+
   // this is just a spot I thought looked good at the center of ucf, important for centering later
   const originalCenter = [-81.2, 28.6000];
-
-
-  // HARDCODED REMOVE LATER!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-  const userData = [
-    { UserId: 1, Firstname: 'bob', Lastname: 'lob', Admin: 'false', Favorites: [1, 3,4,5,6] },
-  ];
-  const currentUserId = '1';
-  const currentUserName = 'Bob lob';
-
 
 
   const [vendingData, setVendingData] = useState([]);
