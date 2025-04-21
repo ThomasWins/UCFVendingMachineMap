@@ -77,22 +77,21 @@ const MapComponent = ({ isVendingRequestPopupOpen: initialPopupOpen }: MapCompon
   const [currentUserName, setCurrentUserName] = useState<string>('');
    
     useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const response = await fetch('/api/users/me', {
-          credentials: 'include',
-        });
-        const user = await response.json();
-        setUserData(user);
-        setCurrentUserId(user.userId.toString());
-        setCurrentUserName(`${user.firstName} ${user.lastName}`);
-      } catch (error) {
-        console.error('Failed to fetch user data:', error);
-      }
-    };
 
-    fetchUserData();
-  }, []);
+  const storedUserData = localStorage.getItem('userData');
+
+  if (storedUserData) {
+
+    const user = JSON.parse(storedUserData);
+
+    setUserData(user);
+    setCurrentUserId(user.userId.toString());
+    setCurrentUserName(`${user.firstName} ${user.lastName}`);
+  } else {
+    console.error('User data not found in localStorage');
+  }
+}, []);
+
 
 
   // this is just a spot I thought looked good at the center of ucf, important for centering later
