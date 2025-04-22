@@ -24,6 +24,7 @@ function ProfilePage(): JSX.Element {
       console.error('Error parsing user_data:', e);
       navigate('/');
     }
+  }
 
   
   return (
