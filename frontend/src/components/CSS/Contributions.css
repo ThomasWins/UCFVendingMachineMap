@@ -1,0 +1,24 @@
+
+.contributionsContainer {
+    margin-top: 1rem;
+  }
+  
+  .list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .card {
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    background: #fafafa;
+  }
+  
+  .image {
+    margin-top: 0.5rem;
+    max-width: 300px;
+    border-radius: 4px;
+  }
+  
