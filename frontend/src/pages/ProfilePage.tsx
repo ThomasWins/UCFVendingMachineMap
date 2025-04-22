@@ -32,7 +32,7 @@ function ProfilePage(): JSX.Element {
         <img src={profilePic} alt="Profile" className={styles.profileImage} />
       </div>
       <div className={styles.rightPanel}>
-        <h2 id="profileTitle">PROFILE MANAGER</h2>
+        <h2 className={styles.introUser}>PROFILE MANAGER</h2>
         <ul className={styles.menu}>
           <li>Favorites</li>
           <li>Contributions</li>
