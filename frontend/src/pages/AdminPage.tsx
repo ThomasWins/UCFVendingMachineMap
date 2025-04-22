@@ -29,68 +29,102 @@ const AdminPage = () => {
   const [selectedRequest, setSelectedRequest] = useState<VendingRequest | null>(null);
   const [adminComment, setAdminComment] = useState<string>('');
 
+  // call for the user data will check if the user is an admin
   useEffect(() => {
-    const userData = localStorage.getItem('user_data');
-    if (userData) {
-      const parsed = JSON.parse(userData);
-      setCurrentUser(parsed);
+  const userData = localStorage.getItem('user_data');
+  if (userData) {
+    const parsed = JSON.parse(userData);
+    setCurrentUser(parsed);
 
-      fetch(`https://gerberthegoat.com/api/users/${parsed.userId}/vending-requests`)
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error('Failed to fetch vending requests');
-          }
-          return response.json();
-        })
-        .then((data) => {
-          setRequests(data.requests);
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-    }
-  }, []);
-
-  const handleAction = async (status: 'approved' | 'rejected') => {
-    if (!selectedRequest || !currentUser) return;
-
-    try {
-      const res = await fetch(
-        `https://gerberthegoat.com/api/users/${currentUser.userId}/vending-requests/${selectedRequest._id}`,
-        {
-          method: 'PATCH',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ status, adminComment }),
+    fetch(`https://merntest.michaelwebsite.xyz/api/users/${parsed.userId}/vending-requests`)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Failed to fetch vending requests');
         }
-      );
+        return response.json();
+      })
+      .then((data) => {
+        const pendingRequests = data.requests.filter(
+          (request: VendingRequest) => request.status === 'pending'
+        );
+        setRequests(pendingRequests);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
+}, []);
 
-      const data = await res.json();
+// function for the approval or denial 
+const handleAction = async (status: 'approved' | 'rejected') => {
+  if (!selectedRequest || !currentUser) return;
 
-      if (res.ok) {
-        alert('Request processed!');
-        setRequests(prev => prev.filter(r => r._id !== selectedRequest._id));
-        setSelectedRequest(null);
-        setAdminComment('');
-      } else {
-        alert(data.error || 'Something went wrong.');
-      }
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  useEffect(() => {
+  try {
     
-    document.body.style.margin = '0';
-    document.body.style.display = 'block';
+    if (status === 'approved') {
+      const latestVendingRes = await fetch('https://gerberthegoat.com/api/vending/latest');
+      const latestVendingData = await latestVendingRes.json();
 
-    return () => {
+      let nextId = 1; 
+      if (latestVendingData.success && latestVendingData.vending) {
+        nextId = latestVendingData.vending.id + 1; 
+      }
 
-      document.body.style.margin = '';
-      document.body.style.display = '';
-    };
-  }, []);
+      const vendingPayload = {
+        id: nextId, 
+        building: selectedRequest.building,
+        description: selectedRequest.description,
+        type: selectedRequest.type,
+        lat: selectedRequest.coordinates.latitude,
+        lng: selectedRequest.coordinates.longitude,
+        imageUrl: selectedRequest.imagePath || null, 
+      };
 
+      const uploadRes = await fetch('https://gerberthegoat.com/api/vending/manual', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include', 
+        body: JSON.stringify(vendingPayload),
+      });
+
+      const uploadData = await uploadRes.json();
+
+      if (!uploadRes.ok) {
+        throw new Error(uploadData.error || 'Failed to add vending machine.');
+      }
+
+      alert('Vending machine approved and added!');
+    }
+ 
+    const res = await fetch(
+      `https://gerberthegoat.com/api/users/${currentUser.userId}/vending-requests/${selectedRequest._id}`,
+      {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ status, adminComment }),
+      }
+    );
+
+    const data = await res.json();
+
+    if (res.ok) {
+      alert('Request processed!');
+      setRequests(prev => prev.filter(r => r._id !== selectedRequest._id));
+      setSelectedRequest(null);
+      setAdminComment('');
+    } else {
+      alert(data.error || 'Something went wrong updating the request.');
+    }
+  } catch (err) {
+    console.error(err);
+    alert('An error occurred while processing the request.');
+  }
+};
+//mapbox section
   useEffect(() => {
     if (!selectedRequest) return;
 
@@ -126,6 +160,7 @@ const AdminPage = () => {
 
       {/* left box displaying the information idk if I like this format */}
       <div className="unique-admin-layout">
+        {/* Left Section: Request List */}
         <div className="unique-request-list-box">
           <h3>Vending Request List</h3>
           <div className="unique-request-list">
@@ -171,13 +206,13 @@ const AdminPage = () => {
             {/*doesn't do anything yet*/}
             {selectedRequest.imagePath && (
               <img
-                src={`https://merntest.michaelwebsite.xyz/${selectedRequest.imagePath}`}
+                src={`https://gerberthegoat.com/${selectedRequest.imagePath}`}
                 alt="Vending"
                 style={{ maxWidth: '100%', borderRadius: '8px' }}
               />
             )}
 
-            {/* I was going to format some scrolling here but i switched things up so now its all messed up*/}
+            {/* scrollable area FIX THIS IS UGLY */}
             <div className="unique-vending-scrollable-fields">
               <label>Admin Comment:</label>
               <textarea
@@ -207,4 +242,7 @@ const AdminPage = () => {
 };
 
 export default AdminPage;
+
+
+
 
