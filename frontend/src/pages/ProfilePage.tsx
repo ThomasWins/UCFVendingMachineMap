@@ -28,13 +28,11 @@ function ProfilePage(): JSX.Element {
     <div className={styles.container}>
       <NavBar />
       <div className={styles.leftPanel}>
-        <p style={{ fontSize: '2rem', fontWeight: 'bold', color: 'darkblue' }}>
-        Hello {userData.firstName} {userData.lastName}!
-        </p>
+        {userData && className={styles.introUser}>Hello {userData.firstName} {userData.lastName}!</p>}
         <img src={profilePic} alt="Profile" className={styles.profileImage} />
       </div>
       <div className={styles.rightPanel}>
-        <h2 className={styles.introUser}>PROFILE MANAGER</h2>
+        <h2 className={styles.profileTitle}>PROFILE MANAGER</h2>
         <ul className={styles.menu}>
           <li>Favorites</li>
           <li>Contributions</li>
