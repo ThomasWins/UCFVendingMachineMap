@@ -26,22 +26,22 @@ function ProfilePage(): JSX.Element {
 
   return (
     <div className={styles.wrapper}>
-    <div className={styles.container}>
-      <NavBar />
-      <div className={styles.leftPanel}>
-        {userData && ( <p className={styles.introUser}>
-        Hello {userData.firstName} {userData.lastName}!
-        </p>)}
-        <img src={profilePic} alt="Profile" className={styles.profileImage} />
+      <div className={styles.container}>
+        <NavBar />
+        <div className={styles.leftPanel}>
+          {userData && ( <p className={styles.introUser}>
+          Hello {userData.firstName} {userData.lastName}!
+          </p>)}
+          <img src={profilePic} alt="Profile" className={styles.profileImage} />
+        </div>
+        <div className={styles.rightPanel}>
+          <h2 className={styles.profileTitle}>PROFILE MANAGER</h2>
+          <ul className={styles.menu}>
+            <li>Favorites</li>
+            <li>Contributions</li>
+          </ul>
+        </div>
       </div>
-      <div className={styles.rightPanel}>
-        <h2 className={styles.profileTitle}>PROFILE MANAGER</h2>
-        <ul className={styles.menu}>
-          <li>Favorites</li>
-          <li>Contributions</li>
-        </ul>
-      </div>
-    </div>
     </div>
   );
 }
