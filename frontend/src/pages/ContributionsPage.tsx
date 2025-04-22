@@ -1,12 +1,12 @@
 import NavBar from '../components/NavBar';
-import ContributionsBody from '../components/ContributionsBody';
+import Contributions from '../components/Contributions';
 
 const ContributionsPage = () => {
 
 return (
   <div>
     <NavBar /> 
-    <ContributionsBody />
+    <Contributions />
   </div>
   );
 };
