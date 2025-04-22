@@ -20,7 +20,7 @@ const upload = multer({ storage });
 // POST /api/vending/upload
 router.post('/upload', upload.single('image'), async (req, res) => {
   try {
-    
+
     const { building, description, type, lat, lng } = req.body;
     const imageUrl = req.file ? `/uploads/${req.file.filename}` : null;
 
@@ -46,6 +46,79 @@ router.post('/upload', upload.single('image'), async (req, res) => {
   }
 });
 
+// make a new vending machine after approval, idk if I was supposed to use uploads above but the formatting was confusing me ^
+router.post('/manual', async (req, res) => {
+  try {
+    const {
+      id, 
+      building,
+      description,
+      type,
+      lat,
+      lng,
+      imageUrl,
+    } = req.body;
+
+    if (!id) {
+      return res.status(400).json({ error: 'ID is required' });
+    }
+
+    const existingVending = await Vending.findOne({ id });
+    if (existingVending) {
+      return res.status(400).json({ error: 'Vending machine with this ID already exists' });
+    }
+
+
+    const name = `${building} ${type} Vending`;
+    
+    const newVending = new Vending({
+      id, 
+      name, 
+      building,
+      description,
+      type,
+      coordinates: [parseFloat(lng), parseFloat(lat)], 
+      imageUrl: imageUrl || null, 
+      ratings: [], 
+      comments: [], 
+    });
+
+    
+    await newVending.save();
+
+    res.status(201).json({
+      success: true,
+      vending: newVending,
+    });
+  } catch (error) {
+    console.error('Error adding vending machine:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// probably easier way to do this but I needed this for making the id different
+// it current finds the highest value and picks one higher which is fine for now ig
+router.get('/latest', async (req, res) => {
+  try {
+    const latestVending = await Vending.findOne().sort({ id: -1 }); 
+
+    if (latestVending) {
+      res.status(200).json({
+        success: true,
+        vending: latestVending,
+      });
+    } else {
+      res.status(200).json({
+        success: true,
+        vending: null, 
+      });
+    }
+  } catch (error) {
+    console.error('Error fetching latest vending machine:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
 // get all of the vending machines from the database
 router.get('/', async (req, res) => {
   try {
@@ -60,7 +133,7 @@ router.get('/', async (req, res) => {
 
 router.post('/:id/comment', async (req, res) => {
   let { userId, userName, rating, comment } = req.body;
-  userId = parseInt(userId); 
+  userId = parseInt(userId);
   const vendingId = req.params.id;
 
   try {
@@ -92,7 +165,7 @@ router.post('/:id/comment', async (req, res) => {
 
 router.post('/:id/updateRating', async (req, res) => {
   let { userId, rating } = req.body;
-  userId = parseInt(userId); 
+  userId = parseInt(userId);
   const vendingId = req.params.id;
 
   try {
@@ -155,4 +228,9 @@ router.delete('/:id/comment/:commentId', async (req, res) => {
 
 
 module.exports = router;
+
+
+
+
+
 
