@@ -309,12 +309,12 @@ exports.submitVendingRequest = [
   async (req, res) => {
     try {
       const { userId } = req.params;
-      const { coordinates, description } = req.body;
+      const { latitude, longitude, description, building, type } = req.body;
       const imagePath = req.file ? req.file.path : null;
 
       // Validate input
-      if (!coordinates || !description) {
-        return res.status(400).json({ error: 'Coordinates and description are required' });
+      if (!latitude || !longitude || !description || !building || !type) {
+        return res.status(400).json({ error: 'Missing required fields' });
       }
 
       // Find the user by userId
@@ -327,9 +327,14 @@ exports.submitVendingRequest = [
       const request = new VendingRequest({
         userId: user.userId,
         userLogin: user.login,
-        coordinates,
+        coordinates: {
+          latitude: parseFloat(latitude),
+          longitude: parseFloat(longitude)
+        },
         description,
         imagePath,
+        building,
+        type,
         status: 'pending',
         submittedAt: new Date()
       });
