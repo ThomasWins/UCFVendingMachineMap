@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
-import styles from './CSS/Contributions.css';
+import  './CSS/Contributions.css';
 
 interface Contribution {
   _id: string;
@@ -47,18 +47,18 @@ const Contributions: React.FC<ContributionsListProps> = ({ userId }) => {
   if (contributions.length === 0) return <p>No contributions found.</p>;
 
   return (
-    <div className={styles.contributionsContainer}>
+    <div className="contributionsContainer">
       <h3>Your Contributions</h3>
-      <ul className={styles.list}>
+      <ul className="list">
         {contributions.map((item) => (
-          <li key={item._id} className={styles.card}>
+          <li key={item._id} className="card">
             <p><strong>Description:</strong> {item.description}</p>
             <p><strong>Building:</strong> {item.building}</p>
             <p><strong>Type:</strong> {item.type}</p>
             <p><strong>Status:</strong> {item.status}</p>
             <p><strong>Submitted At:</strong> {new Date(item.submittedAt).toLocaleString()}</p>
             {item.adminComment && <p><strong>Admin Comment:</strong> {item.adminComment}</p>}
-            {item.imagePath && <img src={`/${item.imagePath}`} alt="Vending submission" className={styles.image} />}
+            {item.imagePath && <img src={`/${item.imagePath}`} alt="Vending submission" className="image" />}
           </li>
         ))}
       </ul>
