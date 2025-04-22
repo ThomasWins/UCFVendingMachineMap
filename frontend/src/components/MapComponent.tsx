@@ -79,7 +79,7 @@ const MapComponent = ({ isVendingRequestPopupOpen: initialPopupOpen }: MapCompon
 
 const fetchVendingData = async () => {
   try {
-    const res = await fetch('https://merntest.michaelwebsite.xyz/api/vending');
+    const res = await fetch('https://gerberthegoat.com/api/vending');
     const data = await res.json();
     setVendingData(data);
   } catch (err) {
