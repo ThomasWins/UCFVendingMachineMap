@@ -37,7 +37,7 @@ function ProfilePage(): JSX.Element {
         <div className={styles.rightPanel}>
           <h2 className={styles.profileTitle}>PROFILE MANAGER</h2>
           <ul className={styles.menu}>
-            <li><Link to="/map" state={{ toggleFavorites: true }}>Favorites</Link></li>
+            <li>Favorites</li>
             <li>Contributions</li>
           </ul>
         </div>
