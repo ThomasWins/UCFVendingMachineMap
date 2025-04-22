@@ -300,7 +300,7 @@ const handleVendingRequestSubmit = async (e: React.FormEvent) => {
   }
 
   try {
-    const response = await fetch('/api/vending/upload', {
+    const response = await fetch(`/api/users/${currentUserId}/vending-requests`, {
       method: 'POST',
       body: formData,
       credentials: 'include' // Important for sessions
