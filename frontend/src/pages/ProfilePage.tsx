@@ -42,7 +42,7 @@ function ProfilePage(): JSX.Element {
           <h2 className={styles.profileTitle}>PROFILE MANAGER</h2>
           <ul className={styles.menu}>
             <li>Favorites</li>
-            <li onClick={goToContributions}>>Contributions</li>
+            <li><div onClick={goToContributions}>Contributions</div></li>
           </ul>
         </div>
       </div>
