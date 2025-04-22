@@ -38,7 +38,7 @@ function ProfilePage(): JSX.Element {
           <h2 className={styles.profileTitle}>PROFILE MANAGER</h2>
           <ul className={styles.menu}>
             <li>Favorites</li>
-            <li>Contributions</li>
+            <li><Link to="/profile/contributions">Contributions</Link></li>
           </ul>
         </div>
       </div>
