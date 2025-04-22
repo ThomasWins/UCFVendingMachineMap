@@ -1,3 +1,11 @@
+.wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+}
+
 .container {
     display: flex;
     padding: 1rem;
@@ -45,19 +53,21 @@
     cursor: pointer;
     font-weight: 500;
     color: #333;
+    transition: all 0.3s ease;
   }
   
   .menu li:hover {
     color: #007bff;
+    transform: scale(1.05);
   }
 
 .profileTitle {
-    font-size: 3rem;
+    font-size: 2rem;
     font-weight: bold;
 }
 
 .introUser {
-    font-size: 2rem;
+    font-size: 1.7rem;
     font-weight: bold;
     color: darkblue;
 }
