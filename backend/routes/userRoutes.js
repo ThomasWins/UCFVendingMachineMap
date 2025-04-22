@@ -3,7 +3,7 @@ const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/userController');
 
-// User's basic operations
+// User's Register/Login/Logout
 router.post('/register', userController.registerUser);
 router.post('/login', userController.loginUser);
 router.post('/logout', userController.logoutUser);
@@ -16,19 +16,19 @@ router.delete('/:userId/favorites/:vendingId', userController.removeFavorite);
 // User's profile
 router.get('/profile/:userId', userController.getUserProfile);
 
-// user info
+// User's info
 router.get('/info/:userId', userController.getUserInfo);
 
-// Submit a new vending machine request
+// User's vending machine request submission
 router.post('/:userId/vending-requests', userController.submitVendingRequest);
+
+// User's contributions
+router.get('/:userId/contributions', userController.getUserContributions);
 
 // Get all vending machine requests (admin only)
 router.get('/:userId/vending-requests', userController.getVendingRequests);
 
-// Update a vending request status (admin only)
+// Update a vending machine's request status (admin only)
 router.patch('/:userId/vending-requests/:requestId', userController.updateVendingRequest);
-
-// Get a user's contributions/submissions
-router.get('/:userId/contributions', userController.getUserContributions);
 
 module.exports = router;
