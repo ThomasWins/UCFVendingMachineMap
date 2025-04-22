@@ -36,7 +36,7 @@ const AdminPage = () => {
     const parsed = JSON.parse(userData);
     setCurrentUser(parsed);
 
-    fetch(`https://merntest.michaelwebsite.xyz/api/users/${parsed.userId}/vending-requests`)
+    fetch(`https://gerberthegoat.com/api/users/${parsed.userId}/vending-requests`)
       .then((response) => {
         if (!response.ok) {
           throw new Error('Failed to fetch vending requests');
