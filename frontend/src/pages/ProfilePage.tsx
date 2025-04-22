@@ -24,6 +24,10 @@ function ProfilePage(): JSX.Element {
     }
   }, [navigate]);
 
+  const goToContributions = () => {
+    navigate('/profile/contributions'); // Navigate programmatically to the contributions page
+  };
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.container}>
@@ -38,7 +42,7 @@ function ProfilePage(): JSX.Element {
           <h2 className={styles.profileTitle}>PROFILE MANAGER</h2>
           <ul className={styles.menu}>
             <li>Favorites</li>
-            <li><Link to="/profile/contributions">Contributions</Link></li>
+            <li onClick={goToContributions}>>Contributions</li>
           </ul>
         </div>
       </div>
