@@ -1,87 +1,64 @@
-import React, { useState, useEffect } from 'react';
-import './CSS/Contributions.css';
 
-interface VendingRequest {
-  userId: number;
-  userLogin: string;
+import React, { useEffect, useState } from 'react';
+import  './CSS/Contributions.css';
+
+interface Contribution {
+  _id: string;
+  description: string;
   building: string;
   type: string;
-  coordinates: {
-    latitude: number;
-    longitude: number;
-  };
-  description: string;
-  imagePath?: string;
   status: string;
   submittedAt: string;
-  processedAt?: string;
-  processedBy?: number;
+  imagePath?: string;
   adminComment?: string;
 }
 
-interface Rating {
+interface ContributionsListProps {
   userId: number;
-  rating: number;
 }
 
-interface ContributionsProps {
-  userId: number;
-  vendingMachineId: number;
-}
-
-const Contributions: React.FC<ContributionsProps> = ({ userId, vendingMachineId }) => {
-  const [vendingRequests, setVendingRequests] = useState<VendingRequest[]>([]);
-  const [ratings, setRatings] = useState<Rating[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+const Contributions: React.FC<ContributionsListProps> = ({ userId }) => {
+  const [contributions, setContributions] = useState<Contribution[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const fetchVendingRequests = async () => {
+    const fetchContributions = async () => {
       try {
         const response = await fetch(`/api/users/${userId}/contributions`);
+        if (!response.ok) {
+          throw new Error(`Error ${response.status}: ${response.statusText}`);
+        }
+
         const data = await response.json();
-        setVendingRequests(data);
-      } catch (error) {
-        console.error('Error fetching vending requests:', error);
+        setContributions(data.contributions);
+      } catch (err: any) {
+        setError(err.message || 'Failed to load contributions');
+      } finally {
+        setLoading(false);
       }
     };
 
-    const fetchRatings = async () => {
-      try {
-        const response = await fetch(`/api/users/${userId}/vending/${vendingMachineId}/ratings`);
-        const data = await response.json();
-        setRatings(data);
-      } catch (error) {
-        console.error('Error fetching ratings:', error);
-      }
-    };
+    fetchContributions();
+  }, [userId]);
 
-    fetchVendingRequests();
-    fetchRatings();
-
-    setLoading(false);
-  }, [userId, vendingMachineId]);
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
+  if (loading) return <p>Loading contributions...</p>;
+  if (error) return <p style={{ color: 'red' }}>{error}</p>;
+  if (contributions.length === 0) return <p>No contributions found.</p>;
 
   return (
-    <div>
-      <h2>Vending Requests</h2>
-      <ul>
-        {vendingRequests.map((request) => (
-          <li key={request.userId}>
-            <strong>{request.userLogin}</strong> requested a vending machine at {request.building}.
-            Status: {request.status}
-          </li>
-        ))}
-      </ul>
-
-      <h2>Ratings</h2>
-      <ul>
-        {ratings.map((rating, index) => (
-          <li key={index}>
-            User ID: {rating.userId} gave a rating of {rating.rating}
+    <div className="contributionsContainer">
+      <h3>Your Contributions</h3>
+      <ul className="list">
+        {contributions.map((item) => (
+          <li key={item._id} className="card">
+            <p><strong>Description:</strong> {item.description}</p>
+            <p><strong>Building:</strong> {item.building}</p>
+            <p><strong>Type:</strong> {item.type}</p>
+            <p><strong>Status:</strong> {item.status}</p>
+            <p><strong>Submitted At:</strong> {new Date(item.submittedAt).toLocaleString()}</p>
+            {item.adminComment && <p><strong>Admin Comment:</strong> {item.adminComment}</p>}
+            {item.imagePath && <img src={`/${item.imagePath}`} alt="Vending submission" className="image" />}
           </li>
         ))}
       </ul>
@@ -90,4 +67,3 @@ const Contributions: React.FC<ContributionsProps> = ({ userId, vendingMachineId 
 };
 
 export default Contributions;
-
