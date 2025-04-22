@@ -35,7 +35,7 @@ const AdminPage = () => {
       const parsed = JSON.parse(userData);
       setCurrentUser(parsed);
 
-      fetch(`https://https://gerberthegoat.com/home/api/users/${parsed.userId}/vending-requests`)
+      fetch(`https://gerberthegoat.com/api/users/${parsed.userId}/vending-requests`)
         .then((response) => {
           if (!response.ok) {
             throw new Error('Failed to fetch vending requests');
@@ -56,7 +56,7 @@ const AdminPage = () => {
 
     try {
       const res = await fetch(
-        `https://https://gerberthegoat.com/home/api/users/${currentUser.userId}/vending-requests/${selectedRequest._id}`,
+        `https://gerberthegoat.com/api/users/${currentUser.userId}/vending-requests/${selectedRequest._id}`,
         {
           method: 'PATCH',
           headers: { 'Content-Type': 'application/json' },
