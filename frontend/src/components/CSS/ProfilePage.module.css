@@ -9,11 +9,12 @@
 .container {
     display: flex;
     padding: 1rem;
-    width: 900px;
+    max-width: 900px;
     margin: auto;
     border: 1px solid #ddd;
     background-color: #fafafa;
-    height: 500px;
+    height: 100vh;
+    max-height: 500px;
     font-family: Cera pro, Trebuchet MS, sans-serif;
     border-radius: 12px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
