@@ -32,7 +32,7 @@ function ProfilePage(): JSX.Element {
       </div>
       <div className={styles.rightPanel}>
         <h2>PROFILE MANAGER</h2>
-        {userData && <p>Hello {userData.firstName} {userData.lastName}</p>}
+        {userData && <p id="introUser">Hello {userData.firstName} {userData.lastName}!</p>}
         <ul className={styles.menu}>
           <li>Favorites</li>
           <li>Contributions</li>
