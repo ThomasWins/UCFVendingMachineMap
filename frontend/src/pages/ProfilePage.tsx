@@ -1,4 +1,4 @@
-import React, { JSX } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from '../components/CSS/ProfilePage.module.css';
 import profilePic from '../assets/profilepictureicon.jpg';
 import { useNavigate } from 'react-router-dom';
@@ -6,36 +6,33 @@ import { useNavigate } from 'react-router-dom';
 import NavBar from '../components/NavBar.tsx';
 
 function ProfilePage(): JSX.Element {
-
-  const navigate = useNavigate(); 
-  let isLoggedIn = false;
+  const navigate = useNavigate();
+  const [userData, setUserData] = useState<{ firstName: string; lastName: string } | null>(null);
 
   useEffect(() => {
     const _ud = localStorage.getItem('user_data');
     try {
-      const userData = _ud ? JSON.parse(_ud) : null;
-      if (userData && userData.userId) {
-        isLoggedIn = true;
-      }
-      else {
+      const parsedData = _ud ? JSON.parse(_ud) : null;
+      if (parsedData && parsedData.userId) {
+        setUserData({ firstName: parsedData.firstName, lastName: parsedData.lastName });
+      } else {
         navigate('/');
       }
     } catch (e) {
       console.error('Error parsing user_data:', e);
       navigate('/');
     }
-  }
+  }, [navigate]);
 
-  
   return (
     <div className={styles.container}>
-        <NavBar />
+      <NavBar />
       <div className={styles.leftPanel}>
         <img src={profilePic} alt="Profile" className={styles.profileImage} />
       </div>
       <div className={styles.rightPanel}>
         <h2>PROFILE MANAGER</h2>
-        <p>Hello {user_data.firstName} {user_data.lastName}</p>
+        {userData && <p>Hello {userData.firstName} {userData.lastName}</p>}
         <ul className={styles.menu}>
           <li>Favorites</li>
           <li>Contributions</li>
@@ -46,4 +43,3 @@ function ProfilePage(): JSX.Element {
 }
 
 export default ProfilePage;
-
