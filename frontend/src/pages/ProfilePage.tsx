@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styles from '../components/CSS/ProfilePage.module.css';
 import profilePic from '../assets/profilepictureicon.jpg';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 import NavBar from '../components/NavBar.tsx';
 
@@ -37,7 +37,7 @@ function ProfilePage(): JSX.Element {
         <div className={styles.rightPanel}>
           <h2 className={styles.profileTitle}>PROFILE MANAGER</h2>
           <ul className={styles.menu}>
-            <li>Favorites</li>
+            <li><Link to="/map" state={{ toggleFavorites: true }}>Favorites</Link></li>
             <li>Contributions</li>
           </ul>
         </div>
