@@ -51,12 +51,46 @@ function Register() {
         };
         localStorage.setItem('user_data', JSON.stringify(user));
         setMessage('');
-        navigate('/home'); // Set to home page later (wherever we want new user directed)
       }
     } catch (error) {
       alert(error.toString());
     }
   }
+
+  try {
+    const response = await fetch('/api/users/login', {
+      method: 'POST',
+      body: js,
+      headers: { 'Content-Type': 'application/json' }
+    });
+
+    if (response.status === 401) {
+      const errorData = await response.json();
+      setMessage(errorData.error || 'User/Password combination incorrect');
+      return;
+    }
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.error || 'Network response was not ok');
+    }
+
+    const res = await response.json();
+
+    if (res.success) {
+      // Store the entire user object in localStorage
+      localStorage.setItem('user_data', JSON.stringify(res.user));
+      
+      setMessage('');
+      navigate('/home');
+    } else {
+      setMessage('An unexpected error occurred.');
+    }
+  } catch (error) {
+    console.error('Login error:', error);
+    setMessage(error.message || 'An error occurred during login. Please try again.');
+  }
+}
   const sendToLogin = () => {
     navigate('../');
   };
