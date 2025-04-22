@@ -1,0 +1,186 @@
+/*this whole css file is an absolute mess some of these things aren't even used and most if it is just css snippets from mapstyles.css but with unique in front so I can change stuff without it messing with my files*/
+.unique-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  backdrop-filter: blur(5px);
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: -1;
+}
+
+.unique-background-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -2;
+}
+
+.unique-admin-container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+  color: #222;
+  margin: 0;
+  padding: 0;
+}
+
+.unique-admin-layout {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  padding: 40px;
+  gap: 60px;
+  z-index: 2;
+  height: calc(100vh - 80px);
+}
+
+.unique-request-list-box,
+.unique-vending-request-popup {
+  width: 42%;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+.unique-request-list-box h3,
+.unique-vending-request-popup h3 {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.unique-request-list-box p {
+  font-size: 15px;
+  margin: 4px 0;
+  color: #333;
+}
+
+.unique-request-list {
+  flex-grow: 1;
+  overflow-y: auto;
+  margin-top: 10px;
+}
+
+.unique-request-card {
+  border: 1px solid #ddd;
+  padding: 14px 16px;
+  margin-bottom: 14px;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background-color 0.2s ease;
+  font-size: 14px;
+}
+
+.unique-request-card:hover {
+  background-color: #f0f0f0;
+}
+
+.unique-close-vending-request-popup {
+  position: absolute;
+  font-size: 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #666;
+}
+
+.unique-vending-request-popup label {
+  font-weight: 600;
+  font-size: 14px;
+  margin-top: 12px;
+  color: #444;
+}
+
+.unique-vending-request-popup p {
+  font-size: 15px;
+  margin: 4px 0;
+  color: #333;
+}
+
+.unique-vending-request-popup input,
+.unique-vending-request-popup textarea,
+.unique-vending-request-popup select {
+  width: 97.5%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.unique-vending-request-popup button[type="submit"] {
+  margin-top: 12px;
+  padding: 10px 16px;
+  background-color: #0070f3;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.unique-vending-request-popup button[type="submit"]:hover {
+  background-color: #0059c1;
+}
+
+#unique-popup-map {
+  height: 400px;
+  width: 100%;
+  border-radius: 8px;
+  margin-top: 10px;
+  flex-shrink: 0;
+}
+
+.unique-vending-scrollable-fields {
+  overflow-y: auto;
+  flex-grow: 1;
+  overflow-x: hidden;
+  padding-right: 4px;
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.unique-info-box {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 12px;
+  font-size: 14px;
+  color: #333;
+  word-break: break-word;
+  white-space: pre-line;
+  min-height: 60px;
+}
+
+/* makes it move n stuff idk if i like this or not */
+@media (max-width: 1000px) {
+  .unique-admin-layout {
+    flex-direction: column;
+    align-items: center;
+    height: auto;
+  }
+
+  .unique-request-list-box,
+  .unique-vending-request-popup {
+    width: 90%;
+    min-height: unset;
+  }
+}
+
+
+
+
+
+
