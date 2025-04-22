@@ -3,7 +3,7 @@ const User = require('../models/userModel');
 const Vending = require('../models/vendingModel');
 const VendingRequest = require('../models/vendingRequestModel');
 const upload = require('../middleware/uploads');
-
+const { exec } = require('child_process'); // For executing automated scripts to upload images to server
 // User Registration
 exports.registerUser = async (req, res) => {
   try {
@@ -340,6 +340,19 @@ exports.submitVendingRequest = [
       });
 
       await request.save();
+      
+      // Trigger the auto-commit script if an image was uploaded
+      if (imagePath) {
+        exec('bash /opt/bitnami/projects/cards/auto-commit-uploads.sh', (err, stdout, stderr) => {
+          if (err) {
+            console.error('Auto commit failed:', err);
+            // Don't return here - we still want to send the response
+          } else {
+            console.log('Auto commit successful:', stdout);
+          }
+        });
+      }
+      
       return res.status(201).json({
         message: 'Vending machine request submitted successfully',
         requestId: request._id
