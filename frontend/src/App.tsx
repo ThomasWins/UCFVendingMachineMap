@@ -9,6 +9,7 @@ import TheGoat from './pages/TheGoatPage';
 import MapPage from './pages/MapPage';
 import ProfilePage from './pages/ProfilePage';
 import AdminPage from './pages/AdminPage';
+import ContributionsPage from './pages/ContributionsPage';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/secret" element={<TheGoat />} />
         <Route path="/admin" element={<AdminPage/>} />
         <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/profile/contributions" element={<ContributionsPage />} />
       </Routes>
     </Router>
   );
