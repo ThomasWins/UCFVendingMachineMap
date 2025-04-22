@@ -303,8 +303,8 @@ const handleVendingRequestSubmit = async (e: React.FormEvent) => {
   formData.append('building', vendingForm.building);
   formData.append('description', vendingForm.description);
   formData.append('type', vendingForm.type);
-  formData.append('coordinates[latitude]', requestCoords[1].toString());
-  formData.append('coordinates[longitude]', requestCoords[0].toString());
+  formData.append('latitude', requestCoords[1].toString());
+  formData.append('longitude', requestCoords[0].toString());
 
 
   if (vendingForm.image) {
