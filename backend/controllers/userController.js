@@ -108,11 +108,11 @@ exports.getUserProfile = async (req, res) => {
     // Obtain the userId as a parameter
     const userId = req.params.userId;
     const parsedUserId = parseInt(userId);
+    
+    console.log(`Looking up profile for userId: ${parsedUserId}`);
 
     // Find the user
     const user = await User.findOne({ userId: parsedUserId }).select('login firstName lastName favorites');
-
-    // Throw an error if the user is not found
     if (!user) {
       return res.status(404).json({ error: 'User not found' });
     }
@@ -120,68 +120,61 @@ exports.getUserProfile = async (req, res) => {
     // Retrieve favorite vending machines
     const favoriteVendingMachines = await Vending.find({ id: { $in: user.favorites } })
       .select('name building type');
+    
+    // Direct check for comments/ratings to verify data exists
+    const checkVending = await Vending.findOne({
+      $or: [
+        { 'comments.userId': parsedUserId },
+        { 'ratings.userId': parsedUserId }
+      ]
+    });
+    
+    console.log(`Direct DB check: User has comments/ratings: ${checkVending ? 'YES' : 'NO'}`);
+    
+    // Try simpler approach instead of aggregation
+    const allVendings = await Vending.find({
+      $or: [
+        { 'comments.userId': parsedUserId },
+        { 'ratings.userId': parsedUserId }
+      ]
+    }).select('id name building comments ratings');
+    
+    console.log(`Found ${allVendings.length} vending machines with user interactions`);
 
-    // Find vending machines where the user has comments or ratings
-    const userInteractions = await Vending.aggregate([
-      // Match vending machines that have comments or ratings from this user
-      {
-        $match: {
-          $or: [
-            { 'comments.userId': parsedUserId },
-            { 'ratings.userId': parsedUserId }
-          ]
-        }
-      },
-      // Project only the fields we need
-      {
-        $project: {
-          id: 1,
-          name: 1,
-          building: 1,
-          userComments: {
-            $filter: {
-              input: '$comments',
-              as: 'comment',
-              cond: { $eq: ['$$comment.userId', parsedUserId] }
-            }
-          },
-          userRatings: {
-            $filter: {
-              input: '$ratings',
-              as: 'rating',
-              cond: { $eq: ['$$rating.userId', parsedUserId] }
-            }
-          }
-        }
-      }
-    ]);
-
-    // Extract comments and ratings from the aggregation results
     const comments = [];
     const ratings = [];
 
-    userInteractions.forEach(vending => {
-      // Add each comment with vending machine info
-      vending.userComments.forEach(comment => {
-        comments.push({
-          vendingId: vending.id,
-          vendingName: vending.name,
-          building: vending.building,
-          rating: comment.rating,
-          text: comment.comment,
+    // Process each vending machine
+    allVendings.forEach(vending => {
+      // Extract matching comments
+      if (vending.comments && Array.isArray(vending.comments)) {
+        const userComments = vending.comments.filter(c => c.userId === parsedUserId);
+        userComments.forEach(comment => {
+          comments.push({
+            vendingId: vending.id,
+            vendingName: vending.name,
+            building: vending.building,
+            rating: comment.rating,
+            text: comment.comment
+          });
         });
-      });
-
-      // Add each rating with vending machine info
-      vending.userRatings.forEach(rating => {
-        ratings.push({
-          vendingId: vending.id,
-          vendingName: vending.name,
-          building: vending.building,
-          rating: rating.rating
+      }
+      
+      // Extract matching ratings
+      if (vending.ratings && Array.isArray(vending.ratings)) {
+        const userRatings = vending.ratings.filter(r => r.userId === parsedUserId);
+        userRatings.forEach(rating => {
+          ratings.push({
+            vendingId: vending.id,
+            vendingName: vending.name,
+            building: vending.building,
+            rating: rating.rating
+          });
         });
-      });
+      }
     });
+    
+    console.log(`Extracted ${comments.length} comments and ${ratings.length} ratings`);
 
     // Return the user's profile with comments and ratings included
     res.status(200).json({
@@ -194,6 +187,7 @@ exports.getUserProfile = async (req, res) => {
     });
 
   } catch (error) {
+    console.error('Error in getUserProfile:', error);
     res.status(500).json({ error: error.message });
   }
 };
