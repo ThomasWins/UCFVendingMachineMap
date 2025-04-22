@@ -4,14 +4,18 @@
     max-width: 900px;
     margin: auto;
     border: 1px solid #ddd;
-    border-radius: 10px;
     background-color: #fafafa;
     height: 100vh;
+    max-height: 500px;
+    font-family: Cera pro, Trebuchet MS, sans-serif;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
   
   .leftPanel {
     flex: 1;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
   }
@@ -46,4 +50,15 @@
   .menu li:hover {
     color: #007bff;
   }
+
+#profileTitle {
+    font-size: 3rem;
+    font-weight: bold;
+}
+
+#introUser {
+    font-size: 2rem;
+    font-weight: bold;
+    color: darkblue;
+}
   
