@@ -28,7 +28,9 @@ function ProfilePage(): JSX.Element {
     <div className={styles.container}>
       <NavBar />
       <div className={styles.leftPanel}>
-        {userData && className={styles.introUser}>Hello {userData.firstName} {userData.lastName}!</p>}
+        {userData && ( <p className={styles.introUser}>
+        Hello {userData.firstName} {userData.lastName}!
+        </p>)}
         <img src={profilePic} alt="Profile" className={styles.profileImage} />
       </div>
       <div className={styles.rightPanel}>
