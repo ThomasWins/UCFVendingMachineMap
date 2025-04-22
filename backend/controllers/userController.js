@@ -2,7 +2,7 @@
 const User = require('../models/userModel');
 const Vending = require('../models/vendingModel');
 const VendingRequest = require('../models/vendingRequestModel');
-const upload = require('../middleware/upload');
+const upload = require('../middleware/uploads');
 
 // User Registration
 exports.registerUser = async (req, res) => {
