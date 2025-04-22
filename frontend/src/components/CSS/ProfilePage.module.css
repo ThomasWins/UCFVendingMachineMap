@@ -51,12 +51,12 @@
     color: #007bff;
   }
 
-#profileTitle {
+.profileTitle {
     font-size: 3rem;
     font-weight: bold;
 }
 
-#introUser {
+.introUser {
     font-size: 2rem;
     font-weight: bold;
     color: darkblue;
