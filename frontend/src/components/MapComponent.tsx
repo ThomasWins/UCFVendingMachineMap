@@ -77,7 +77,17 @@ const MapComponent = ({ isVendingRequestPopupOpen: initialPopupOpen }: MapCompon
   const [currentUserName, setCurrentUserName] = useState<string>('');
 
 
-  //test to see if it works 
+const fetchVendingData = async () => {
+  try {
+    const res = await fetch('https://merntest.michaelwebsite.xyz/api/vending');
+    const data = await res.json();
+    setVendingData(data);
+  } catch (err) {
+    console.error('Error fetching vending data:', err);
+  }
+};
+
+  //test to see if it works
  useEffect(() => {
     const fetchFullUserData = async (userId: number) => {
       try {
@@ -90,9 +100,9 @@ const MapComponent = ({ isVendingRequestPopupOpen: initialPopupOpen }: MapCompon
         const user_data = await response.json();
 
         console.log('Full user data:', user_data);
-        
+
         setUserData(user_data);
-        setCurrentUserId(user_data.userId);    
+        setCurrentUserId(user_data.userId);
         setCurrentUserName(`${user_data.firstName} ${user_data.lastName}`);
       } catch (err: any) {
         console.error('Error fetching user profile:', err.message);
@@ -124,7 +134,7 @@ useEffect(() => {
     // Set the local state based on the initial prop
     setIsVendingRequestPopupOpen(initialPopupOpen);
 }, [initialPopupOpen]);
-  
+
 // does some api stuff idk im frontend
 useEffect(() => {
   fetch('https://gerberthegoat.com/api/vending')
@@ -159,7 +169,7 @@ const renderMarkers = (mapInstance: mapboxgl.Map) => {
   });
 };
 const navigate = useNavigate();
-  
+
 const goHome = () => {
     navigate('/home');
   };
@@ -170,7 +180,7 @@ const goAdmin = () => {
 
 // set the rating for the user if it is changed this now works when clicking on stars!
 const handleRatingChange = async (rating) => {
-  setUserRating(rating); 
+  setUserRating(rating);
 
   if (selectedVending && currentUserId) {
     const payload = {
@@ -190,6 +200,7 @@ const handleRatingChange = async (rating) => {
       if (response.ok && data.success) {
         console.log('Rating updated successfully!');
         setSelectedVending(data.vending);
+        fetchVendingData();
       } else {
         console.error('failed to update rating:', data.error || data.message);
       }
@@ -206,7 +217,7 @@ const handleRatingChange = async (rating) => {
     document.body.style.overflow = 'hidden';
     document.body.style.padding = '0';
     document.body.style.color = '#5e5e5e';
-    
+
     mapboxgl.accessToken = 'pk.eyJ1IjoibWljYWFsbGUiLCJhIjoiY203dHAwM2N1MXdpbjJsb240djF3cWVnMCJ9.lIqkPrRisBYi0eR9iBjMOQ';
 
     const mapInstance = new mapboxgl.Map({
@@ -224,14 +235,14 @@ const handleRatingChange = async (rating) => {
     mapInstance.addControl(new mapboxgl.NavigationControl(), 'bottom-right');
     setMap(mapInstance);
 
-    return () => mapInstance.remove();
-    // Reset scroll styles
-    document.body.style.overflow = 'auto';
+     return () => {
+    mapInstance.remove();
     document.body.style.margin = '';
+    document.body.style.overflow = 'auto';
     document.body.style.padding = '';
     document.body.style.color = '';
-    }, []);
-
+  };
+}, []);
 
 // this is the second mapbox instance made when the vending request popup is made. We probably need a third for the admin stuff
 useEffect(() => {
@@ -295,7 +306,7 @@ const handleVendingRequestSubmit = async (e: React.FormEvent) => {
   formData.append('coordinates[latitude]', requestCoords[1].toString());
   formData.append('coordinates[longitude]', requestCoords[0].toString());
 
-  
+
   if (vendingForm.image) {
     formData.append('image', vendingForm.image);
   }
@@ -312,7 +323,7 @@ const handleVendingRequestSubmit = async (e: React.FormEvent) => {
     }
 
     const data = await response.json();
-    
+
     // Reset form and close popup on success
     setVendingForm({
       building: '',
@@ -322,8 +333,8 @@ const handleVendingRequestSubmit = async (e: React.FormEvent) => {
       image: null
     });
     setIsVendingRequestPopupOpen(false);
-    
-    
+
+
 
   } catch (error) {
     console.error('Error uploading:', error);
@@ -381,6 +392,7 @@ const handleSubmitComment = async () => {
     const data = await res.json();
     if (res.ok) {
       setSelectedVending(data.vending);
+      fetchVendingData();
       setUserComment('');
     } else {
       console.error('Server error:', data.error || data.message);
@@ -428,7 +440,6 @@ const handleSubmitComment = async () => {
     if (map) {
       map.setStyle(style);
       setShowStylePopup(false);
-      setCurrentMapStyle(style);
     }
   };
 
@@ -537,9 +548,9 @@ return (
     <div className={`favorites-popup ${isFavoritesOpen ? 'open' : ''}`}>
       <button className="favorites-close-button" onClick={toggleFavorites}>×</button>
       <h2>Favorites</h2>
-      
+
 {userData?.favorites?.length === 0 ? (
-  <p>No favorites yet. Favorite a vending machine to see it here.</p>
+  <p>Favorite a vending machine to see it here.</p>
 ) : (
   userData?.favorites?.map(favId => {
     const favoriteVending = vendingData.find(vending => vending.id === favId);
@@ -830,4 +841,12 @@ return (
 };
 
 export default MapComponent;
+
+
+
+
+
+
+
+
 
