@@ -28,7 +28,9 @@ function ProfilePage(): JSX.Element {
     <div className={styles.container}>
       <NavBar />
       <div className={styles.leftPanel}>
-        {userData && <p id="introUser">Hello {userData.firstName} {userData.lastName}!</p>}
+        {userData <p style={{ fontSize: '2rem', fontWeight: 'bold', color: 'darkblue' }}>
+        Hello {userData.firstName} {userData.lastName}!
+        </p>}
         <img src={profilePic} alt="Profile" className={styles.profileImage} />
       </div>
       <div className={styles.rightPanel}>
