@@ -212,8 +212,6 @@ const handleAction = async (status: 'approved' | 'rejected') => {
               />
             )}
 
-            {/* scrollable area FIX THIS IS UGLY */}
-            <div className="unique-vending-scrollable-fields">
               <label>Admin Comment:</label>
               <textarea
                 placeholder="Optional admin comment"
@@ -233,7 +231,6 @@ const handleAction = async (status: 'approved' | 'rejected') => {
               >
                 Reject
               </button>
-            </div>
           </div>
         )}
       </div>
