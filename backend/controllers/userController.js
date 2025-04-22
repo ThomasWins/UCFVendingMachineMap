@@ -67,24 +67,6 @@ exports.loginUser = async (req, res) => {
 
     console.log("Mapped userData:", req.session.user); // Log the mapped data before sending
 
-
-    /*
-    
-    // Save the session
-    req.session.save((err) => {
-      if (err) {
-        console.error("Session save error:", err);
-        return res.status(500).json({ error: 'Session save failed' });
-      }
-    
-      res.status(200).json({
-        success: true,
-        user: req.session.user
-      });
-    });
-
-  */
-
     // Set the session cookie
     res.cookie('session_id', req.sessionID, {
       httpOnly: true,
@@ -96,7 +78,6 @@ exports.loginUser = async (req, res) => {
       success: true,
       user: req.session.user
     });
-
 
   } catch (error) {
     console.error("Login error:", error);
@@ -114,16 +95,6 @@ exports.logoutUser = (req, res) => {
       return res.status(500).json({ error: 'Logout failed' });
     }
 
-    /*
-    // Clear the actual session cookie
-    res.clearCookie('connect.sid', {
-      path: '/',
-      httpOnly: true,
-      secure: true,
-      sameSite: 'none'
-    });
-    */
-
     // Clear the session cookie
     res.clearCookie('session_id');
 
@@ -133,13 +104,13 @@ exports.logoutUser = (req, res) => {
 
 // Retrieve User's Profile
 exports.getUserProfile = async (req, res) => {
-
   try {
     // Obtain the userId as a parameter
     const userId = req.params.userId;
+    const parsedUserId = parseInt(userId);
 
     // Find the user
-    const user = await User.findOne({ userId: parseInt(userId) }).select('login firstName lastName favorites');
+    const user = await User.findOne({ userId: parsedUserId }).select('login firstName lastName favorites');
 
     // Throw an error if the user is not found
     if (!user) {
@@ -150,15 +121,78 @@ exports.getUserProfile = async (req, res) => {
     const favoriteVendingMachines = await Vending.find({ id: { $in: user.favorites } })
       .select('name building type');
 
-    // Return the user's profile
+    // Find vending machines where the user has comments or ratings
+    const userInteractions = await Vending.aggregate([
+      // Match vending machines that have comments or ratings from this user
+      {
+        $match: {
+          $or: [
+            { 'comments.userId': parsedUserId },
+            { 'ratings.userId': parsedUserId }
+          ]
+        }
+      },
+      // Project only the fields we need
+      {
+        $project: {
+          id: 1,
+          name: 1,
+          building: 1,
+          userComments: {
+            $filter: {
+              input: '$comments',
+              as: 'comment',
+              cond: { $eq: ['$$comment.userId', parsedUserId] }
+            }
+          },
+          userRatings: {
+            $filter: {
+              input: '$ratings',
+              as: 'rating',
+              cond: { $eq: ['$$rating.userId', parsedUserId] }
+            }
+          }
+        }
+      }
+    ]);
+
+    // Extract comments and ratings from the aggregation results
+    const comments = [];
+    const ratings = [];
+
+    userInteractions.forEach(vending => {
+      // Add each comment with vending machine info
+      vending.userComments.forEach(comment => {
+        comments.push({
+          vendingId: vending.id,
+          vendingName: vending.name,
+          building: vending.building,
+          rating: comment.rating,
+          text: comment.comment,
+        });
+      });
+
+      // Add each rating with vending machine info
+      vending.userRatings.forEach(rating => {
+        ratings.push({
+          vendingId: vending.id,
+          vendingName: vending.name,
+          building: vending.building,
+          rating: rating.rating
+        });
+      });
+    });
+
+    // Return the user's profile with comments and ratings included
     res.status(200).json({
       login: user.login,
       firstName: user.firstName,
       lastName: user.lastName,
       favorites: favoriteVendingMachines,
+      comments: comments,
+      ratings: ratings
     });
 
-    // Catch any other errors
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -316,7 +350,6 @@ exports.submitVendingRequest = [
     }
   }
 ];
-
 
 // Admin can view active vending machine requests
 exports.getVendingRequests = async (req, res) => {
