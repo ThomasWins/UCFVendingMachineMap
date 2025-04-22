@@ -11,4 +11,4 @@ return (
   );
 };
 
-export default contributionsPage;
+export default ContributionsPage;
