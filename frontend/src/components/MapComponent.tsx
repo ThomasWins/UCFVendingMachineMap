@@ -135,6 +135,12 @@ useEffect(() => {
     setIsVendingRequestPopupOpen(initialPopupOpen);
 }, [initialPopupOpen]);
 
+  useEffect(() => {
+  if (toggleFavorites !== undefined) {
+    setIsFavoritesOpen(toggleFavorites);  // This will update the `isFavoritesOpen` state
+  }
+}, [toggleFavorites]);
+
 // does some api stuff idk im frontend
 useEffect(() => {
   fetch('https://gerberthegoat.com/api/vending')
