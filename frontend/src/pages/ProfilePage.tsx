@@ -25,6 +25,7 @@ function ProfilePage(): JSX.Element {
   }, [navigate]);
 
   return (
+    <div className={styles.wrapper}>
     <div className={styles.container}>
       <NavBar />
       <div className={styles.leftPanel}>
@@ -40,6 +41,7 @@ function ProfilePage(): JSX.Element {
           <li>Contributions</li>
         </ul>
       </div>
+    </div>
     </div>
   );
 }
