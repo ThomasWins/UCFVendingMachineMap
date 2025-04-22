@@ -23,6 +23,10 @@ const vendingRequestSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  imagePath: {
+    type: String,
+    required: false
+  },
   status: {
     type: String,
     enum: ['pending', 'approved', 'rejected'],
