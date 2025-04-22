@@ -21,6 +21,7 @@ function App() {
         <Route path="/logout" element={<Logout />} />
         <Route path="/secret" element={<TheGoat />} />
         <Route path="/admin" element={<AdminPage/>} />
+        <Route path="/profile" element={<ProfilePage />} />
       </Routes>
     </Router>
   );
