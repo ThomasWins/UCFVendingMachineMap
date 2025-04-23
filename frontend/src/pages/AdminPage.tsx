@@ -77,7 +77,7 @@ const handleAction = async (status: 'approved' | 'rejected') => {
         type: selectedRequest.type,
         lat: selectedRequest.coordinates.latitude,
         lng: selectedRequest.coordinates.longitude,
-        imageUrl: selectedRequest.imagePath || null, 
+        imageUrl: selectedRequest.imagePath, 
       };
 
       const uploadRes = await fetch('https://gerberthegoat.com/api/vending/manual', {
