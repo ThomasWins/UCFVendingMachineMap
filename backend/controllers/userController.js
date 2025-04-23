@@ -309,6 +309,8 @@ exports.submitVendingRequest = [
   upload.single('image'), // Middleware to handle the image upload
   async (req, res) => {
     try {
+      console.log('File details:', req.file);
+      
       const { userId } = req.params;
       const { latitude, longitude, description, building, type } = req.body;
       const imagePath = req.file ? req.file.path : null;
