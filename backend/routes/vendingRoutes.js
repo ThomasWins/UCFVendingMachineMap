@@ -34,7 +34,7 @@ router.post('/upload', upload.single('image'), async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 });
-/*
+*/
 
 // make a new vending machine after approval, idk if I was supposed to use uploads above but the formatting was confusing me ^
 router.post('/manual', async (req, res) => {
