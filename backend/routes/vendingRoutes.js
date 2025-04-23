@@ -112,12 +112,14 @@ router.get('/latest', async (req, res) => {
 // get all of the vending machines from the database
 router.get('/', async (req, res) => {
   try {
-    const vendingMachines = await Vending.find();
-    console.log('Vending machines retrieved:', vendingMachines);
-    res.json(vendingMachines);
-  } catch (err) {
-    console.error('Error fetching vending machines:', err);
-    res.status(500).json({ error: err.message });
+    const vendings = await Vending.find();
+    console.log("Sample image paths:", vendings.slice(0, 3).map(v => ({
+      id: v.id,
+      imageUrl: v.imageUrl
+    })));
+    res.json(vendings);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 });
 
