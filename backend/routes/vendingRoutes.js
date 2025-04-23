@@ -1,26 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const Vending = require('../models/vendingModel');
-const multer = require('multer');
+const upload = require('../middleware/uploads');
 const path = require('path');
 const User = require('../models/userModel');
-
-
-// Multer Storage
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'uploads/'); // Directory where images go
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + path.extname(file.originalname)); // filename with timestamp
-  }
-});
-const upload = multer({ storage });
 
 // POST /api/vending/upload
 router.post('/upload', upload.single('image'), async (req, res) => {
   try {
-
     const { building, description, type, lat, lng } = req.body;
     const imageUrl = req.file ? `/uploads/${req.file.filename}` : null;
 
