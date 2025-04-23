@@ -512,11 +512,12 @@ return (
           value={selectedBuilding}
           onChange={(e) => setSelectedBuilding(e.target.value)}
         >
-          <option value="all">All Buildings</option>
-          <option value="Math Science">Math Science</option>
-          <option value="Ferrel Commons">Ferrel Commons</option>
-          <option value="Recreation Center">Recreation Center</option>
-          <option value="Tennis Courts">Tennis Courts</option>
+        <option value="all">All Buildings</option>
+          {ucfBuildings.map((building) => (
+           <option key={building} value={building}>
+             {building}
+           </option>
+         ))}
         </select>
 
         <select
