@@ -619,6 +619,7 @@ return (
       <div className="vending-popup">
         {/*HARDCODED IMAGE NEEDS TO BE CHANGED !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/}
         {selectedVending.imageUrl && (
+<<<<<<< HEAD
   <img
     src={`https://gerberthegoat.com/uploads/${selectedVending.imageUrl.split('/').pop()}`}
     alt={selectedVending.name}
@@ -630,6 +631,14 @@ return (
     }}
   />
 )}
+=======
+          <img
+            src={selectedVending.imageUrl}
+            alt={selectedVending.name}
+            className="vending-popup-image"
+          />
+        )}
+>>>>>>> parent of 2983c82 (pray gentlmen we want images)
         <div className="vending-popup-content">
           <button className="close-vending-popup" onClick={() => setIsVendingPopupOpen(false)}>×</button>
           <div className="vending-title">{selectedVending.name}</div>
