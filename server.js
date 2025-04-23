@@ -53,10 +53,28 @@ const vendingRoutes = require('./backend/routes/vendingRoutes');
 app.use('/api/users', userRoutes);
 app.use('/api/vending', vendingRoutes);
 
-// Static route to serve uploaded files
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-// Also serve files at root level for backward compatibility
-app.use('/', express.static(path.join(__dirname, 'uploads')));
+// Static route to serve uploaded files with proper MIME types
+app.use('/uploads', express.static(path.join(__dirname, 'uploads'), {
+  setHeaders: (res, filePath) => {
+    if (filePath.endsWith('.jpg') || filePath.endsWith('.jpeg')) {
+      res.set('Content-Type', 'image/jpeg');
+    } else if (filePath.endsWith('.png')) {
+      res.set('Content-Type', 'image/png');
+    }
+    console.log(`Serving file: ${filePath} with Content-Type: ${res.get('Content-Type')}`);
+  }
+}));
+
+// Also serve files at root level with same MIME type handling
+app.use('/', express.static(path.join(__dirname, 'uploads'), {
+  setHeaders: (res, filePath) => {
+    if (filePath.endsWith('.jpg') || filePath.endsWith('.jpeg')) {
+      res.set('Content-Type', 'image/jpeg');
+    } else if (filePath.endsWith('.png')) {
+      res.set('Content-Type', 'image/png');
+    }
+  }
+}));
 
 app.listen(5000, () => {
     console.log("Server is running on port 5000");
