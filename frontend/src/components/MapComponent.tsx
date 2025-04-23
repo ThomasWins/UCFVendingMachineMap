@@ -150,11 +150,48 @@ useEffect(() => {
 
 // goes through the vending machines in the database and will add markers at the coordinates
 const renderMarkers = (mapInstance: mapboxgl.Map) => {
+  // Existing debug code
   console.log("Vending data with images:", vendingData.map(item => ({
     id: item.id, 
     name: item.name,
     imageUrl: item.imageUrl
   })));
+  
+  // Add this new enhanced debugging
+  if (vendingData.length > 0) {
+    // Get the first few items with images
+    const itemsWithImages = vendingData.filter(item => item.imageUrl).slice(0, 3);
+    
+    // Log detailed information about image paths
+    console.log("Image path details:", itemsWithImages.map(item => ({
+      id: item.id,
+      name: item.name,
+      rawImageUrl: item.imageUrl,
+      transformedUrl: `https://gerberthegoat.com/uploads/${item.imageUrl?.split('/').pop() || ''}`,
+      filename: item.imageUrl?.split('/').pop() || '',
+      contentType: item.imageUrl?.endsWith('.png') ? 'image/png' : 
+                  item.imageUrl?.endsWith('.jpg') || item.imageUrl?.endsWith('.jpeg') ? 'image/jpeg' : 'unknown'
+    })));
+    
+    // Try to fetch the first image to see the response headers
+    if (itemsWithImages.length > 0) {
+      const testUrl = `https://gerberthegoat.com/uploads/${itemsWithImages[0].imageUrl?.split('/').pop() || ''}`;
+      console.log(`Testing image fetch for: ${testUrl}`);
+      fetch(testUrl)
+        .then(response => {
+          console.log(`Image fetch status: ${response.status}`);
+          console.log(`Content-Type: ${response.headers.get('Content-Type')}`);
+          return response.text();
+        })
+        .then(text => {
+          if (text.includes('<!DOCTYPE html>')) {
+            console.error('Received HTML instead of image data!');
+            console.log('First 100 chars:', text.substring(0, 100));
+          }
+        })
+        .catch(err => console.error('Image fetch test failed:', err));
+    }
+  }
 
   const existingMarkers = document.querySelectorAll('.mapboxgl-marker');
   existingMarkers.forEach(marker => marker.remove());
@@ -582,17 +619,17 @@ return (
       <div className="vending-popup">
         {/*HARDCODED IMAGE NEEDS TO BE CHANGED !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/}
         {selectedVending.imageUrl && (
-          <img
-            src={selectedVending.imageUrl.startsWith('http') 
-              ? selectedVending.imageUrl 
-              : `https://gerberthegoat.com/${selectedVending.imageUrl}`}
-            alt={selectedVending.name}
-            className="vending-popup-image"
-            onError={(e) => {
-              console.error("Image load error:", e.target.src);
-            }}
-          />
-        )}
+  <img
+    src={`https://gerberthegoat.com/uploads/${selectedVending.imageUrl.split('/').pop()}`}
+    alt={selectedVending.name}
+    className="vending-popup-image"
+    onError={(e) => {
+      console.error("Image load error:", e.target.src);
+      e.target.onerror = null; // Prevent infinite error loop
+      e.target.src = "https://gerberthegoat.com/default-vending.png"; // Fallback image
+    }}
+  />
+)}
         <div className="vending-popup-content">
           <button className="close-vending-popup" onClick={() => setIsVendingPopupOpen(false)}>×</button>
           <div className="vending-title">{selectedVending.name}</div>

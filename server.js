@@ -46,6 +46,41 @@ app.use(session({
     }
 }));
 
+// DIRECT IMAGE HANDLER - emergency fix for image loading issues
+app.get('*/uploads/*.(jpg|jpeg|png)', (req, res) => {
+  try {
+    // Extract the image path from the request
+    let imagePath = req.path;
+    if (imagePath.includes('/uploads/')) {
+      imagePath = imagePath.substring(imagePath.indexOf('/uploads/') + 9);
+    }
+    
+    // Full path to the image file
+    const fullPath = path.join(__dirname, 'uploads', imagePath);
+    console.log('Attempting to serve image at:', fullPath);
+    
+    // Check if file exists
+    if (!fs.existsSync(fullPath)) {
+      console.error('Image file not found:', fullPath);
+      return res.status(404).send('Image not found');
+    }
+    
+    // Set the appropriate content type based on file extension
+    if (fullPath.endsWith('.jpg') || fullPath.endsWith('.jpeg')) {
+      res.setHeader('Content-Type', 'image/jpeg');
+    } else if (fullPath.endsWith('.png')) {
+      res.setHeader('Content-Type', 'image/png');
+    }
+    
+    // Stream the file directly
+    const fileStream = fs.createReadStream(fullPath);
+    fileStream.pipe(res);
+  } catch (error) {
+    console.error('Error serving image:', error);
+    res.status(500).send('Error serving image');
+  }
+});
+
 // IMPORTANT: Image handling middleware must come BEFORE route handlers
 // Serve files from uploads directory with proper MIME types
 app.use('/uploads', express.static(path.join(__dirname, 'uploads'), {
