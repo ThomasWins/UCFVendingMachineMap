@@ -5,7 +5,6 @@ const mongoose = require('mongoose');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const path = require('path');
-const fs = require('fs');
 
 const app = express();
 
@@ -46,8 +45,15 @@ app.use(session({
     }
 }));
 
-// IMPORTANT: Image handling middleware must come BEFORE route handlers
-// Serve files from uploads directory with proper MIME types
+// Import Routes
+const userRoutes = require('./backend/routes/userRoutes');
+const vendingRoutes = require('./backend/routes/vendingRoutes');
+
+// User and Vending Routes
+app.use('/api/users', userRoutes);
+app.use('/api/vending', vendingRoutes);
+
+// Static route to serve uploaded files with proper MIME types
 app.use('/uploads', express.static(path.join(__dirname, 'uploads'), {
   setHeaders: (res, filePath) => {
     if (filePath.endsWith('.jpg') || filePath.endsWith('.jpeg')) {
@@ -59,7 +65,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads'), {
   }
 }));
 
-// Serve uploads at root path for backward compatibility
+// Also serve files at root level with same MIME type handling
 app.use('/', express.static(path.join(__dirname, 'uploads'), {
   setHeaders: (res, filePath) => {
     if (filePath.endsWith('.jpg') || filePath.endsWith('.jpeg')) {
@@ -69,22 +75,6 @@ app.use('/', express.static(path.join(__dirname, 'uploads'), {
     }
   }
 }));
-
-// Import Routes
-const userRoutes = require('./backend/routes/userRoutes');
-const vendingRoutes = require('./backend/routes/vendingRoutes');
-
-// User and Vending Routes
-app.use('/api/users', userRoutes);
-app.use('/api/vending', vendingRoutes);
-
-// Add this debugging middleware at the end to catch any missed image requests
-app.use((req, res, next) => {
-  if (req.path.startsWith('/uploads/') || req.path.match(/\.(jpg|jpeg|png)$/i)) {
-    console.log(`Image request missed by static middleware: ${req.path}`);
-  }
-  next();
-});
 
 app.listen(5000, () => {
     console.log("Server is running on port 5000");
