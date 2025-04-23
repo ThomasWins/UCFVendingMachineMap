@@ -578,7 +578,7 @@ return (
         {/*HARDCODED IMAGE NEEDS TO BE CHANGED !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/}
         {selectedVending.imageUrl && (
           <img
-            src={msbImage}
+            src={selectedVending.imageUrl}
             alt={selectedVending.name}
             className="vending-popup-image"
           />
