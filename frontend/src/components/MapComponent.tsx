@@ -150,11 +150,6 @@ useEffect(() => {
 
 // goes through the vending machines in the database and will add markers at the coordinates
 const renderMarkers = (mapInstance: mapboxgl.Map) => {
-  console.log("Vending data with images:", vendingData.map(item => ({
-    id: item.id, 
-    name: item.name,
-    imageUrl: item.imageUrl
-  })));
 
   const existingMarkers = document.querySelectorAll('.mapboxgl-marker');
   existingMarkers.forEach(marker => marker.remove());
@@ -583,15 +578,10 @@ return (
         {/*HARDCODED IMAGE NEEDS TO BE CHANGED !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/}
         {selectedVending.imageUrl && (
           <img
-            src={selectedVending.imageUrl.startsWith('http') 
-              ? selectedVending.imageUrl 
-              : `https://gerberthegoat.com/${selectedVending.imageUrl}`}
+            src={`https://gerberthegoat.com/${selectedVending.imageUrl}`}
             alt={selectedVending.name}
             className="vending-popup-image"
-            onError={(e) => {
-              console.error("Image load error:", e.target.src);
-              e.target.src = "https://gerberthegoat.com/placeholder.png"; // Fallback image
-            }}
+            onError={(e) => console.error("Image load error:", e.target.src)}
           />
         )}
         <div className="vending-popup-content">
