@@ -590,7 +590,6 @@ return (
             className="vending-popup-image"
             onError={(e) => {
               console.error("Image load error:", e.target.src);
-              e.target.src = "https://gerberthegoat.com/placeholder.png"; // Fallback image
             }}
           />
         )}
