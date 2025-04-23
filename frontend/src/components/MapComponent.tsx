@@ -578,9 +578,10 @@ return (
         {/*HARDCODED IMAGE NEEDS TO BE CHANGED !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/}
         {selectedVending.imageUrl && (
           <img
-            src={selectedVending.imageUrl}
+            src={`https://gerberthegoat.com/${selectedVending.imageUrl}`}
             alt={selectedVending.name}
             className="vending-popup-image"
+            onError={(e) => console.error("Image load error:", e.target.src)}
           />
         )}
         <div className="vending-popup-content">
