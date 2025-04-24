@@ -104,8 +104,6 @@ const fetchVendingData = async () => {
 
         const user_data = await response.json();
 
-        console.log('Full user data:', user_data);
-
         setUserData(user_data);
         setCurrentUserId(user_data.userId);
         setCurrentUserName(`${user_data.firstName} ${user_data.lastName}`);
