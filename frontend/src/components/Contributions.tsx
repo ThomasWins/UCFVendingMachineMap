@@ -62,7 +62,7 @@ const Contributions: React.FC<ContributionsListProps> = ({ userId }) => {
                       {item.adminComment && <p><strong>Admin Comment:</strong> {item.adminComment}</p>}
                       {item.imagePath && (
                           <img
-                              src={`http://localhost:5000${item.imagePath}`}
+                              src={`/uploads/${item.imagePath}`}
                               alt="Vending submission"
                               className="image"
                           />
