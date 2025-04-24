@@ -25,13 +25,15 @@ const Contributions: React.FC<ContributionsListProps> = ({ userId }) => {
   useEffect(() => {
     const fetchContributions = async () => {
       try {
-        const response = await fetch(`/api/users/${userId}/contributions`);
+        const response = await fetch(`/api/users/${userId}/contributions`, {
+          credentials: 'include' 
+        });
         if (!response.ok) {
           throw new Error(`Error ${response.status}: ${response.statusText}`);
         }
 
         const data = await response.json();
-        setContributions(data.contributions);
+        setContributions(data.contributions.map((contribution: any) => ({ ...contribution, userId })));
       } catch (err: any) {
         setError(err.message || 'Failed to load contributions');
       } finally {
@@ -58,7 +60,13 @@ const Contributions: React.FC<ContributionsListProps> = ({ userId }) => {
             <p><strong>Status:</strong> {item.status}</p>
             <p><strong>Submitted At:</strong> {new Date(item.submittedAt).toLocaleString()}</p>
             {item.adminComment && <p><strong>Admin Comment:</strong> {item.adminComment}</p>}
-            {item.imagePath && <img src={`/${item.imagePath}`} alt="Vending submission" className="image" />}
+                {item.imagePath && (
+                    <img
+                        src={`https://gerberthegoat.com/${item.imagePath}`}
+                        alt="Vending submission"
+                        className="image"
+                    />
+                )}
           </li>
         ))}
       </ul>

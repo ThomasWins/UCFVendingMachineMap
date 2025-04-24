@@ -31,6 +31,7 @@ import {
   renderStars,
   countRatings,
 } from './mapStdlib';
+import Contributions from './Contributions';
 
 interface MapComponentProps {
   isVendingRequestPopupOpen: boolean;
