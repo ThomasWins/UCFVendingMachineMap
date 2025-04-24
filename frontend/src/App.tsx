@@ -10,6 +10,7 @@ import MapPage from './pages/MapPage';
 import ProfilePage from './pages/ProfilePage';
 import AdminPage from './pages/AdminPage';
 import ContributionsPage from './pages/ContributionsPage';
+import RatingsPage from './pages/RatingsPage';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path="/admin" element={<AdminPage/>} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/profile/contributions" element={<ContributionsPage />} />
+        <Route path="/profile/ratings" element={<RatingsPage />} />
       </Routes>
     </Router>
   );
