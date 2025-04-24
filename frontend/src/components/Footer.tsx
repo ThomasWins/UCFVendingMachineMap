@@ -19,7 +19,7 @@ const Footer: React.FC = () => {
           <h4>Links</h4>
           <ul>
             <li><a href="#aboutContainer">About</a></li>
-            <li><Link to="/profile">Profile</a></li>
+            <li><Link to="/profile">Profile</Link></li>
             <li><Link to="/map" state={{ openPopup: true}}>Add a Machine</Link></li>
           </ul>
         </div>
