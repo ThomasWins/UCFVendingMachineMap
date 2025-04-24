@@ -92,6 +92,22 @@ const fetchVendingData = async () => {
   }
 };
 
+  useEffect(() => {
+
+  const _ud = localStorage.getItem('user_data');
+    try {
+      const parsedData = _ud ? JSON.parse(_ud) : null;
+      if (parsedData && parsedData.userId) {
+        setUserData({ firstName: parsedData.firstName, lastName: parsedData.lastName });
+      } else {
+        navigate('/');
+      }
+    } catch (e) {
+      console.error('Error parsing user_data:', e);
+      navigate('/');
+    }
+  }, [navigate]);
+
   //test to see if it works
  useEffect(() => {
     const fetchFullUserData = async (userId: number) => {
