@@ -496,11 +496,17 @@ const handleSubmitComment = async () => {
 const countRatings = (ratings) => ratings?.length || 0;
 
   const filteredVending = vendingData.filter(item => {
-    const matchBuilding = selectedBuilding === 'all' || item.building === selectedBuilding;
-    const matchType = selectedType === 'all' || item.type === selectedType;
-    return matchBuilding && matchType;
-  });
-
+  const matchBuilding = selectedBuilding === 'all' || item.building === selectedBuilding;
+  
+  //attempt to fix the filters 
+  const matchType = selectedType === 'all' || 
+                    (selectedType.toLowerCase() === 'snacks' && item.type.toLowerCase() === 'snacks') ||
+                    (selectedType.toLowerCase() === 'drinks' && item.type.toLowerCase() === 'drinks') ||
+                    (selectedType.toLowerCase() === 'snacks & drinks' && 
+                      (item.type.toLowerCase() === 'snacks' || item.type.toLowerCase() === 'drinks'));
+  
+  return matchBuilding && matchType;
+});
 // favorites use effect
 useEffect(() => {
   if (selectedVending && userData) {
