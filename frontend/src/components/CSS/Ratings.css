@@ -1,0 +1,23 @@
+#ratingsWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem; /* Space between the columns */
+  padding: 20px;
+}
+
+#favoritesCol, #ratingsCol, #commentsCol {
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+  #ratingsWrapper {
+    padding: 10px;
+  }
+  
+  #favoritesCol, #ratingsCol, #commentsCol {
+    padding: 15px;
+  }
+}
