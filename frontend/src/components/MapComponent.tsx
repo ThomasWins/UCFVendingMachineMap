@@ -594,8 +594,8 @@ return (
           onChange={(e) => setSelectedType(e.target.value)}
         >
           <option value="all">All Types</option>
-          <option value="snacks">Snacks</option>
-          <option value="drinks">Drinks</option>
+          <option value="Snacks">Snacks</option>
+          <option value="Drinks">Drinks</option>
         </select>
       </div>
     )}
