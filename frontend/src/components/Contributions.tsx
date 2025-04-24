@@ -60,13 +60,13 @@ const Contributions: React.FC<ContributionsListProps> = ({ userId }) => {
                       <p><strong>Status:</strong> {item.status}</p>
                       <p><strong>Submitted At:</strong> {new Date(item.submittedAt).toLocaleString()}</p>
                       {item.adminComment && <p><strong>Admin Comment:</strong> {item.adminComment}</p>}
-                      {item.imagePath && (
+                      {/* {item.imagePath && (
                           <img
                               src={`/uploads/${item.imagePath}`}
                               alt="Vending submission"
                               className="image"
                           />
-                      )}
+                      )} */}
                   </li>
               ))}
           </ul>
