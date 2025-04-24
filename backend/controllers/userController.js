@@ -295,7 +295,7 @@ exports.retrieveFavorites = async (req, res) => {
 
     // Retrieve favorite vending machines
     const favoriteVendingMachines = await Vending.find({ id: { $in: user.favorites } })
-      .select('name building type');
+      .select('id name building type -_id');
 
     // Return favorite vending machines
     res.status(200).json(favoriteVendingMachines);
