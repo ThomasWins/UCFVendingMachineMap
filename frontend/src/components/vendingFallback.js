@@ -1,5 +1,5 @@
 import msb from './photos/msb.jpg';
-import fc from './photos/FerrelCommons.jpg';
+import fc from './photos/ferrelCommons.png';
 import rwc from './photos/rwc.png';
 import tennis from './photos/TenisCourt.jpg';
 import eng1 from './photos/eng1.png';
