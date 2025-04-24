@@ -1,6 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import './CSS/footer.css';
+import instagramLogo from '../assets/instagramlogo2.png';
+import facebookLogo from '../assets/facebooklogo.png';
+import twitterLogo from '../assets/xlogo.jpg';
 
 const Footer: React.FC = () => {
   return (
@@ -28,9 +31,21 @@ const Footer: React.FC = () => {
 
         <div className="footer-section social-icons">
           <h4>Follow Us</h4>
-          <a href="#"><i className="fab fa-twitter" /></a>
-          <a href="#"><i className="fab fa-instagram" /></a>
-          <a href="#"><i className="fab fa-facebook" /></a>
+          <a href="https://www.x.com" target="_blank" rel="noopener noreferrer">
+            <img src={twitterLogo}
+              alt="Twitter"
+              style={{ width: '24px', height: '24px' }} />
+          </a>
+          <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">
+            <img src={instagramLogo}
+              alt="Instagram"
+              style={{ width: '24px', height: '24px' }} />
+          </a>
+          <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer">
+            <img src={facebookLogo}
+              alt="Facebook"
+              style={{ width: '24px', height: '24px' }} />
+          </a>
         </div>
 
       </div>
