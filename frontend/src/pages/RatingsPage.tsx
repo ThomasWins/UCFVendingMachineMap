@@ -8,27 +8,32 @@ function RatingsPage(): JSX.Element {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchProfileData = async () => {
-      try {
-        const userData = localStorage.getItem('user_data');
-        const parsedData = userData ? JSON.parse(userData) : null;
-        if (!parsedData || !parsedData.userId) {
-          navigate('/'); // If not logged in send to login screen
-          return;
-        }
-
-        const response = await fetch(`/api/user/${parsedData.userId}`);
-        const data = await response.json();
-
-        setRatings(data.ratings || []);
-        setFavorites(data.favorites || []);
-      } catch (err) {
-        console.error('Failed to fetch profile data:', err);
+  const fetchData = async () => {
+    try {
+      const userData = localStorage.getItem('user_data');
+      const parsedData = userData ? JSON.parse(userData) : null;
+      if (!parsedData || !parsedData.userId) {
+        navigate('/');
+        return;
       }
-    };
 
-    fetchProfileData();
-  }, [navigate]);
+      // Fetch favorites
+      const favRes = await fetch(`/api/user/${parsedData.userId}/favorites`);
+      const favData = await favRes.json();
+      setFavorites(favData || []);
+
+      // Fetch full profile (or just ratings if you split it)
+      const profileRes = await fetch(`/api/user/${parsedData.userId}`);
+      const profileData = await profileRes.json();
+      setRatings(profileData.ratings || []);
+    } catch (err) {
+      console.error('Failed to fetch data:', err);
+    }
+  };
+
+  fetchData();
+}, [navigate]);
+
 
   return (
     <div>
