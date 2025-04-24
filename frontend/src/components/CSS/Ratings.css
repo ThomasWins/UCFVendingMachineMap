@@ -1,7 +1,8 @@
 #ratingsWrapper {
+  margin-top: 100px;
   display: flex;
   flex-direction: column;
-  gap: 2rem; /* Space between the columns */
+  gap: 2rem;
   padding: 20px;
 }
 
