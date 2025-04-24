@@ -27,6 +27,7 @@ const ContributionsPage = () => {
   return (
     <div>
       <NavBar />
+      <h1>Contributions</h1>
       <Contributions userId={userId} />
     </div>
   );
