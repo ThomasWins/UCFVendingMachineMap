@@ -6,7 +6,7 @@ import { useNavigate} from 'react-router-dom';
 
 // map styles imports (basically what allows us to change between maps)
 import sataliteImage from './photos/satalite.png';
-import standardImage from './photos/satalite.png'; //change back to standard
+import standardImage from './photos/standard.png'; //change back to standard
 import darkImage from './photos/dark.png';
 import streetsImage from './photos/streets.png';
 import outsideImage from './photos/outside.png';
