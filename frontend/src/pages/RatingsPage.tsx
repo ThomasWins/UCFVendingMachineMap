@@ -2,67 +2,105 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import NavBar from '../components/NavBar.tsx';
 
+interface VendingMachine {
+  id: string;
+  name: string;
+  building: string;
+  type: string;
+}
+
+interface Rating {
+  vendingId: string;
+  vendingName: string;
+  building: string;
+  rating: number;
+}
+
+interface Comment {
+  vendingId: string;
+  vendingName: string;
+  building: string;
+  rating: number;
+  text: string;
+}
+
 function RatingsPage(): JSX.Element {
-  const [ratings, setRatings] = useState([]);
-  const [favorites, setFavorites] = useState([]);
   const navigate = useNavigate();
+  const [favorites, setFavorites] = useState<VendingMachine[]>([]);
+  const [ratings, setRatings] = useState<Rating[]>([]);
+  const [comments, setComments] = useState<Comment[]>([]);
 
   useEffect(() => {
-  const fetchData = async () => {
-    try {
-      const userData = localStorage.getItem('user_data');
-      const parsedData = userData ? JSON.parse(userData) : null;
-      if (!parsedData || !parsedData.userId) {
-        navigate('/');
-        return;
+    const fetchProfileData = async () => {
+      try {
+        const userData = localStorage.getItem('user_data');
+        const parsedData = userData ? JSON.parse(userData) : null;
+
+        if (!parsedData || !parsedData.userId) {
+          navigate('/');
+          return;
+        }
+
+        const res = await fetch(`/api/users/${parsedData.userId}/profile`);
+        if (!res.ok) throw new Error('Failed to fetch user profile');
+        const data = await res.json();
+
+        setFavorites(data.favorites || []);
+        setRatings(data.ratings || []);
+        setComments(data.comments || []);
+      } catch (error) {
+        console.error('Error loading profile data:', error);
       }
+    };
 
-      // Fetch favorites
-      const favRes = await fetch(`/api/user/${parsedData.userId}/favorites`);
-      const favData = await favRes.json();
-      setFavorites(favData || []);
-
-      // Fetch full profile (or just ratings if you split it)
-      const profileRes = await fetch(`/api/user/${parsedData.userId}`);
-      const profileData = await profileRes.json();
-      setRatings(profileData.ratings || []);
-    } catch (err) {
-      console.error('Failed to fetch data:', err);
-    }
-  };
-
-  fetchData();
-}, [navigate]);
-
+    fetchProfileData();
+  }, [navigate]);
 
   return (
     <div>
       <NavBar />
-      <h2>Your Favorites</h2>
-      <ul>
+      <div className="p-4">
+        <h2 className="text-xl font-semibold mb-2">Your Favorite Machines</h2>
         {favorites.length > 0 ? (
-          favorites.map((fav: any, index: number) => (
-            <li key={index}>
-              <strong>{fav.name}</strong> — {fav.type} in {fav.building}
-            </li>
-          ))
+          <ul className="mb-6">
+            {favorites.map((fav) => (
+              <li key={fav.id}>
+                <strong>{fav.name}</strong> — {fav.type} in {fav.building}
+              </li>
+            ))}
+          </ul>
         ) : (
-          <p>You have no favorite vending machines.</p>
+          <p>No favorite machines yet.</p>
         )}
-      </ul>
 
-      <h2>Your Ratings</h2>
-      <ul>
+        <h2 className="text-xl font-semibold mb-2">Your Ratings</h2>
         {ratings.length > 0 ? (
-          ratings.map((rating: any, index: number) => (
-            <li key={index}>
-              <strong>{rating.vendingName}</strong> in {rating.building} — Rated: {rating.rating}/5
-            </li>
-          ))
+          <ul className="mb-6">
+            {ratings.map((rate, idx) => (
+              <li key={idx}>
+                <strong>{rate.vendingName}</strong> — Rated {rate.rating}/5 in {rate.building}
+              </li>
+            ))}
+          </ul>
         ) : (
-          <p>You haven't rated any vending machines yet.</p>
+          <p>No ratings yet.</p>
         )}
-      </ul>
+
+        <h2 className="text-xl font-semibold mb-2">Your Comments</h2>
+        {comments.length > 0 ? (
+          <ul>
+            {comments.map((comment, idx) => (
+              <li key={idx} className="mb-2">
+                <strong>{comment.vendingName}</strong> in {comment.building} — Rated {comment.rating}/5
+                <br />
+                <em>"{comment.text}"</em>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p>No comments yet.</p>
+        )}
+      </div>
     </div>
   );
 }
