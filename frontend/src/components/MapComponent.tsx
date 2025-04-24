@@ -717,7 +717,7 @@ return (
           </div>
           {/*This just allows the users to write comments and preps them for database, I currently think this is ugly so CHANGE At SOME POINT !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/}
           <div>
-            <div className="my-h3">Leave a Review PLACEHOLDER</div>
+            <div className="my-h3">Leave a Review </div>
                    <input
               type="text"
               value={userComment}
