@@ -103,3 +103,4 @@ return (
     </div>
   }
 }
+export default Ratings;
