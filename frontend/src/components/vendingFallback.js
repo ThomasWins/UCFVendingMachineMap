@@ -18,6 +18,7 @@ import outside from './photos/outside.png';
 import psy from './photos/psy.png';
 import research1 from './photos/research1.png';
 import su1 from './photos/su1.png';
+import error from './photos/Errorgmod.jpg';
 
 
 export const fallbackImages = {
@@ -39,4 +40,5 @@ export const fallbackImages = {
   '17': library,
   '18': hs1,
   '19': hs2,
+  default: error,
 };
