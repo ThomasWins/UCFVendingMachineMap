@@ -19,13 +19,14 @@ import psy from './photos/psy.png';
 import research1 from './photos/research1.png';
 import su1 from './photos/su1.png';
 import error from './photos/Errorgmod.jpg';
-
+import fallback from './photos/IMG_7698';
 
 export const fallbackImages = {
   '1': msb,       
   '2': fc,          
   '3': rwc,           
-  '4': tennis,  
+  '4': tennis, 
+  '5': fallback,
   '6': cat,
   '7': eng1,           
   '8': psy,          
@@ -40,5 +41,11 @@ export const fallbackImages = {
   '17': library,
   '18': hs1,
   '19': hs2,
+  '20': fallback,
+  '21': fallback,
+  '22': fallback,
+  '23': fallback,
+  '24': fallback,
+  '25': fallback,
   default: error,
 };
