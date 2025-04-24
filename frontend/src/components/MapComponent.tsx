@@ -857,7 +857,7 @@ return (
               <option value="">Select type</option>
               <option value="snacks">Snacks</option>
               <option value="drinks">Drinks</option>
-              <option value="combo">Snacks & Drinks</option>
+              <option value="Snacks & Drinks">Snacks & Drinks</option>
             </select>
 
             <button type="submit">Submit</button>
