@@ -656,7 +656,6 @@ return (
           }}
         />
        )}
-     </div>
         <div className="vending-popup-content">
           <button className="close-vending-popup" onClick={() => setIsVendingPopupOpen(false)}>×</button>
           <div className="vending-title">{selectedVending.name}</div>
