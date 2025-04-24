@@ -30,7 +30,6 @@ const Footer: React.FC = () => {
         </div>
 
         <div className="footer-section social-icons">
-          // No reason to add this
         </div>
 
       </div>
