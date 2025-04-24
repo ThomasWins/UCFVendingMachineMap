@@ -48,6 +48,27 @@ interface VendingForm {
 }
 // set up all of the things that will be changed i.e checks for popups (mostly)
 const MapComponent = ({ isVendingRequestPopupOpen: initialPopupOpen }: MapComponentProps) => {
+
+  useEffect(() => {
+  // IF USER NOT LOGGED IN DONT LOAD PAGE INSTEAD SEND TO LOGIN
+  const _ud = localStorage.getItem('user_data');
+    try {
+      const parsedData = _ud ? JSON.parse(_ud) : null;
+      if (parsedData && parsedData.userId) {
+        setUserData({ firstName: parsedData.firstName, lastName: parsedData.lastName });
+      } else {
+        navigate('/');
+      }
+    } catch (e) {
+      console.error('Error parsing user_data:', e);
+      navigate('/');
+    }
+  }, [navigate]);
+
+
+
+
+  
   const mapContainerRef = useRef<HTMLDivElement | null>(null);
   const [map, setMap] = useState<mapboxgl.Map | null>(null);
   const [isTilted, setIsTilted] = useState<boolean>(true);
@@ -91,22 +112,6 @@ const fetchVendingData = async () => {
     console.error('Error fetching vending data:', err);
   }
 };
-
-  useEffect(() => {
-
-  const _ud = localStorage.getItem('user_data');
-    try {
-      const parsedData = _ud ? JSON.parse(_ud) : null;
-      if (parsedData && parsedData.userId) {
-        setUserData({ firstName: parsedData.firstName, lastName: parsedData.lastName });
-      } else {
-        navigate('/');
-      }
-    } catch (e) {
-      console.error('Error parsing user_data:', e);
-      navigate('/');
-    }
-  }, [navigate]);
 
   //test to see if it works
  useEffect(() => {
