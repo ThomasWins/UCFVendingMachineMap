@@ -1,4 +1,3 @@
-
 import './CSS/mapStyles.css';
 import mapboxgl from 'mapbox-gl';
 import { useEffect, useRef, useState } from 'react';
@@ -496,18 +495,10 @@ const handleSubmitComment = async () => {
 const countRatings = (ratings) => ratings?.length || 0;
 
   const filteredVending = vendingData.filter(item => {
-  const matchBuilding = selectedBuilding === 'all' || item.building === selectedBuilding;
-  
-
-  // attempt 2
-  const matchType = selectedType === 'all' || 
-                    (selectedType.toLowerCase() === 'snacks' && item.type.toLowerCase() === 'snacks') ||
-                    (selectedType.toLowerCase() === 'drinks' && item.type.toLowerCase() === 'drinks') ||
-                    (selectedType.toLowerCase() === 'snacks & drinks' && 
-                      (item.type.toLowerCase() === 'snacks' || item.type.toLowerCase() === 'drinks'));
-
-  return matchBuilding && matchType;
-});
+    const matchBuilding = selectedBuilding === 'all' || item.building === selectedBuilding;
+    const matchType = selectedType === 'all' || item.type === selectedType;
+    return matchBuilding && matchType;
+  });
 
 // favorites use effect
 useEffect(() => {
@@ -581,40 +572,33 @@ return (
     </div>
 
     {/*filter logic now updated for new building logic*/}
-{isFilterVisible && (
-  <div className="filter-container">
-    <select
-      className="filter-select"
-      value={selectedBuilding}
-      onChange={(e) => setSelectedBuilding(e.target.value)}
-    >
-      <option value="all">All Buildings</option>
-      {ucfBuildings.map((building) => (
-        <option key={building} value={building}>
-          {building}
-        </option>
-      ))}
-    </select>
+    {isFilterVisible && (
+      <div className="filter-container">
+        <select
+          className="filter-select"
+          value={selectedBuilding}
+          onChange={(e) => setSelectedBuilding(e.target.value)}
+        >
+        <option value="all">All Buildings</option>
+          {ucfBuildings.map((building) => (
+           <option key={building} value={building}>
+             {building}
+           </option>
+         ))}
+        </select>
 
-    <select
-      className="filter-select"
-      value={selectedType}
-      onChange={(e) => {
-        const selected = e.target.value;
-        // should show both but maybe not
-        if (selected === 'Snacks' || selected === 'Drinks') {
-          setSelectedType('Snacks & Drinks');
-        } else {
-          setSelectedType(selected);
-        }
-      }}
-    >
-      <option value="all">All Types</option>
-      <option value="Snacks">Snacks</option>
-      <option value="Drinks">Drinks</option>
-    </select>
-  </div>
-)}
+        <select
+          className="filter-select"
+          value={selectedType}
+          onChange={(e) => setSelectedType(e.target.value)}
+        >
+          <option value="all">All Types</option>
+          <option value="snacks">Snacks</option>
+          <option value="drinks">Drinks</option>
+          <option value="Snacks & Drinks">Snacks & Drinks</option>
+        </select>
+      </div>
+    )}
 
     {isFilterVisible && (
       <div className="vending-list-container">
