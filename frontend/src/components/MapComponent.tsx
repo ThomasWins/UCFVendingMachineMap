@@ -48,7 +48,7 @@ interface VendingForm {
 }
 // set up all of the things that will be changed i.e checks for popups (mostly)
 const MapComponent = ({ isVendingRequestPopupOpen: initialPopupOpen }: MapComponentProps) => {
-
+  const navigate = useNavigate();
   useEffect(() => {
   // IF USER NOT LOGGED IN DONT LOAD PAGE INSTEAD SEND TO LOGIN
   const _ud = localStorage.getItem('user_data');
@@ -194,7 +194,6 @@ const renderMarkers = (mapInstance: mapboxgl.Map) => {
     }
   });
 };
-const navigate = useNavigate();
 
 const goHome = () => {
     navigate('/home');
