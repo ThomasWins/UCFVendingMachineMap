@@ -5,6 +5,7 @@ const vendingSchema = new mongoose.Schema({
   name: { type: String, required: true },
   coordinates: { type: [Number], required: true }, 
   building: { type: String, required: true },
+  description: { type: String, required: true },
   type: { type: String, required: true }, 
   imageUrl: { type: String, required: true },
   ratings: [
