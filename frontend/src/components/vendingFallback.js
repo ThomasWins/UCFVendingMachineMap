@@ -19,7 +19,7 @@ import psy from './photos/psy.png';
 import research1 from './photos/research1.png';
 import su1 from './photos/su1.png';
 import error from './photos/Errorgmod.jpg';
-import fallback from './photos/IMG_7698';
+import fallback from './photos/IMG_7698.jpg';
 
 export const fallbackImages = {
   '1': msb,       
