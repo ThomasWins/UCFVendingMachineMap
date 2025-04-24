@@ -646,17 +646,19 @@ return (
        {/*no idea if this will work still need a defult in case others fail*/}
        {selectedVending.imageUrl && (
          <img
-           src={selectedVending.imageUrl}
-           alt={selectedVending.name}
-           className="vending-popup-image"
-           onError={(e) => {
-           const fallback = fallbackImages[String(selectedVending.id)];
-           if (fallback) {
-             e.target.onerror = null; 
-             e.target.src = fallback;
-            }
+           src={
+             selectedVending.imageUrl ||
+             fallbackImages[String(selectedVending.id)] ||
+             fallbackImages.default
+          }
+          alt={selectedVending.name}
+          className="vending-popup-image"
+          onError={(e) => {
+            e.target.onerror = null;
+            {/*added extra fallback in case of an error*/}
+            e.target.src = fallbackImages[String(selectedVending.id)] || fallbackImages.default;
           }}
-        />
+       />
        )}
         <div className="vending-popup-content">
           <button className="close-vending-popup" onClick={() => setIsVendingPopupOpen(false)}>×</button>
