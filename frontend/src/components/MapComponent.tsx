@@ -1,3 +1,4 @@
+
 import './CSS/mapStyles.css';
 import mapboxgl from 'mapbox-gl';
 import { useEffect, useRef, useState } from 'react';
@@ -55,9 +56,12 @@ const MapComponent = ({ isVendingRequestPopupOpen: initialPopupOpen }: MapCompon
   const [selectedBuilding, setSelectedBuilding] = useState<string>('all');
   const [selectedType, setSelectedType] = useState<string>('all');
   const [isFilterVisible, setIsFilterVisible] = useState<boolean>(false);
-  const [selectedVending, setSelectedVending] = useState<any | null>(null); // Add state for selected vending machine
+  const [selectedVending, setSelectedVending] = useState<any | null>(null); 
 
-  const [isVendingPopupOpen, setIsVendingPopupOpen] = useState<boolean>(false); // State for vending popup visibility
+  // new favorites use state
+  const [isFavorite, setIsFavorite] = useState(false);
+  
+  const [isVendingPopupOpen, setIsVendingPopupOpen] = useState<boolean>(false); 
   const [isVendingRequestPopupOpen, setIsVendingRequestPopupOpen] = useState(false);
 
   const requestMarkerRef = useRef<mapboxgl.Marker | null>(null);
@@ -135,7 +139,7 @@ useEffect(() => {
     setIsVendingRequestPopupOpen(initialPopupOpen);
 }, [initialPopupOpen]);
 
-  
+
 
 // does some api stuff idk im frontend
 useEffect(() => {
@@ -479,12 +483,58 @@ const countRatings = (ratings) => ratings?.length || 0;
     return matchBuilding && matchType;
   });
 
+// favorites use effect
+useEffect(() => {
+  if (selectedVending && userData) {
+    setIsFavorite(userData.favorites.includes(selectedVending.id));
+  }
+}, [selectedVending, userData]);
 
+//handle the changing of the favorites look at all the ? : statements basically just shuffles between them and acts the same as a prior function just for favorites
+const handleToggleFavorite = async () => {
+  if (!userData || !selectedVending) return;
+//basically just a true or false to determine the correct path
+  try {
+    const url = isFavorite
+      ? `/api/users/${userData.userId}/favorites/${selectedVending.id}`
+      : '/api/users/favorites/add';
+    
+    const options = isFavorite
+      ? { method: 'DELETE' }
+      : {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            userId: userData.userId,
+            vendingId: selectedVending.id
+          }),
+        };
+
+    const res = await fetch(url, options);
+    const data = await res.json();
+
+    if (res.ok) {
+      
+      const updatedFavorites = isFavorite
+        ? userData.favorites.filter((id: number) => id !== selectedVending.id)
+        : [...userData.favorites, selectedVending.id];
+
+      // update the favorite state, pretty much exactly how i did all the other ones just with favorites
+      setUserData({ ...userData, favorites: updatedFavorites });
+
+      setIsFavorite(!isFavorite);
+    } else {
+      console.error(data.error);
+    }
+  } catch (err) {
+    console.error('error with favorite:', err);
+  }
+};
 
 
 
 // this part of the code is very messy
-
+  
 return (
   <div>
     <div ref={mapContainerRef} id="map" />
@@ -504,7 +554,7 @@ return (
       </div>
     </div>
 
-    {/*filter logic NEEDS TO BE UPDATED FOR NEW BUILDING ARRAY AND PROBABLY FORMATTED*/}
+    {/*filter logic now updated for new building logic*/}
     {isFilterVisible && (
       <div className="filter-container">
         <select
@@ -547,7 +597,7 @@ return (
       </div>
     )}
 
-    {/*favorites logic NEEDS TO BE CONNECTED FOR DATABASE ASWELL*/}
+    {/*favorites logic is now connected to the database*/}
     <div className={`favorites-popup ${isFavoritesOpen ? 'open' : ''}`}>
       <button className="favorites-close-button" onClick={toggleFavorites}>×</button>
       <h2>Favorites</h2>
@@ -645,20 +695,29 @@ return (
           {/*This just allows the users to write comments and preps them for database, I currently think this is ugly so CHANGE At SOME POINT !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/}
           <div>
             <div className="my-h3">Leave a Review PLACEHOLDER</div>
-            <input
+                   <input
               type="text"
               value={userComment}
               onChange={handleCommentChange}
               placeholder="Write a review..."
               style={{ width: '90%', padding: '8px' }}
             />
-            <button
-              onClick={handleSubmitComment}
-              style={{ padding: '8px 16px', marginTop: '8px' }}
-            >
-              Submit Review
+            <div style={{ marginTop: '8px', display: 'flex', gap: '10px' }}>
+              <button
+                onClick={handleSubmitComment}
+                style={{ padding: '8px 16px' }}
+              >
+                Submit Review
+              </button>
+              {/* i just copy and pasted the submit review button for the favorites one and added a true/false switch condition*/}
+              <button
+                onClick={handleToggleFavorite}
+                style={{ padding: '8px 16px' }}
+              >
+                {isFavorite ? 'Remove from Favorites' : 'Add to Favorites'}
             </button>
-            {/*will rending the username along with the comment and stars FORMAT LATER TO COMBINE FIRST AND LAST NAME AND USE THAT INSTEAD !!!!!!!!!!!!!!!!!!!!!!*/}
+            </div>
+            {/*will rending the username along with the comment and stars should be all correct*/}
             <div className="comments-container">
               <h4><strong>Reviews</strong></h4>
               {selectedVending.comments.length === 0 ? (
@@ -844,12 +903,3 @@ return (
 };
 
 export default MapComponent;
-
-
-
-
-
-
-
-
-
