@@ -52,13 +52,13 @@ const MapComponent = ({ isVendingRequestPopupOpen: initialPopupOpen }: MapCompon
   useEffect(() => {
   // IF USER NOT LOGGED IN DONT LOAD PAGE INSTEAD SEND TO LOGIN
   const _ud = localStorage.getItem('user_data');
+    
     try {
       const parsedData = _ud ? JSON.parse(_ud) : null;
-      if (parsedData && parsedData.userId) {
-        setUserData({ firstName: parsedData.firstName, lastName: parsedData.lastName });
-      } else {
+      if (!parsedData || !parsedData.userId) {
         navigate('/');
       }
+        
     } catch (e) {
       console.error('Error parsing user_data:', e);
       navigate('/');
