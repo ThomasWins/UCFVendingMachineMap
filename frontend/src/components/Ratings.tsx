@@ -56,8 +56,8 @@ function Ratings(): JSX.Element {
   }, [navigate]);
 
   return (
-    <div>
-      <div className="p-4">
+    <div id="ratingsWrapper">
+      <div id="favoritesCol">
         <h2 className="text-xl font-semibold mb-2">Your Favorite Machines</h2>
         {favorites.length > 0 ? (
           <ul className="mb-6">
@@ -70,7 +70,8 @@ function Ratings(): JSX.Element {
         ) : (
           <p>No favorite machines yet.</p>
         )}
-
+      </div>
+      <div id="ratingsCol">
         <h2 className="text-xl font-semibold mb-2">Your Ratings</h2>
         {ratings.length > 0 ? (
           <ul className="mb-6">
@@ -83,7 +84,8 @@ function Ratings(): JSX.Element {
         ) : (
           <p>No ratings yet.</p>
         )}
-
+      </div>
+      <div id="commentsCol">
         <h2 className="text-xl font-semibold mb-2">Your Comments</h2>
         {comments.length > 0 ? (
           <ul>
