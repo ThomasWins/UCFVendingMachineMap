@@ -204,13 +204,6 @@ const handleAction = async (status: 'approved' | 'rejected') => {
             <div className="unique-info-box">{selectedRequest.userLogin}</div>
 
             {/*doesn't do anything yet*/}
-            {selectedRequest.imagePath && (
-              <img
-                src={`https://gerberthegoat.com/${selectedRequest.imagePath}`}
-                alt="Vending"
-                style={{ maxWidth: '100%', borderRadius: '8px' }}
-              />
-            )}
 
               <label>Admin Comment:</label>
               <textarea
