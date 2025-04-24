@@ -1,6 +1,7 @@
 import msb from './photos/msb.jpg';
 import fc from './photos/ferrelCommons.png';
 import rwc from './photos/rwc.png';
+import cat from './photos/cat.png;
 import tennis from './photos/TenisCourt.jpg';
 import eng1 from './photos/eng1.png';
 import eng2 from './photos/eng2.png';
@@ -23,7 +24,8 @@ export const fallbackImages = {
   '1': msb,       
   '2': fc,          
   '3': rwc,           
-  '4': tennis,                 
+  '4': tennis,  
+  '6': cat,
   '7': eng1,           
   '8': psy,          
   '9': cb2,      
