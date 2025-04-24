@@ -119,7 +119,7 @@ exports.getUserProfile = async (req, res) => {
 
     // Retrieve favorite vending machines
     const favoriteVendingMachines = await Vending.find({ id: { $in: user.favorites } })
-      .select('name building type');
+      .select('id name building type -_id');
     
     // Direct check for comments/ratings to verify data exists
     const checkVending = await Vending.findOne({
