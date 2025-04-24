@@ -63,7 +63,9 @@ const MapComponent = ({ isVendingRequestPopupOpen: initialPopupOpen }: MapCompon
   }, [navigate]);
 
 
-
+  const goToContributions = () => {
+    navigate('/profile/contributions'); 
+  };
 
   
   const mapContainerRef = useRef<HTMLDivElement | null>(null);
@@ -769,7 +771,7 @@ return (
       <div className="menu-links">
         <p className="menu-link" onClick={toggleFavorites}>Favorites</p>
         <p className="menu-link" onClick={toggleFilter}>Filter</p>
-        <p className="menu-link">Your Contributions</p>
+        <p className="menu-link" onClick={goToContributions}>Your Contributions</p>
         <p
           className="menu-link"
           onClick={() => (
