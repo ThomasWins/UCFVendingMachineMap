@@ -41,7 +41,7 @@ function RatingsPage(): JSX.Element {
           return;
         }
 
-        const res = await fetch(`/api/profile/${parsedData.userId}`);
+        const res = await fetch(`/api/users/profile/${parsedData.userId}`);
         if (!res.ok) throw new Error('Failed to fetch user profile');
         const data = await res.json();
 
