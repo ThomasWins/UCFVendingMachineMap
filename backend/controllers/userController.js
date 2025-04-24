@@ -311,7 +311,7 @@ exports.submitVendingRequest = [
     try {
       const { userId } = req.params;
       const { latitude, longitude, description, building, type } = req.body;
-      const imagePath = req.file ? req.file.path : null;
+      const imagePath = req.file ? `/uploads/${req.file.filename}` : null;
 
       // Validate input
       if (!latitude || !longitude || !description || !building || !type) {
