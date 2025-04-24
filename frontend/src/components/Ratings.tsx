@@ -55,10 +55,9 @@ function Ratings(): JSX.Element {
     fetchProfileData();
   }, [navigate]);
 
-
-return (
-  <div>
-    <div className="p-4">
+  return (
+    <div>
+      <div className="p-4">
         <h2 className="text-xl font-semibold mb-2">Your Favorite Machines</h2>
         {favorites.length > 0 ? (
           <ul className="mb-6">
@@ -101,5 +100,7 @@ return (
         )}
       </div>
     </div>
-  }
+  );
+}
+
 export default Ratings;
