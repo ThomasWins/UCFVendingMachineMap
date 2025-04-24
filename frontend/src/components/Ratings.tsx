@@ -78,7 +78,7 @@ function Ratings(): JSX.Element {
           <ul className="mb-6">
             {ratings.map((rate, idx) => (
               <li key={idx}>
-                <strong>{rate.vendingName}</strong> — Rated {rate.rating}/5 in {rate.building}
+                <strong>{rate.vendingName}</strong> — Rated {rate.rating}/5
               </li>
             ))}
           </ul>
