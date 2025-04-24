@@ -11,11 +11,8 @@ import darkImage from './photos/dark.png';
 import streetsImage from './photos/streets.png';
 import outsideImage from './photos/outside.png';
 
-// HARDCODED IMAGES PLEASE REMOVE AFTER GETTING MULTER WORKING!!!!!!!!!!!!!!!!!!!
-import msbImage from './photos/msb.jpg';
-import FerrelCommonsImage from './photos/FerrelCommons.jpg';
-import TenisCourtImage from './photos/TenisCourt.jpg';
-import rwcImage from './photos/rwc.png';
+
+import { fallbackImages } from './vendingFallback';  
 
 // star images for the rating
 import FULLSTAR from './photos/FULLSTAR.png';
@@ -643,15 +640,23 @@ return (
     </div>
     {/*formatting for the vending machine popup (i.e clicking on a marker)*/}
     {isVendingPopupOpen && selectedVending && (
-      <div className="vending-popup">
-        {/*HARDCODED IMAGE NEEDS TO BE CHANGED !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/}
-        {selectedVending.imageUrl && (
-          <img
-            src={selectedVending.imageUrl}
-            alt={selectedVending.name}
-            className="vending-popup-image"
-          />
-        )}
+     <div className="vending-popup">
+       {/*no idea if this will work still need a defult in case others fail*/}
+       {selectedVending.imageUrl && (
+         <img
+           src={selectedVending.imageUrl}
+           alt={selectedVending.name}
+           className="vending-popup-image"
+           onError={(e) => {
+           const fallback = fallbackImages[String(selectedVending.id)];
+           if (fallback) {
+             e.target.onerror = null; 
+             e.target.src = fallback;
+            }
+          }}
+        />
+       )}
+     </div>
         <div className="vending-popup-content">
           <button className="close-vending-popup" onClick={() => setIsVendingPopupOpen(false)}>×</button>
           <div className="vending-title">{selectedVending.name}</div>
