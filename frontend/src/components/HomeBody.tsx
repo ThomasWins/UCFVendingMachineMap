@@ -64,7 +64,7 @@ const HomeBody = () => {
       <div id="aboutContainer">
         <h1 id="aboutUs">About us</h1>
         <p>
-          We are a team of 6 computer science students who want to make students' lives easier. Our interactive UCF Vending Machine Map is designed to help students and visitors quickly locate snack and drink machines across the UCF campus. Whether you're rushing between classes or just exploring campus, our map makes it easy to find exactly what you're craving.
+          We are a team of 5 computer science students who want to make students' lives easier. Our interactive UCF Vending Machine Map is designed to help students and visitors quickly locate snack and drink machines across the UCF campus. Whether you're rushing between classes or just exploring campus, our map makes it easy to find exactly what you're craving.
         </p>
 
         <h3>Find Vending Machines Near You</h3>
