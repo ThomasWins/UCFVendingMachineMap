@@ -16,7 +16,7 @@ This project helps students and visitors on the UCF campus locate vending machin
 
 ## Tech Stack
 
-- **Frontend:** React.js, Tailwind CSS
+- **Frontend:** React.js
 - **Backend:** Node.js, Express.js, Postman (API)
 - **Database:** MongoDB (with Mongoose)
 - **Server Hose:** Lightsail
